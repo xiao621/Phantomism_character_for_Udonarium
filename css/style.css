@@ -19,7 +19,7 @@ div{
 
 #personal_data dl dt{
   text-align: right;
-  width: 100px;
+  width: 125px;
   padding: 3px 2px;
   float:left;
   clear:both;
@@ -54,10 +54,15 @@ div{
   margin: 0 10px 10px 10px;
 }
 
-.special td input{
-  margin: 0 20px 0 0;
-}
-
 .hidden{
   display: none;
+}
+
+.grow{
+  text-align: center;
+  width: 25px;
+}
+
+.special .grow{
+  margin: 0 20px 0 0;
 }

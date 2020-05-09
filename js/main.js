@@ -1,22 +1,22 @@
 var document = document,
   ablility_list = {
-    "phantom" : [],
-    "ghost" : [],
-    "magic" : [],
-    "jack" : [],
-    "comet" : [],
-    "spider" : []
+    "phantom": [],
+    "ghost": [],
+    "magic": [],
+    "jack": [],
+    "comet": [],
+    "spider": []
   };
 
 function setDefaultStatus() {
   var status = {
-    "phantom" : [5, 10,  6,  4,  6,  8, 6],
-    "ghost"   : [4,  6, 10,  8,  4,  7, 6],
-    "magic"   : [5,  6,  4, 10,  6,  6, 8],
-    "jack"    : [6,  8,  6,  5, 10,  6, 4],
-    "comet"   : [5,  4,  8,  6,  7, 10, 5],
-    "spider"  : [5,  6,  5,  7,  8,  4, 10]
-  },
+      "phantom": [5, 10, 6, 4, 6, 8, 6],
+      "ghost": [4, 6, 10, 8, 4, 7, 6],
+      "magic": [5, 6, 4, 10, 6, 6, 8],
+      "jack": [6, 8, 6, 5, 10, 6, 4],
+      "comet": [5, 4, 8, 6, 7, 10, 5],
+      "spider": [5, 6, 5, 7, 8, 4, 10]
+    },
     phantomism_list = Object.keys(status),
     phantomism = document.getElementById("phantomism").value,
     index = 0;
@@ -58,7 +58,7 @@ function calcStatus() {
                   document.getElementById("default_for").value,
                   document.getElementById("default_stl").value,
                   document.getElementById("default_crf").value],
-      
+
     adds = [document.getElementById("add_vit"),
             document.getElementById("add_adp"),
             document.getElementById("add_agi"),
@@ -66,7 +66,7 @@ function calcStatus() {
             document.getElementById("add_for"),
             document.getElementById("add_stl"),
             document.getElementById("add_crf")],
-      
+
     sums = [document.getElementById("sum_vit"),
             document.getElementById("sum_adp"),
             document.getElementById("sum_agi"),
@@ -78,7 +78,7 @@ function calcStatus() {
     alladds = 0,
     point_left = 20,
     temp;
-  
+
   // 追加分のバリデーション 
   for (index = 0; index < 7; index++) {
     alladds += parseInt(adds[index].value);
@@ -88,7 +88,7 @@ function calcStatus() {
       adds[index].style.backgroundColor = "#fff";
     }
   }
-  
+
   // 残りの追加値を計算
   point_left -= alladds;
   document.getElementById("point_left").textContent = "残り " + point_left;
@@ -97,7 +97,7 @@ function calcStatus() {
   } else {
     document.getElementById("point_left").style.color = "#000";
   }
-  
+
   // 合計値計算
   for (index = 0; index < 7; index++) {
     temp = parseInt(defaults[index]) + parseInt(adds[index].value);

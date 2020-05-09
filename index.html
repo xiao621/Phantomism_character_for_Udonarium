@@ -18,16 +18,16 @@
         <dt>Gender</dt> <dd><input type="text" id="character_gender"></dd>
         <dt>Home</dt> <dd><input type="text" id="character_home"></dd>
         <dt>Job</dt> <dd><input type="text" id="character_job"></dd>
-        <dt>Phantomism</dt>
+        <dt>PHANTOMISM</dt>
         <dd>
           <select id="phantomism" onchange="setDefaultStatus()">
             <option value="">選択してください</option>
-            <option value="phantom">Phantom</option>
-            <option value="ghost">Ghost</option>
-            <option value="magic">Magic</option>
-            <option value="jack">Jack</option>
-            <option value="comet">Comet</option>
-            <option value="spider">Spider</option>
+            <option value="phantom">PHANTOM</option>
+            <option value="ghost">GHOST</option>
+            <option value="magic">MAGIC</option>
+            <option value="jack">JACK</option>
+            <option value="comet">COMET</option>
+            <option value="spider">SPIDER</option>
           </select>
         </dd>
       </dl>
@@ -96,16 +96,16 @@
                 ADP分野
                 <table>
                   <tr>
-                    <td>洞察</td><td><input type="checkbox" id="dousatsu"></td>
+                    <td>洞察</td><td><input type="checkbox" id="dousatsu"></td><td>+<input type="number" class="grow" id="dousatsu_grow"></td>
                   </tr>
                   <tr>
-                    <td>スニーキング</td><td><input type="checkbox" id="sneaking"></td>
+                    <td>スニーキング</td><td><input type="checkbox" id="sneaking"></td><td>+<input type="number" class="grow" id="sneaking_grow"></td>
                   </tr>
                   <tr>
-                    <td>地形順応</td><td><input type="checkbox" id="chikeijunnou"></td>
+                    <td>地形順応</td><td><input type="checkbox" id="chikeijunnou"></td><td>+<input type="number" class="grow" id="chikeijunnou_grow"></td>
                   </tr>
                   <tr>
-                    <td>分析</td><td><input type="checkbox" id="bunseki"></td>
+                    <td>分析</td><td><input type="checkbox" id="bunseki"></td><td>+<input type="number" class="grow" id="bunseki_grow"></td>
                   </tr>
                 </table>
               </div>
@@ -115,16 +115,16 @@
                 TEC分野
                 <table>
                   <tr>
-                    <td>記録術</td><td><input type="checkbox" id="kirokujyutsu"></td>
+                    <td>記録術</td><td><input type="checkbox" id="kirokujyutsu"></td><td>+<input type="number" class="grow" id="kirokujyutsu_grow"></td>
                   </tr>
                   <tr>
-                    <td>目利き</td><td><input type="checkbox" id="mekiki"></td>
+                    <td>目利き</td><td><input type="checkbox" id="mekiki"></td><td>+<input type="number" class="grow" id="mekiki_grow"></td>
                   </tr>
                   <tr>
-                    <td>機械工作</td><td><input type="checkbox" id="kikaikousaku"></td>
+                    <td>機械工作</td><td><input type="checkbox" id="kikaikousaku"></td><td>+<input type="number" class="grow" id="kikaikousaku_grow"></td>
                   </tr>
                   <tr>
-                    <td>医療</td><td><input type="checkbox" id="iryou"></td>
+                    <td>医療</td><td><input type="checkbox" id="iryou"></td><td>+<input type="number" class="grow" id="iryou_grow"></td>
                   </tr>
                 </table>
               </div>
@@ -134,16 +134,16 @@
                 STL分野
                 <table>
                   <tr>
-                    <td>体術</td><td><input type="checkbox" id="taijyutsu"></td>
+                    <td>体術</td><td><input type="checkbox" id="taijyutsu"></td><td>+<input type="number" class="grow" id="taijyutsu_grow"></td>
                   </tr>
                   <tr>
-                    <td>グライダー</td><td><input type="checkbox" id="glider"></td>
+                    <td>グライダー</td><td><input type="checkbox" id="glider"></td><td>+<input type="number" class="grow" id="glider_grow"></td>
                   </tr>
                   <tr>
-                    <td>撹乱</td><td><input type="checkbox" id="kakuran"></td>
+                    <td>撹乱</td><td><input type="checkbox" id="kakuran"></td><td>+<input type="number" class="grow" id="kakuran_grow"></td>
                   </tr>
                   <tr>
-                    <td>遠距離攻撃</td><td><input type="checkbox" id="enkyorikougeki"></td>
+                    <td>遠距離攻撃</td><td><input type="checkbox" id="enkyorikougeki"></td><td>+<input type="number" class="grow" id="enkyorikougeki_grow"></td>
                   </tr>
                 </table>
               </div>
@@ -156,16 +156,16 @@
                 AGI分野
                 <table>
                   <tr>
-                    <td>早業</td><td><input type="checkbox" id="hayawaza"></td>
+                    <td>早業</td><td><input type="checkbox" id="hayawaza"></td><td>+<input type="number" class="grow" id="hayawaza_grow"></td>
                   </tr>
                   <tr>
-                    <td>危険予知</td><td><input type="checkbox" id="kikenyochi"></td>
+                    <td>危険予知</td><td><input type="checkbox" id="kikenyochi"></td><td>+<input type="number" class="grow" id="kikenyochi_grow"></td>
                   </tr>
                   <tr>
-                    <td>捕縛</td><td><input type="checkbox" id="hobaku"></td>
+                    <td>捕縛</td><td><input type="checkbox" id="hobaku"></td><td>+<input type="number" class="grow" id="hobaku_grow"></td>
                   </tr>
                   <tr>
-                    <td>回避</td><td><input type="checkbox" id="kaihi"></td>
+                    <td>回避</td><td><input type="checkbox" id="kaihi"></td><td>+<input type="number" class="grow" id="kaihi_grow"></td>
                   </tr>
                 </table>
               </div>
@@ -175,16 +175,16 @@
                 FOR分野
                 <table>
                   <tr>
-                    <td>操縦</td><td><input type="checkbox" id="hayawaza"></td>
+                    <td>操縦</td><td><input type="checkbox" id="hayawaza"></td><td>+<input type="number" class="grow" id="hayawaza_grow"></td>
                   </tr>
                   <tr>
-                    <td>ノックアウト</td><td><input type="checkbox" id="kikenyochi"></td>
+                    <td>ノックアウト</td><td><input type="checkbox" id="kikenyochi"></td><td>+<input type="number" class="grow" id="kikenyochi_grow"></td>
                   </tr>
                   <tr>
-                    <td>突破</td><td><input type="checkbox" id="hobaku"></td>
+                    <td>突破</td><td><input type="checkbox" id="hobaku"></td><td>+<input type="number" class="grow" id="hobaku_grow"></td>
                   </tr>
                   <tr>
-                    <td>近接攻撃</td><td><input type="checkbox" id="kaihi"></td>
+                    <td>近接攻撃</td><td><input type="checkbox" id="kaihi"></td><td>+<input type="number" class="grow" id="kaihi_grow"></td>
                   </tr>
                 </table>
               </div>
@@ -194,16 +194,16 @@
                 CRF分野
                 <table>
                   <tr>
-                    <td>電脳</td><td><input type="checkbox" id="dennou"></td>
+                    <td>電脳</td><td><input type="checkbox" id="dennou"></td><td>+<input type="number" class="grow" id="dennou_grow"></td>
                   </tr>
                   <tr>
-                    <td>言いくるめ</td><td><input type="checkbox" id="iikurume"></td>
+                    <td>言いくるめ</td><td><input type="checkbox" id="iikurume"></td><td>+<input type="number" class="grow" id="iikurume_grow"></td>
                   </tr>
                   <tr>
-                    <td>解読</td><td><input type="checkbox" id="kaidoku"></td>
+                    <td>解読</td><td><input type="checkbox" id="kaidoku"></td><td>+<input type="number" class="grow" id="kaidoku_grow"></td>
                   </tr>
                   <tr>
-                    <td>略奪</td><td><input type="checkbox" id="ryakudatsu"></td>
+                    <td>略奪</td><td><input type="checkbox" id="ryakudatsu"></td><td>+<input type="number" class="grow" id="ryakudatsu_grow"></td>
                   </tr>
                 </table>
               </div>
@@ -212,40 +212,130 @@
         </table>
       </div>
       <div class="special phantom hidden">
-        <h4>Phantom特化技能</h4>
+        <h4>PHANTOM特化技能</h4>
         <table>
           <tr>
             <table>
               <tr>
-                <td>変装</td><td><input type="checkbox" id="hensou"></td>
-                <td>変幻自在</td><td><input type="checkbox" id="hengenjizai"></td>
+                <td>変装</td><td><input type="checkbox" id="hensou"></td><td>+<input type="number" class="grow" id="hensou_grow"></td>
+                <td>変幻自在</td><td><input type="checkbox" id="hengenjizai"></td><td>+<input type="number" class="grow" id="hengenjizai_grow"></td>
               </tr>
               <tr>
-                <td>擬態</td><td><input type="checkbox" id="gitai"></td>
-                <td>跳躍</td><td><input type="checkbox" id="chouyaku"></td>
+                <td>擬態</td><td><input type="checkbox" id="gitai"></td><td>+<input type="number" class="grow" id="gitai_grow"></td>
+                <td>跳躍</td><td><input type="checkbox" id="chouyaku"></td><td>+<input type="number" class="grow" id="chouyaku_grow"></td>
               </tr>
               <tr>
-                <td>ワイヤーアクション</td><td><input type="checkbox" id="wireaction"></td>
-                <td>デコイ</td><td><input type="checkbox" id="decoy"></td>
+                <td>ワイヤーアクション</td><td><input type="checkbox" id="wireaction"></td><td>+<input type="number" class="grow" id="wireaction_grow"></td>
+                <td>デコイ</td><td><input type="checkbox" id="decoy"></td><td>+<input type="number" class="grow" id="decoy_grow"></td>
               </tr>
             </table>
           </tr>
         </table>
       </div>
       <div class="special ghost hidden">
-        <h4>Ghost特化技能</h4>
+        <h4>GHOST特化技能</h4>
+        <table>
+          <tr>
+            <table>
+              <tr>
+                <td>隠蔽</td><td><input type="checkbox" id="inpei"></td><td>+<input type="number" class="grow" id="inpei_grow"></td>
+                <td>瞬足</td><td><input type="checkbox" id="shunsoku"></td><td>+<input type="number" class="grow" id="shunsoku_grow"></td>
+              </tr>
+              <tr>
+                <td>隠密</td><td><input type="checkbox" id="onmitsu"></td><td>+<input type="number" class="grow" id="onmitsu_grow"></td>
+                <td>闇帳</td><td><input type="checkbox" id="yamidobari"></td><td>+<input type="number" class="grow" id="yamitobari_grow"></td>
+              </tr>
+              <tr>
+                <td>幽霊歩き</td><td><input type="checkbox" id="yuureiaruki"></td><td>+<input type="number" class="grow" id="yuureiaruki_grow"></td>
+                <td>疾風脚</td><td><input type="checkbox" id="sippuukyaku"></td><td>+<input type="number" class="grow" id="sippuukyaku_grow"></td>
+              </tr>
+            </table>
+          </tr>
+        </table>
       </div>
       <div class="special magic hidden">
-        <h4>Magic技能</h4>
+        <h4>MAGIC特化技能</h4>
+        <table>
+          <tr>
+            <table>
+              <tr>
+                <td>小間使い</td><td><input type="checkbox" id="komadukai"></td><td>+<input type="number" class="grow" id="komadukai_grow"></td>
+                <td>スワップ</td><td><input type="checkbox" id="swap"></td><td>+<input type="number" class="grow" id="swap_grow"></td>
+              </tr>
+              <tr>
+                <td>イリュージョン</td><td><input type="checkbox" id="illusion"></td><td>+<input type="number" class="grow" id="illusion_grow"></td>
+                <td>ミミック</td><td><input type="checkbox" id="mimic"></td><td>+<input type="number" class="grow" id="mimic_grow"></td>
+              </tr>
+              <tr>
+                <td>シャドウ</td><td><input type="checkbox" id="shadow"></td><td>+<input type="number" class="grow" id="shadow_grow"></td>
+                <td>スピードコントロール</td><td><input type="checkbox" id="speedcontrol"></td><td>+<input type="number" class="grow" id="speedcontrol_grow"></td>
+              </tr>
+            </table>
+          </tr>
+        </table>
       </div>
       <div class="special jack hidden">
-        <h4>Jack技能</h4>
+        <h4>JACK特化技能</h4>
+        <table>
+          <tr>
+            <table>
+              <tr>
+                <td>威圧</td><td><input type="checkbox" id="iatsu"></td><td>+<input type="number" class="grow" id="iatsu_grow"></td>
+                <td>見切り</td><td><input type="checkbox" id="mikiri"></td><td>+<input type="number" class="grow" id="mikiri_grow"></td>
+              </tr>
+              <tr>
+                <td>剣術</td><td><input type="checkbox" id="kenjyutsu"></td><td>+<input type="number" class="grow" id="kenjyutsu_grow"></td>
+                <td>打ち壊し</td><td><input type="checkbox" id="uchikowashi"></td><td>+<input type="number" class="grow" id="uchikowashi_grow"></td>
+              </tr>
+              <tr>
+                <td>一閃</td><td><input type="checkbox" id="issen"></td><td>+<input type="number" class="grow" id="issen_grow"></td>
+                <td>スマッシュ</td><td><input type="checkbox" id="smash"></td><td>+<input type="number" class="grow" id="smash_grow"></td>
+              </tr>
+            </table>
+          </tr>
+        </table>
       </div>
       <div class="special comet hidden">
-        <h4>Comet技能</h4>
+        <h4>COMET特化技能</h4>
+        <table>
+          <tr>
+            <table>
+              <tr>
+                <td>スピードガン</td><td><input type="checkbox" id="speedgun"></td><td>+<input type="number" class="grow" id="speedgun_grow"></td>
+                <td>フリップジャンプ</td><td><input type="checkbox" id=flipjump></td><td>+<input type="number" class="grow" id="flipjump_grow"></td>
+              </tr>
+              <tr>
+                <td>クイックステップ</td><td><input type="checkbox" id="quickstep"></td><td>+<input type="number" class="grow" id="quickstep_grow"></td>
+                <td>連撃</td><td><input type="checkbox" id="rengeki"></td><td>+<input type="number" class="grow" id="rengeki_grow"></td>
+              </tr>
+              <tr>
+                <td>二丁銃</td><td><input type="checkbox" id="nichoujyuu"></td><td>+<input type="number" class="grow" id="nichoujyuu_grow"></td>
+                <td>迫撃</td><td><input type="checkbox" id="hakugeki"></td><td>+<input type="number" class="grow" id="hakugeki_grow"></td>
+              </tr>
+            </table>
+          </tr>
+        </table>
       </div>
       <div class="special spider hidden">
-        <h4>Spider技能</h4>
+        <h4>SPIDER特化技能</h4>
+        <table>
+          <tr>
+            <table>
+              <tr>
+                <td>偽造</td><td><input type="checkbox" id="gizou"></td><td>+<input type="number" class="grow" id="gizou_grow"></td>
+                <td>スリップトラップ</td><td><input type="checkbox" id="sliptrap"></td><td>+<input type="number" class="grow" id="sliptrap_grow"></td>
+              </tr>
+              <tr>
+                <td>催眠術</td><td><input type="checkbox" id="saiminjyutsu"></td><td>+<input type="number" class="grow" id="saiminjyutsu_grow"></td>
+                <td>キャプチャーウェブ</td><td><input type="checkbox" id="captureweb"></td><td>+<input type="number" class="grow" id="captureweb_grow"></td>
+              </tr>
+              <tr>
+                <td>看破</td><td><input type="checkbox" id="kanpa"></td><td>+<input type="number" class="grow" id="kanpa_grow"></td>
+                <td>サンダーボルト</td><td><input type="checkbox" id="thunderbolt"></td><td>+<input type="number" class="grow" id="thunderbolt_grow"></td>
+              </tr>
+            </table>
+          </tr>
+        </table>
       </div>
     </div>
    
