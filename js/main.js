@@ -101,7 +101,9 @@ function calcStatus() {
   // 合計値計算
   for (index = 0; index < 7; index++) {
     temp = parseInt(defaults[index]) + parseInt(adds[index].value);
-    if (temp > 18) {
+    if (index === 0 && temp > 10) {
+      sums[index].style.backgroundColor = "#fcc";
+    } else if (temp > 18) {
       sums[index].style.backgroundColor = "#fcc";
     } else {
       sums[index].style.backgroundColor = "#fff";
