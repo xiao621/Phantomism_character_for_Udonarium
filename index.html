@@ -84,7 +84,7 @@
         <div class="fixed">
           <table>
             <tr>
-              <td>通常攻撃</td><td><input type="checkbox" checked="checked" disabled="disabled"></td>
+              <td>通常攻撃(固定取得)</td><td><input type="checkbox" checked="checked" disabled="disabled"></td>
             </tr>
           </table>
         </div>
@@ -175,16 +175,16 @@
                 FOR分野
                 <table>
                   <tr>
-                    <td>操縦</td><td><input type="checkbox" id="hayawaza"></td><td>+<input type="number" class="grow" id="hayawaza_grow"></td>
+                    <td>操縦</td><td><input type="checkbox" id="soujyuu"></td><td>+<input type="number" class="grow" id="soujyuu_grow"></td>
                   </tr>
                   <tr>
-                    <td>ノックアウト</td><td><input type="checkbox" id="kikenyochi"></td><td>+<input type="number" class="grow" id="kikenyochi_grow"></td>
+                    <td>ノックアウト</td><td><input type="checkbox" id="knockout"></td><td>+<input type="number" class="grow" id="knockout_grow"></td>
                   </tr>
                   <tr>
-                    <td>突破</td><td><input type="checkbox" id="hobaku"></td><td>+<input type="number" class="grow" id="hobaku_grow"></td>
+                    <td>突破</td><td><input type="checkbox" id="toppa"></td><td>+<input type="number" class="grow" id="toppa_grow"></td>
                   </tr>
                   <tr>
-                    <td>近接攻撃</td><td><input type="checkbox" id="kaihi"></td><td>+<input type="number" class="grow" id="kaihi_grow"></td>
+                    <td>近接攻撃</td><td><input type="checkbox" id="kinsetsukougeki"></td><td>+<input type="number" class="grow" id="kinsetsukougeki_grow"></td>
                   </tr>
                 </table>
               </div>
@@ -302,7 +302,7 @@
             <table>
               <tr>
                 <td>スピードガン</td><td><input type="checkbox" id="speedgun"></td><td>+<input type="number" class="grow" id="speedgun_grow"></td>
-                <td>フリップジャンプ</td><td><input type="checkbox" id=flipjump></td><td>+<input type="number" class="grow" id="flipjump_grow"></td>
+                <td>フリップジャンプ</td><td><input type="checkbox" id="flipjump"></td><td>+<input type="number" class="grow" id="flipjump_grow"></td>
               </tr>
               <tr>
                 <td>クイックステップ</td><td><input type="checkbox" id="quickstep"></td><td>+<input type="number" class="grow" id="quickstep_grow"></td>
@@ -339,7 +339,14 @@
       </div>
     </div>
    
+    <div id="message"></div>
     <input type="button" onclick="makeCharacterXML()" value="キャラクター作成！">
+
+    <div class="footer">
+      このツールは非公式ツールです。<br />
+      PHANTOMISMの著作権は全て「miRa」「つきのみち」に帰属します。<br />
+      made by xiao (twitter: @s_o_xiao)
+    </div>
     <script src="js/main.js"></script>
   </body>
 </html>
