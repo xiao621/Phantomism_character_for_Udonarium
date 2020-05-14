@@ -153,7 +153,7 @@ function makeCharacterXML() {
     phantomism = document.getElementById("phantomism").value,
     index = 0,
     alladds = 0,
-    abilities = [],
+    abilities = {},
     temp_list,
     msg = "";
 
@@ -184,7 +184,7 @@ function makeCharacterXML() {
   temp_list = Object.keys(ability_list["common"]);
   for (index = 0; index < 24; index++) {
     if (document.getElementById(temp_list[index]).checked) {
-      abilities.push(ability_list["common"][temp_list[index]]);
+      abilities[temp_list[index]] = ability_list["common"][temp_list[index]];
     }
   }
 
@@ -192,19 +192,19 @@ function makeCharacterXML() {
     temp_list = Object.keys(ability_list[phantomism]);
     for (index = 0; index < 6; index++) {
       if (document.getElementById(temp_list[index]).checked) {
-        abilities.push(ability_list[phantomism][temp_list[index]]);
+        abilities[temp_list[index]] = ability_list[phantomism][temp_list[index]];
       }
     }
   }
-  if (abilities.length > 7) {
+  if (Object.keys(abilities).length > 7) {
     msg += "習得技能が多すぎます。通常攻撃を除いて7つまでです。<br />";
-  } else if (abilities.length < 7) {
+  } else if (Object.keys(abilities).length < 7) {
     msg += "習得技能が少なすぎます。通常攻撃を除いて7つ取得してください。<br />";
   }
 
   // 技能の成長にマイナスがないか
-  for (index = 0; index < abilities.length; index++) {
-    if (document.getElementById(abilities[index] + "_grow") < 0) {
+  for (index = 0; index < Object.keys(abilities).length; index++) {
+    if (document.getElementById(Object.keys(abilities)[index] + "_grow").value < 0) {
       msg += "技能の成長がマイナスの所があります。<br />";
     }
   }
