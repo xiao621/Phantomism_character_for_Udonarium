@@ -229,7 +229,7 @@ function makeCharacterXML(abilities) {
                document.getElementById("sum_for").value,
                document.getElementById("sum_stl").value,
                document.getElementById("sum_crf").value],
-      index = 0, growth = 0, setting;
+      index = 0, growth = 0, setting, blob, url, atag;
 
   xml += '<?xml version="1.0" encoding="UTF-8"?>\n';
   xml += '<character>\n';
@@ -291,5 +291,13 @@ function makeCharacterXML(abilities) {
   }
   xml += '  </chat-palette>\n';
   xml += '</character>\n';
-  console.log(xml);
+  blob = new Blob([xml], {"type":"text/xml"});
+  url = URL.createObjectURL(blob);
+  atag = document.createElement("a");
+  document.body.appendChild(atag);
+  atag.download = document.getElementById("character_name").value.replace(/\s+/g, "") + '.xml';
+  atag.href = url;
+  atag.click();
+  atag.remove();
+  URL.revokeObjectURL(url);
 }
