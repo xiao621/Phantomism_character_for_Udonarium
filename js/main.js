@@ -135,7 +135,7 @@ function calcStatus() {
   }
 }
 
-function makeCharacterXML() {
+function check_and_make_Character() {
   var adds = [document.getElementById("add_vit"),
             document.getElementById("add_adp"),
             document.getElementById("add_agi"),
@@ -214,7 +214,82 @@ function makeCharacterXML() {
     document.getElementById("message").innerHTML = msg;
   } else {
     document.getElementById("message").innerHTML = "";
-    alert("キャラクターデータOK.");
-    // TODO XML生成処理
+    makeCharacterXML(abilities);
   }
+}
+
+function makeCharacterXML(abilities) {
+  var xml = "",
+      // 習得済み技能IDリスト
+      learned_ability = Object.keys(abilities),
+      // VITを除いたステータス
+      status = [document.getElementById("sum_adp").value,
+               document.getElementById("sum_agi").value,
+               document.getElementById("sum_tec").value,
+               document.getElementById("sum_for").value,
+               document.getElementById("sum_stl").value,
+               document.getElementById("sum_crf").value],
+      index = 0, growth = 0, setting;
+
+  xml += '<?xml version="1.0" encoding="UTF-8"?>\n';
+  xml += '<character>\n';
+  xml += '  <data name="character">\n';
+  xml += '    <data name="image">\n';
+  xml += '      <data type="image" name="imageIdentifier">none_icon</data>\n';
+  xml += '    </data>\n';
+  xml += '    <data name="common">\n';
+  xml += '      <data name="name">'+document.getElementById("character_name").value+'</data>\n';
+  xml += '      <data name="size">2</data>\n';
+  xml += '    </data>\n';
+  xml += '    <data name="detail">\n';
+  xml += '      <data name="リソース">\n';
+  xml += '        <data type="numberResource" currentValue="'+document.getElementById("sum_vit").value+'" name="VIT">'+document.getElementById("sum_vit").value+'</data>\n';
+  xml += '      </data>\n';
+  xml += '      <data name="情報">\n';
+  xml += '        <data name="Age">'+document.getElementById("character_age").value+'</data>\n';
+  xml += '        <data name="Gender">'+document.getElementById("character_gender").value+'</data>\n';
+  xml += '        <data name="Home">'+document.getElementById("character_home").value+'</data>\n';
+  xml += '        <data name="Job">'+document.getElementById("character_job").value+'</data>\n';
+  xml += '        <data name="PHANTOMISM">'+document.getElementById("phantomism").value.toUpperCase()+'</data>\n';
+  xml += '        <data type="note" name="メモ">';
+  // textareaの改行込み処理
+  setting = document.getElementById("memo").value.replace(/\r\n|\r/g, "\n").split("\n");
+  for (index = 0; index < setting.length; index++) {
+    xml += setting[index] +'\n';
+  }
+  xml += '        </data>\n';
+  xml += '      </data>\n';
+  xml += '      <data name="ステータス">\n';
+  xml += '        <data name="ADP">'+status[0]+'</data>\n';
+  xml += '        <data name="AGI">'+status[1]+'</data>\n';
+  xml += '        <data name="TEC">'+status[2]+'</data>\n';
+  xml += '        <data name="FOR">'+status[3]+'</data>\n';
+  xml += '        <data name="STL">'+status[4]+'</data>\n';
+  xml += '        <data name="CRF">'+status[5]+'</data>\n';
+  xml += '      </data>\n';
+  xml += '      <data name="技能">\n';
+  xml += '        <data name="">通常攻撃</data>\n';
+  for(index = 0; index < learned_ability.length; index++) {
+    xml += '        <data name="">'+abilities[learned_ability[index]][0]+'</data>\n';
+  }
+  xml += '      </data>\n';
+  xml += '    </data>\n';
+  xml += '  </data>\n';
+  xml += '  <chat-palette dicebot="">';
+  xml += '1d20&lt;='+Math.max(status[0], status[1], status[2], status[3], status[4], status[5])+' 通常攻撃\n';
+  for(index = 0; index < learned_ability.length; index++) {
+    growth = document.getElementById(learned_ability[index] + "_grow").value;
+    xml += '1d20&lt;=('+abilities[learned_ability[index]][1];
+    if (growth !== "" && growth > 0) {
+      xml += '+'+growth;
+    }
+    xml += ') '+abilities[learned_ability[index]][0];
+    if (growth !== "" && growth > 0) {
+      xml += '+'+growth;
+    }
+    xml += '\n';
+  }
+  xml += '  </chat-palette>\n';
+  xml += '</character>\n';
+  console.log(xml);
 }
