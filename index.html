@@ -12,25 +12,47 @@
     
     <div id="personal_data">
       <h3>Personal Data</h3>
-      <dl>
-        <dt>Name</dt> <dd><input type="text" id="character_name"></dd>
-        <dt>Age</dt>  <dd><input type="text" id="character_age"></dd>
-        <dt>Gender</dt> <dd><input type="text" id="character_gender"></dd>
-        <dt>Home</dt> <dd><input type="text" id="character_home"></dd>
-        <dt>Job</dt> <dd><input type="text" id="character_job"></dd>
-        <dt>PHANTOMISM</dt>
-        <dd>
-          <select id="phantomism" onchange="setDefaultStatus()">
-            <option value="">選択してください</option>
-            <option value="phantom">PHANTOM</option>
-            <option value="ghost">GHOST</option>
-            <option value="magic">MAGIC</option>
-            <option value="jack">JACK</option>
-            <option value="comet">COMET</option>
-            <option value="spider">SPIDER</option>
-          </select>
-        </dd>
-      </dl>
+      <table>
+        <tr>
+          <td class="personal_elem">Name</td>
+          <td><input type="text" id="character_name"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="personal_elem">Age</td>
+          <td><input type="text" id="character_age"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="personal_elem">Gender</td>
+          <td><input type="text" id="character_gender"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="personal_elem">Home</td>
+          <td><input type="text" id="character_home"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="personal_elem">Job</td>
+          <td><input type="text" id="character_job"></td>
+        </tr>
+        <tr>
+          <td class="personal_elem">PHANTOMISM</td>
+          <td>
+            <select id="phantomism" onchange="setDefaultStatus()">
+              <option value="">選択してください</option>
+              <option value="phantom">PHANTOM</option>
+              <option value="ghost">GHOST</option>
+              <option value="magic">MAGIC</option>
+              <option value="jack">JACK</option>
+              <option value="comet">COMET</option>
+              <option value="spider">SPIDER</option>
+            </select>
+          </td>
+          <td><input type="button" onclick="setSampleCharacter()" value="サンプルキャラクター 能力セット"></td>
+        </tr>
+      </table>
       <textarea id="memo" rows="10" cols="50" placeholder="Other Info..."></textarea>
     </div>
     
@@ -53,13 +75,13 @@
         </tr>
         <tr>
           <td>追加分</td>
-          <td><input type="number" id="add_vit" value="0" onchange="calcStatus()"></td>
-          <td><input type="number" id="add_adp" value="0" onchange="calcStatus()"></td>
-          <td><input type="number" id="add_agi" value="0" onchange="calcStatus()"></td>
-          <td><input type="number" id="add_tec" value="0" onchange="calcStatus()"></td>
-          <td><input type="number" id="add_for" value="0" onchange="calcStatus()"></td>
-          <td><input type="number" id="add_stl" value="0" onchange="calcStatus()"></td>
-          <td><input type="number" id="add_crf" value="0" onchange="calcStatus()"></td>
+          <td><input type="number" class="status_add" id="add_vit" value="0" onchange="calcStatus()"></td>
+          <td><input type="number" class="status_add" id="add_adp" value="0" onchange="calcStatus()"></td>
+          <td><input type="number" class="status_add" id="add_agi" value="0" onchange="calcStatus()"></td>
+          <td><input type="number" class="status_add" id="add_tec" value="0" onchange="calcStatus()"></td>
+          <td><input type="number" class="status_add" id="add_for" value="0" onchange="calcStatus()"></td>
+          <td><input type="number" class="status_add" id="add_stl" value="0" onchange="calcStatus()"></td>
+          <td><input type="number" class="status_add" id="add_crf" value="0" onchange="calcStatus()"></td>
           <td><div id=point_left>残り 20</div></td>
         </tr>
         <tr>
@@ -102,7 +124,7 @@
                     <td>スニーキング</td><td><input type="checkbox" id="sneaking"></td><td>+<input type="number" class="grow" id="sneaking_grow"></td>
                   </tr>
                   <tr>
-                    <td>地形順応</td><td><input type="checkbox" id="chikeijunnou"></td><td>+<input type="number" class="grow" id="chikeijunnou_grow"></td>
+                    <td>地形順応</td><td><input type="checkbox" id="chikeijyunnou"></td><td>+<input type="number" class="grow" id="chikeijyunnou_grow"></td>
                   </tr>
                   <tr>
                     <td>分析</td><td><input type="checkbox" id="bunseki"></td><td>+<input type="number" class="grow" id="bunseki_grow"></td>
