@@ -1,7 +1,7 @@
 var document = document,
   ability_list = {
     "common": {"dousatsu": ["洞察", "{ADP}"], "sneaking": ["スニーキング", "{ADP}"],
-               "chikeijunnou": ["地形順応", "{ADP}"], "bunseki": ["分析", "{ADP}"],
+               "chikeijyunnou": ["地形順応", "{ADP}"], "bunseki": ["分析", "{ADP}"],
                "hayawaza": ["早業", "{AGI}"], "kikenyochi": ["危険予知", "{AGI}"],
                "hobaku": ["捕縛", "{AGI}"], "kaihi": ["回避", "{AGI}"],
                "kirokujyutsu": ["記録術", "{TEC}"], "mekiki": ["目利き", "{TEC}"],
@@ -135,6 +135,58 @@ function calcStatus() {
   }
 }
 
+function setSampleCharacter() {
+  var sample_data = {
+    // adds, abilities
+    "phantom": {"adds": [2, 8, 0, 0, 0, 10, 0],
+                "abilities": ["dousatsu", "sneaking", "kakuran", "gitai", "enkyorikougeki", "wireaction", "decoy"]},
+    "ghost": {"adds": [0, 0, 8, 6, 0, 0, 6],
+              "abilities": ["hayawaza", "hobaku", "kikaikousaku", "kaihi", "onmitsu", "shunsoku", "yuureiaruki"]},
+    "magic": {"adds": [3, 0, 0, 6, 3, 0, 8],
+              "abilities": ["kirokujyutsu", "mekiki", "iikurume", "swap", "komadukai", "mimic", "speedcontrol"]},
+    "jack": {"adds": [0, 6, 6, 0, 8, 0, 0],
+             "abilities": ["sneaking", "chikeijyunnou", "knockout", "toppa", "kenjyutsu", "mikiri", "smash"]},
+    "comet": {"adds": [2, 0, 10, 0, 0, 8, 0],
+              "abilities": ["taijyutsu", "kaihi", "kinsetsukougeki", "nichoujyuu", "quickstep", "rengeki", "hakugeki"]},
+    "spider": {"adds": [0, 8, 0, 0, 6, 0, 6],
+               "abilities": ["dousatsu", "dennou", "bunseki", "gizou", "saiminjyutsu", "sliptrap", "captureweb"]}
+  },
+    adds = [document.getElementById("add_vit"),
+            document.getElementById("add_adp"),
+            document.getElementById("add_agi"),
+            document.getElementById("add_tec"),
+            document.getElementById("add_for"),
+            document.getElementById("add_stl"),
+            document.getElementById("add_crf")],
+    phantomism = document.getElementById("phantomism").value,
+    index = 0, temp_list;
+
+  if (phantomism === "") {
+    alert("PHANTOMISMを選択してください！");
+    return;
+  }
+  for (index = 0; index < adds.length; index++) {
+    adds[index].value = sample_data[phantomism]["adds"][index];
+  }
+  calcStatus();
+  temp_list = Object.keys(ability_list["common"]);
+  for (index = 0; index < temp_list.length; index++) {
+    if (sample_data[phantomism]["abilities"].includes(temp_list[index])) {
+      document.getElementById(temp_list[index]).checked = true;
+    } else {
+      document.getElementById(temp_list[index]).checked = false;
+    }
+  }
+  temp_list = Object.keys(ability_list[phantomism]);
+  for(index = 0; index < temp_list.length; index++) {
+    if (sample_data[phantomism]["abilities"].includes(temp_list[index])) {
+      document.getElementById(temp_list[index]).checked = true;
+    } else {
+      document.getElementById(temp_list[index]).checked = false;
+    }
+  }
+}
+
 function check_and_make_Character() {
   var adds = [document.getElementById("add_vit"),
             document.getElementById("add_adp"),
@@ -220,16 +272,21 @@ function check_and_make_Character() {
 
 function makeCharacterXML(abilities) {
   var xml = "",
-      // 習得済み技能IDリスト
-      learned_ability = Object.keys(abilities),
-      // VITを除いたステータス
-      status = [document.getElementById("sum_adp").value,
-               document.getElementById("sum_agi").value,
-               document.getElementById("sum_tec").value,
-               document.getElementById("sum_for").value,
-               document.getElementById("sum_stl").value,
-               document.getElementById("sum_crf").value],
-      index = 0, growth = 0, setting, blob, url, atag;
+    // 習得済み技能IDリスト
+    learned_ability = Object.keys(abilities),
+    // VITを除いたステータス
+    status = [document.getElementById("sum_adp").value,
+             document.getElementById("sum_agi").value,
+             document.getElementById("sum_tec").value,
+             document.getElementById("sum_for").value,
+             document.getElementById("sum_stl").value,
+             document.getElementById("sum_crf").value],
+    index = 0,
+    growth = 0,
+    setting,
+    blob,
+    url,
+    atag;
 
   xml += '<?xml version="1.0" encoding="UTF-8"?>\n';
   xml += '<character>\n';
