@@ -12,19 +12,19 @@ div{
   margin: 10px 0;;
 }
 
-#personal_data dl{
+#personal_data table{
   margin: 0;
   padding: 0;
 }
 
-#personal_data dl dt{
+#personal_data .personal_elem{
   text-align: right;
   width: 125px;
   padding: 3px 2px;
   float:left;
   clear:both;
 }
-#personal_data dl dd{
+#personal_data td{
   padding: 3px 2px;
 }
 
@@ -40,6 +40,10 @@ div{
 #status th{
   text-align: center;
   padding: 0;
+}
+
+.status_add{
+  text-align: right;
 }
 
 #point_left{
