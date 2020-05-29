@@ -333,6 +333,7 @@ function makeCharacterXML(abilities) {
   xml += '    </data>\n';
   xml += '  </data>\n';
   xml += '  <chat-palette dicebot="">';
+  xml += '1d3 移動ロール\n';
   xml += '1d20&lt;='+Math.max(status[0], status[1], status[2], status[3], status[4], status[5])+' 通常攻撃\n';
   for(index = 0; index < learned_ability.length; index++) {
     growth = document.getElementById(learned_ability[index] + "_grow").value;
@@ -346,6 +347,14 @@ function makeCharacterXML(abilities) {
     }
     xml += '\n';
   }
+  xml += '\n';
+  xml += '1d10&lt;={VIT} VITロール\n';
+  xml += '1d20&lt;={ADP} ADPロール\n';
+  xml += '1d20&lt;={AGI} AGIロール\n';
+  xml += '1d20&lt;={TEC} TECロール\n';
+  xml += '1d20&lt;={FOR} FORロール\n';
+  xml += '1d20&lt;={STL} STLロール\n';
+  xml += '1d20&lt;={CRF} CRFロール\n';
   xml += '  </chat-palette>\n';
   xml += '</character>\n';
   blob = new Blob([xml], {"type":"text/xml"});
