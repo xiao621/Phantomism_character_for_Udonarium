@@ -1,4 +1,5 @@
 var document = document,
+  patternString = /"|'|<|>|&/g,
   ability_list = {
     "common": {"dousatsu": ["洞察", "{ADP}"], "sneaking": ["スニーキング", "{ADP}"],
                "chikeijyunnou": ["地形順応", "{ADP}"], "bunseki": ["分析", "{ADP}"],
@@ -32,6 +33,52 @@ var document = document,
                "kanpa": ["看破", "{CRF}"], "thunderbolt": ["サンダーボルト", "(({CRF}+{FOR})/2)"]}
   };
 
+// Utitlity
+function escapeString() {
+  if (arguments[0] === "\"") {
+    return "&quot;";
+  } else if (arguments[0] === "\'") {
+    return "&apos;";
+  } else if (arguments[0] === "<") {
+    return "&lt;";
+  } else if (arguments[0] === ">") {
+    return "&gt;";
+  } else if (arguments[0] === "&") {
+    return "&amp;";
+  }
+}
+
+function makeNormalElement(eName,eAttribute,eText) {
+  var elem = document.createElement("data");
+  elem.setAttribute(eName,eAttribute);
+  elem.textContent = eText;
+  return elem;
+}
+
+function makeResourceElement(rName,rAttribute,rText,rCurrent) {
+  var elem = document.createElement("data");
+  elem.setAttribute("type","numberResource");
+  elem.setAttribute("currentValue",rCurrent);
+  elem.setAttribute(rName,rAttribute);
+  elem.textContent = rText;
+  return elem;
+}
+
+function makeNoteElement(nName,nAttribute,nText) {
+  var elem = document.createElement("data");
+  elem.setAttribute("type","note");
+  elem.setAttribute(nName,nAttribute);
+  elem.textContent = nText;
+  return elem;
+}
+
+function makeParentElement(attribute) {
+  var elem = document.createElement("data");
+  elem.setAttribute("name",attribute);
+  return elem;
+}
+
+// Handler
 function setDefaultStatus() {
   var status = {
       "phantom": [5, 10, 6, 4, 6, 8, 6],
@@ -367,3 +414,5 @@ function makeCharacterXML(abilities) {
   atag.remove();
   URL.revokeObjectURL(url);
 }
+
+window.onload = setDefaultStatus;
