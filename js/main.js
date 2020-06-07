@@ -513,9 +513,9 @@ function makeCharacterXML(abilities) {
   xml += '        <data name="CRF">'+status[5]+'</data>\n';
   xml += '      </data>\n';
   xml += '      <data name="技能">\n';
-  xml += '        <data name="">通常攻撃</data>\n';
+  xml += '        <data name="チェス,攻撃">通常攻撃</data>\n';
   for(index = 0; index < learned_ability.length; index++) {
-    xml += '        <data name="">'+abilities[learned_ability[index]][0]+'</data>\n';
+    xml += '        <data name="'+abilities[learned_ability[index]][2]+'">'+abilities[learned_ability[index]][0]+'</data>\n';
   }
   xml += '      </data>\n';
   xml += '    </data>\n';
