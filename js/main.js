@@ -330,11 +330,152 @@ function makeCharacterXML(abilities) {
              document.getElementById("sum_crf").value],
     index = 0,
     growth = 0,
+    tmpabi,
     setting,
+    newlined_setting = "",
     blob,
     url,
     atag;
 
+  /* DOMツリー生成版, エスケープコードがパースされない不具合につき、一旦保留
+  let xmltree = document.createElement("character");
+
+  // data character
+  let character = document.createElement("data");
+  character.setAttribute("name","character");
+
+  // data character - img
+  let img = document.createElement("data");
+  img.setAttribute("name","image");
+  let imgChild = document.createElement("data");
+  imgChild.setAttribute("type","image");
+  imgChild.setAttribute("name","imageIdentifier");
+  imgChild.textContent = "none_icon";
+  img.appendChild(imgChild);
+  character.appendChild(img);
+
+  // data character - common
+  let common = document.createElement("data");
+  common.setAttribute("name","common");
+  let commonChild = makeNormalElement("name","name",document.getElementById("character_name").value.replace(patternString, escapeString));
+  common.appendChild(commonChild);
+  commonChild = makeNormalElement("name","size","2");
+  common.appendChild(commonChild);
+  character.appendChild(common);
+
+  // data character - detail
+  let detail = makeParentElement("detail");
+
+  // data character - detail - リソース
+  let resource = makeParentElement("リソース");
+  let resourceChild = makeResourceElement("name", "VIT", document.getElementById("sum_vit").value, document.getElementById("sum_vit").value);
+  resource.appendChild(resourceChild);
+  detail.appendChild(resource);
+
+  // data character - detail - 情報
+  let info = makeParentElement("情報");
+
+  // data character - detail - 情報 - age
+  let age = makeNormalElement("name", "Age", document.getElementById("character_age").value.replace(patternString, escapeString));
+  info.appendChild(age);
+
+  // data character - detail - 情報 - Gender
+  let gender = makeNormalElement("name", "Gender", document.getElementById("character_gender").value.replace(patternString, escapeString));
+  info.appendChild(gender);
+
+  // data character - detail - 情報 - Home
+  let home = makeNormalElement("name", "Home", document.getElementById("character_home").value.replace(patternString, escapeString));
+  info.appendChild(home);
+
+  // data character - detail - 情報 - Job
+  let job = makeNormalElement("name", "Job", document.getElementById("character_job").value.replace(patternString, escapeString));
+  info.appendChild(job);
+
+  // data character - detail - 情報 - PHANTOMISM
+  let phantomism = makeNormalElement("name", "PHANTOMISM", document.getElementById("phantomism").value.toUpperCase());
+  info.appendChild(phantomism);
+
+  // data character - detail - 情報 - メモ
+  setting = document.getElementById("memo").value.replace(patternString, escapeString).replace(/\r\n|\r/g, "\n").split("\n");
+  for (index = 0; index < setting.length; index++) {
+    newlined_setting += setting[index] +'\n';
+  }
+  let memo = makeNoteElement("name", "メモ", newlined_setting);
+  info.appendChild(memo);
+
+  detail.appendChild(info);
+
+  // data character - detail - ステータス
+  let statuses = makeParentElement("ステータス");
+
+  let adp = makeNormalElement("name", "ADP", status[0]);
+  statuses.appendChild(adp);
+  let agi = makeNormalElement("name", "AGI", status[1]);
+  statuses.appendChild(agi);
+  let tec = makeNormalElement("name", "TEC", status[2]);
+  statuses.appendChild(tec);
+  let force = makeNormalElement("name", "FOR", status[3]);
+  statuses.appendChild(force);
+  let stl = makeNormalElement("name", "STL", status[4]);
+  statuses.appendChild(stl);
+  let crf = makeNormalElement("name", "CRF", status[5]);
+  statuses.appendChild(crf);
+
+  detail.appendChild(statuses);
+
+  // data character - detail - 技能
+  let abilist = makeParentElement("技能");
+
+  let normal_attack = makeNormalElement("name", "チェス,攻撃", "通常攻撃");
+  abilist.appendChild(normal_attack);
+  for(index = 0; index < learned_ability.length; index++) {
+    tmpabi = makeNormalElement("name", "", abilities[learned_ability[index]][0]);
+    abilist.appendChild(tmpabi);
+  }
+
+  detail.appendChild(abilist);
+  character.appendChild(detail);
+  xmltree.appendChild(character);
+
+  // チャットパレット
+  let chat_palette = document.createElement("chat-palette");
+  chat_palette.setAttribute("dicebot","");
+  chat_palette.textContent = "1d3 移動ロール\n";
+  chat_palette.textContent += '\n';
+  chat_palette.textContent += "1d20&lt;="+Math.max(status[0], status[1], status[2], status[3], status[4], status[5])+" 通常攻撃\n";
+  for(index = 0; index < learned_ability.length; index++) {
+    growth = document.getElementById(learned_ability[index] + "_grow").value;
+    chat_palette.textContent += '1d20&lt;=('+abilities[learned_ability[index]][1];
+    if (growth !== "" && growth > 0) {
+      chat_palette.textContent += '+'+growth;
+    }
+    chat_palette.textContent += ') '+abilities[learned_ability[index]][0];
+    if (growth !== "" && growth > 0) {
+      chat_palette.textContent += '+'+growth;
+    }
+    chat_palette.textContent += '\n';
+  }
+  chat_palette.textContent += '\n';
+  chat_palette.textContent += '1d10&lt;={VIT} VITロール\n';
+  chat_palette.textContent += '1d20&lt;={ADP} ADPロール\n';
+  chat_palette.textContent += '1d20&lt;={AGI} AGIロール\n';
+  chat_palette.textContent += '1d20&lt;={TEC} TECロール\n';
+  chat_palette.textContent += '1d20&lt;={FOR} FORロール\n';
+  chat_palette.textContent += '1d20&lt;={STL} STLロール\n';
+  chat_palette.textContent += '1d20&lt;={CRF} CRFロール\n';
+
+  xmltree.appendChild(chat_palette);
+
+  // XML 宣言
+  //let xml = document.createProcessingInstruction('xml', 'version="1.0" encoding="UTF-8"');
+  //xml.append(xmltree);
+
+  // XML 生成
+  xmlSerializer = new XMLSerializer();
+  serializedXML = xmlSerializer.serializeToString(xmltree);
+  serializedXML = serializedXML.replace(/ xmlns="http:\/\/www.w3.org\/1999\/xhtml"/g,'');
+  serializedXML = serializedXML.replace(/currentvalue/g,'currentValue');
+  */
   xml += '<?xml version="1.0" encoding="UTF-8"?>\n';
   xml += '<character>\n';
   xml += '  <data name="character">\n';
@@ -404,6 +545,7 @@ function makeCharacterXML(abilities) {
   xml += '1d20&lt;={CRF} CRFロール\n';
   xml += '  </chat-palette>\n';
   xml += '</character>\n';
+
   blob = new Blob([xml], {"type":"text/xml"});
   url = URL.createObjectURL(blob);
   atag = document.createElement("a");
@@ -413,6 +555,23 @@ function makeCharacterXML(abilities) {
   atag.click();
   atag.remove();
   URL.revokeObjectURL(url);
+
+
+
+  /* DOM 生成版 エスケープコードがパースされないので一旦保留
+  //blob = new Blob([serializedXML], {"type":"text/xml"});
+  // serializedXML = '<?xml version="1.0" encoding="UTF-8"?>\n' + serializedXML;
+  blob = new Blob([serializedXML], {"type":"text/xml"});
+  url = URL.createObjectURL(blob);
+
+  atag = document.createElement("a");
+  document.body.appendChild(atag);
+  atag.download = document.getElementById("character_name").value.replace(/\s+/g, "") + '.xml';
+  atag.href = url;
+  atag.click();
+  atag.remove();
+  URL.revokeObjectURL(url);
+  */
 }
 
 window.onload = setDefaultStatus;
