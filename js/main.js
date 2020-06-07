@@ -342,7 +342,7 @@ function makeCharacterXML(abilities) {
   xml += '      <data type="image" name="imageIdentifier">none_icon</data>\n';
   xml += '    </data>\n';
   xml += '    <data name="common">\n';
-  xml += '      <data name="name">'+document.getElementById("character_name").value+'</data>\n';
+  xml += '      <data name="name">'+document.getElementById("character_name").value.replace(patternString, escapeString)+'</data>\n';
   xml += '      <data name="size">2</data>\n';
   xml += '    </data>\n';
   xml += '    <data name="detail">\n';
@@ -350,14 +350,14 @@ function makeCharacterXML(abilities) {
   xml += '        <data type="numberResource" currentValue="'+document.getElementById("sum_vit").value+'" name="VIT">'+document.getElementById("sum_vit").value+'</data>\n';
   xml += '      </data>\n';
   xml += '      <data name="情報">\n';
-  xml += '        <data name="Age">'+document.getElementById("character_age").value+'</data>\n';
-  xml += '        <data name="Gender">'+document.getElementById("character_gender").value+'</data>\n';
-  xml += '        <data name="Home">'+document.getElementById("character_home").value+'</data>\n';
-  xml += '        <data name="Job">'+document.getElementById("character_job").value+'</data>\n';
+  xml += '        <data name="Age">'+document.getElementById("character_age").value.replace(patternString, escapeString)+'</data>\n';
+  xml += '        <data name="Gender">'+document.getElementById("character_gender").value.replace(patternString, escapeString)+'</data>\n';
+  xml += '        <data name="Home">'+document.getElementById("character_home").value.replace(patternString, escapeString)+'</data>\n';
+  xml += '        <data name="Job">'+document.getElementById("character_job").value.replace(patternString, escapeString)+'</data>\n';
   xml += '        <data name="PHANTOMISM">'+document.getElementById("phantomism").value.toUpperCase()+'</data>\n';
   xml += '        <data type="note" name="メモ">';
   // textareaの改行込み処理
-  setting = document.getElementById("memo").value.replace(/\r\n|\r/g, "\n").split("\n");
+  setting = document.getElementById("memo").value.replace(patternString, escapeString).replace(/\r\n|\r/g, "\n").split("\n");
   for (index = 0; index < setting.length; index++) {
     xml += setting[index] +'\n';
   }
@@ -408,7 +408,7 @@ function makeCharacterXML(abilities) {
   url = URL.createObjectURL(blob);
   atag = document.createElement("a");
   document.body.appendChild(atag);
-  atag.download = document.getElementById("character_name").value.replace(/\s+/g, "") + '.xml';
+  atag.download = document.getElementById("character_name").value.replace(patternString, escapeString).replace(/\s+/g, "") + '.xml';
   atag.href = url;
   atag.click();
   atag.remove();
