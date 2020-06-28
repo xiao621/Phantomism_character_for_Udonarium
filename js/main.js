@@ -515,7 +515,12 @@ function makeCharacterXML(abilities) {
   xml += '      <data name="技能">\n';
   xml += '        <data name="チェス,攻撃">通常攻撃</data>\n';
   for(index = 0; index < learned_ability.length; index++) {
-    xml += '        <data name="'+abilities[learned_ability[index]][2]+'">'+abilities[learned_ability[index]][0]+'</data>\n';
+    growth = document.getElementById(learned_ability[index] + "_grow").value;
+    xml += '        <data name="'+abilities[learned_ability[index]][2]+'">'+abilities[learned_ability[index]][0];
+    if (growth !== "" && growth > 0) {
+      xml += '+'+growth;
+    }
+    xml += '</data>\n';
   }
   xml += '      </data>\n';
   xml += '    </data>\n';
