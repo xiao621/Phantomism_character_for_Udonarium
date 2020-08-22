@@ -586,7 +586,7 @@ function makeCharacterXML(abilities, growths) {
   url = URL.createObjectURL(blob);
   atag = document.createElement("a");
   document.body.appendChild(atag);
-  atag.download = document.getElementById("character_name").value.replace(patternString, escapeString).replace(/\s+/g, "") + '.xml';
+  atag.download = 'phantomism_' + document.getElementById("character_name").value.replace(patternString, escapeString).replace(/\s+/g, "") + '.xml';
   atag.href = url;
   atag.click();
   atag.remove();
