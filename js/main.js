@@ -1,5 +1,6 @@
 var document = document,
   patternString = /"|'|<|>|&/g,
+  // ablity_list ... 分野->技能ID->[技能名, チャットパレット, 使用タイミング]
   ability_list = {
     "common": {"dousatsu": ["洞察", "{ADP}", "調査"], "sneaking": ["スニーキング", "{ADP}", "調査"],
                "chikeijyunnou": ["地形順応", "{ADP}", "調査"], "bunseki": ["分析", "{ADP}", "チェス"],
@@ -152,7 +153,7 @@ function calcStatus() {
   // 追加分のバリデーション 
   for (index = 0; index < 7; index++) {
     alladds += parseInt(adds[index].value);
-    if (adds[index].value < 0) {
+    if (adds[index].value < 0 || adds[index].value === "") {
       adds[index].style.backgroundColor = "#fcc";
     } else {
       adds[index].style.backgroundColor = "#fff";
@@ -161,8 +162,12 @@ function calcStatus() {
 
   // 残りの追加値を計算
   point_left -= alladds;
-  document.getElementById("point_left").textContent = "残り " + point_left;
-  if (point_left < 0) {
+  if (isNaN(point_left)) {
+    document.getElementById("point_left").textContent = "空欄があります";
+  } else {
+    document.getElementById("point_left").textContent = "残り " + point_left;
+  }
+  if (isNaN(point_left) || point_left < 0) {
     document.getElementById("point_left").style.color = "#f00";
   } else {
     document.getElementById("point_left").style.color = "#000";
@@ -171,7 +176,7 @@ function calcStatus() {
   // 合計値計算
   for (index = 0; index < 7; index++) {
     temp = parseInt(defaults[index]) + parseInt(adds[index].value);
-    if (index === 0 && temp > 10) {
+    if (isNaN(temp) || (index === 0 && temp > 10)) {
       sums[index].style.backgroundColor = "#fcc";
     } else if (temp > 18) {
       sums[index].style.backgroundColor = "#fcc";
@@ -253,7 +258,8 @@ function check_and_make_Character() {
     index = 0,
     alladds = 0,
     abilities = {},
-    temp_list,
+    growths = {},
+    abkey_list,
     msg = "";
 
   if (phantomism === "") {
@@ -279,19 +285,33 @@ function check_and_make_Character() {
     msg += "ステータスの追加値が少なすぎます。<br />";
   }
 
-  // 技能7つ取ってるか
-  temp_list = Object.keys(ability_list["common"]);
+  // 技能7つ取っているか
+  abkey_list = Object.keys(ability_list["common"]);
   for (index = 0; index < 24; index++) {
-    if (document.getElementById(temp_list[index]).checked) {
-      abilities[temp_list[index]] = ability_list["common"][temp_list[index]];
+    if (document.getElementById(abkey_list[index]).checked) {
+      abilities[abkey_list[index]] = ability_list["common"][abkey_list[index]];
+    }
+    if (document.getElementById(abkey_list[index]+"_grow").value > 0) {
+      growths[abkey_list[index]] =
+        [ability_list["common"][abkey_list[index]][0],
+        parseInt(document.getElementById(abkey_list[index]+"_grow").value) ];
+    } else if(document.getElementById(abkey_list[index]+"_grow").value < 0) {
+      msg += "成長がマイナスの一般技能があります。<br />"
     }
   }
 
   if (phantomism !== "") {
-    temp_list = Object.keys(ability_list[phantomism]);
+    abkey_list = Object.keys(ability_list[phantomism]);
     for (index = 0; index < 6; index++) {
-      if (document.getElementById(temp_list[index]).checked) {
-        abilities[temp_list[index]] = ability_list[phantomism][temp_list[index]];
+      if (document.getElementById(abkey_list[index]).checked) {
+        abilities[abkey_list[index]] = ability_list[phantomism][abkey_list[index]];
+      }
+      if (document.getElementById(abkey_list[index]+"_grow").value > 0) {
+        growths[abkey_list[index]] =
+        [ability_list[phantomism][abkey_list[index]][0],
+        parseInt(document.getElementById(abkey_list[index]+"_grow").value) ];
+      } else if(document.getElementById(abkey_list[index]+"_grow").value < 0) {
+        msg += "成長がマイナスの特化技能があります。<br />"
       }
     }
   }
@@ -313,14 +333,15 @@ function check_and_make_Character() {
     document.getElementById("message").innerHTML = msg;
   } else {
     document.getElementById("message").innerHTML = "";
-    makeCharacterXML(abilities);
+    makeCharacterXML(abilities, growths);
   }
 }
 
-function makeCharacterXML(abilities) {
+function makeCharacterXML(abilities, growths) {
   var xml = "",
     // 習得済み技能IDリスト
     learned_ability = Object.keys(abilities),
+    growth_keys = Object.keys(growths),
     // VITを除いたステータス
     status = [document.getElementById("sum_adp").value,
              document.getElementById("sum_agi").value,
@@ -523,6 +544,16 @@ function makeCharacterXML(abilities) {
     xml += '</data>\n';
   }
   xml += '      </data>\n';
+
+  // 成長
+  if(growth_keys.length !== 0) {
+    xml += '      <data name="成長">\n';
+    for(index = 0; index < growth_keys.length; index++){
+      xml += '        <data name="'+growths[growth_keys[index]][0]+'">+'+growths[growth_keys[index]][1]+'</data>\n';
+    }
+    xml += '      </data>\n';
+  }
+
   xml += '    </data>\n';
   xml += '  </data>\n';
   xml += '  <chat-palette dicebot="">';
