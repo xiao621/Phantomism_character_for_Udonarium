@@ -153,6 +153,7 @@ function setUploadedData(xml) {
   }
 
   // 成長
+  if(xml.getElementsByName("成長")[0] == null) return;
   for(index = 0 ; index < xml.getElementsByName("成長")[0].children.length; index++) {
     document.getElementById(abireverse_list[xml.getElementsByName("成長")[0].children[index].getAttribute("name")] + "_grow").value = xml.getElementsByName("成長")[0].children[index].innerHTML.match(/\d+/)[0];
   }
