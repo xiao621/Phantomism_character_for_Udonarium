@@ -99,6 +99,46 @@ function makeParentElement(attribute) {
   return elem;
 }
 
+function clearAllInput() {
+  var abilist = Object.keys(ability_list),
+      temp_abilist,
+      index, subindex;
+
+  document.getElementById("character_name").value = "";
+  document.getElementById("character_age").value = "";
+  document.getElementById("character_gender").value = "";
+  document.getElementById("character_home").value = "";
+  document.getElementById("character_job").value = "";
+  document.getElementById("phantomism").value = "";
+
+  document.getElementById("memo").innerHTML = "";
+
+  document.getElementById("add_vit").value = 0
+  document.getElementById("default_vit").value = 0;
+  document.getElementById("add_adp").value = 0;
+  document.getElementById("default_adp").value = 0;
+  document.getElementById("add_agi").value = 0;
+  document.getElementById("default_agi").value = 0;
+  document.getElementById("add_tec").value = 0;
+  document.getElementById("default_tec").value = 0;
+  document.getElementById("add_for").value = 0;
+  document.getElementById("default_for").value = 0;
+  document.getElementById("add_stl").value = 0;
+  document.getElementById("default_stl").value = 0;
+  document.getElementById("add_crf").value = 0;
+  document.getElementById("default_crf").value = 0;
+  calcStatus();
+
+  for(index = 0 ; index < abilist.length; index++) {
+    temp_abilist = Object.keys(ability_list[abilist[index]]);
+    for(subindex = 0; subindex < temp_abilist.length; subindex++) {
+      document.getElementById(temp_abilist[subindex]).checked = false;
+      document.getElementById(temp_abilist[subindex]+"_grow").value = "";
+    }
+  }
+}
+
+
 // Handler
 function uploadCharacter(inputElem) {
   var file,
@@ -116,6 +156,7 @@ function uploadCharacter(inputElem) {
       setUploadedData(xml);
     } catch (e) {
       alert("ファイルの形式が不正か、ファイルが壊れています。");
+      console.log(e);
     }
 
   }
@@ -126,6 +167,11 @@ function uploadCharacter(inputElem) {
 function setUploadedData(xml) {
   var possible_abilities = 7,
       index;
+
+  // 初期化
+  if(document.getElementById("phantomism").value !== "") {
+    clearAllInput();
+  }
 
   // 基本情報
   document.getElementById("character_name").value = xml.getElementsByName("name")[0].innerHTML;
