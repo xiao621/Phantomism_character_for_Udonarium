@@ -11,7 +11,11 @@
     <h2>華麗なる怪盗TRPG Phantomism キャラクターコマ作成ツール</h2>
     
     <div id="personal_data">
-      <h3>Personal Data</h3>
+      <h3 class="header">Personal Data</h3>
+      <div class="header uploadBtn">
+        キャラクターアップロード
+        <input type="file" onchange="uploadCharacter(this)">
+      </div>
       <table>
         <tr>
           <td class="personal_elem">Name</td>
@@ -368,7 +372,7 @@
 
     <div class="footer">
       PHANTOMISMの著作権は全て「miRa」「つきのふね」に帰属します。<br />
-      ver1.8 made by xiao (twitter: @s_o_xiao)
+      ver1.9 made by xiao (twitter: @s_o_xiao)
     </div>
     <script src="js/main.js"></script>
   </body>
