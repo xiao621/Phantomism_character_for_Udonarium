@@ -112,7 +112,12 @@ function uploadCharacter(inputElem) {
 
   reader.onload = function() {
     xml = parser.parseFromString(reader.result, "text/xml");
-    setUploadedData(xml);
+    try {
+      setUploadedData(xml);
+    } catch (e) {
+      alert("ファイルの形式が不正か、ファイルが壊れています。");
+    }
+
   }
 
   reader.readAsText(file);
