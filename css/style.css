@@ -28,8 +28,34 @@ body::after {
   clear: both;
 }*/
 
+.header{
+  display: inline-block;
+}
+
 h3{
   margin: 0;
+}
+.uploadBtn {
+  font-size: 13px;
+  border: 1px solid;
+  border-radius: 3px;
+  display: inline-block;
+  padding: 1px 3px;
+  margin-left: 5px;
+  position: relative;
+  background-color: rgb(250,250,250);
+}
+
+.uploadBtn:hover {
+  background-color: rgb(235,235,235);
+}
+.uploadBtn input[type="file"] {
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 
 h4{

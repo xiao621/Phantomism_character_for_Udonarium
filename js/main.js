@@ -32,7 +32,27 @@ var document = document,
     "spider": {"gizou": ["偽造", "{CRF}", "調査"], "sliptrap": ["スリップトラップ", "(({CRF}+{FOR})/2)", "チェス"],
                "saiminjyutsu": ["催眠術", "{FOR}", "調査"], "captureweb": ["キャプチャーウェブ", "(({CRF}+{FOR})/2)", "チェス"],
                "kanpa": ["看破", "{CRF}", "調査,チェス"], "thunderbolt": ["サンダーボルト", "(({CRF}+{FOR})/2)", "チェス"]}
-  };
+  },
+  abireverse_list = {
+        "洞察" : "dousatsu", "スニーキング" : "sneaking", "地形順応" : "chikeijunnou", "分析" : "bunseki",
+        "早業" : "hayawaza", "危険予知" : "kikenyochi", "捕縛" : "hobaku", "回避" : "kaihi",
+        "記録術" : "kirokujyutsu", "目利き" : "mekiki", "機械工作" : "kikaikousaku", "医療" : "iryou",
+        "操縦" : "soujyuu", "ノックアウト" : "knockout", "突破" : "toppa", "近接攻撃" : "kinsetsukougeki",
+        "体術" : "taijyutsu", "グライダー" : "glider", "撹乱" : "kakuran", "遠距離攻撃" : "enkyorikougeki",
+        "電脳" : "dennou", "言いくるめ" : "iikurume", "解読" : "kaidoku", "略奪" : "ryakudatsu",
+          "変装" : "hensou", "変幻自在" : "hengenjizai", "擬態" : "gitai",
+          "跳躍" : "chouyaku", "ワイヤーアクション" : "wireaction", "デコイ" : "decoy",
+          "隠蔽" : "inpei", "瞬足" : "shunsoku", "隠密" : "onmitsu",
+          "闇帳" : "yamitobari", "幽霊歩き" : "yuureiaruki", "疾風脚" : "sippuukyaku",
+          "小間使い" : "komadukai", "スワップ" : "swap", "イリュージョン" : "illusion",
+          "ミミック" : "mimic", "シャドウ" : "shadow", "スピードコントロール" : "speedcontrol",
+          "威圧" : "iatsu", "見切り" : "mikiri", "剣術" : "kenjyutsu",
+          "打ち壊し" : "uchikowashi", "一閃" : "issen", "スマッシュ" : "smash",
+          "スピードガン" : "speedgun", "フリップジャンプ" : "flipjump", "クイックステップ" : "quickstep",
+          "連撃" : "rengeki", "二丁銃" : "nichoujyuu", "迫撃" : "hakugeki",
+          "偽造" : "gizou", "スリップトラップ" : "sliptrap", "催眠術" : "saiminjyutsu",
+          "キャプチャーウェブ" : "captureweb", "看破" : "kanpa", "サンダーボルト" : "thunderbolt"
+    };
 
 // Utitlity
 function escapeString() {
@@ -80,6 +100,65 @@ function makeParentElement(attribute) {
 }
 
 // Handler
+function uploadCharacter(inputElem) {
+  var file,
+      reader,
+      parser,
+      xml;
+
+  file = inputElem.files[0];
+  reader = new FileReader();
+  parser = new DOMParser();
+
+  reader.onload = function() {
+    xml = parser.parseFromString(reader.result, "text/xml");
+    try {
+      setUploadedData(xml);
+    } catch (e) {
+      alert("ファイルの形式が不正か、ファイルが壊れています。");
+    }
+
+  }
+
+  reader.readAsText(file);
+}
+
+function setUploadedData(xml) {
+  var possible_abilities = 7,
+      index;
+
+  // 基本情報
+  document.getElementById("character_name").value = xml.getElementsByName("name")[0].innerHTML;
+  document.getElementById("character_age").value = xml.getElementsByName("Age")[0].innerHTML;
+  document.getElementById("character_gender").value = xml.getElementsByName("Gender")[0].innerHTML;
+  document.getElementById("character_home").value = xml.getElementsByName("Home")[0].innerHTML;
+  document.getElementById("character_job").value = xml.getElementsByName("Job")[0].innerHTML;
+  document.getElementById("phantomism").value = xml.getElementsByName("PHANTOMISM")[0].innerHTML.toLowerCase();
+  setDefaultStatus();
+  document.getElementById("memo").innerHTML = xml.getElementsByName("メモ")[0].innerHTML;
+
+  // ステータス
+  document.getElementById("add_vit").value = parseInt(xml.getElementsByName("VIT")[0].innerHTML) - document.getElementById("default_vit").value;
+  document.getElementById("add_adp").value = parseInt(xml.getElementsByName("ADP")[0].innerHTML) - document.getElementById("default_adp").value;
+  document.getElementById("add_agi").value = parseInt(xml.getElementsByName("AGI")[0].innerHTML) - document.getElementById("default_agi").value;
+  document.getElementById("add_tec").value = parseInt(xml.getElementsByName("TEC")[0].innerHTML) - document.getElementById("default_tec").value;
+  document.getElementById("add_for").value = parseInt(xml.getElementsByName("FOR")[0].innerHTML) - document.getElementById("default_for").value;
+  document.getElementById("add_stl").value = parseInt(xml.getElementsByName("STL")[0].innerHTML) - document.getElementById("default_stl").value;
+  document.getElementById("add_crf").value = parseInt(xml.getElementsByName("CRF")[0].innerHTML) - document.getElementById("default_crf").value;
+  calcStatus();
+
+  // 技能
+  for(index = 1; index < possible_abilities+1; index++){
+    document.getElementById(abireverse_list[xml.getElementsByName("技能")[0].children[index].innerHTML.match(/[^+]+/)[0]]).checked = true;
+  }
+
+  // 成長
+  for(index = 0 ; index < xml.getElementsByName("成長")[0].children.length; index++) {
+    document.getElementById(abireverse_list[xml.getElementsByName("成長")[0].children[index].getAttribute("name")] + "_grow").value = xml.getElementsByName("成長")[0].children[index].innerHTML.match(/\d+/)[0];
+  }
+}
+
+
 function setDefaultStatus() {
   var status = {
       "phantom": [5, 10, 6, 4, 6, 8, 6],
