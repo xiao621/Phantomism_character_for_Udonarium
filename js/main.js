@@ -34,7 +34,7 @@ var document = document,
                "kanpa": ["看破", "{CRF}", "調査,チェス"], "thunderbolt": ["サンダーボルト", "(({CRF}+{FOR})/2)", "チェス"]}
   },
   abireverse_list = {
-        "洞察" : "dousatsu", "スニーキング" : "sneaking", "地形順応" : "chikeijunnou", "分析" : "bunseki",
+        "洞察" : "dousatsu", "スニーキング" : "sneaking", "地形順応" : "chikeijyunnou", "分析" : "bunseki",
         "早業" : "hayawaza", "危険予知" : "kikenyochi", "捕縛" : "hobaku", "回避" : "kaihi",
         "記録術" : "kirokujyutsu", "目利き" : "mekiki", "機械工作" : "kikaikousaku", "医療" : "iryou",
         "操縦" : "soujyuu", "ノックアウト" : "knockout", "突破" : "toppa", "近接攻撃" : "kinsetsukougeki",
