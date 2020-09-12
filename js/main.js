@@ -34,7 +34,10 @@ var document = document,
                "kanpa": ["看破", "{CRF}", "調査,チェス"], "thunderbolt": ["サンダーボルト", "(({CRF}+{FOR})/2)", "チェス"]},
     "retro": {"yokokujyou" : ["予告状", "(({STL}+{TEC})/2)", "調査"], "miryou" : ["魅了", "{STL}", "調査"],
               "balloon" : ["バルーン", "(({TEC}+{STL})/2)", "調査,チェス,移動前,例外"], "ropeandhook": ["ロープ&amp;フック", "(({TEC}+{STL})/2)", "チェス,例外"],
-              "spotlight" : ["スポットライト", "{STL}", "チェス"], "timebomb" : ["タイムボム", "{TEC}", "チェス"]}
+              "spotlight" : ["スポットライト", "{STL}", "チェス"], "timebomb" : ["タイムボム", "{TEC}", "チェス"]},
+    "ayakashi" : {"ayakashinokai" : ["アヤカシの怪", "{ADP}", "チェス"], "yotaka" : ["ヘンゲ：夜鷹", "(({ADP}+{TEC})/2)", "調査"],
+                  "kyuubi": ["ヘンゲ：九尾", "(({ADP}+{CRF})/2)", "チェス,移動前,例外"], "karasutengu" : ["ヘンゲ：烏天狗", "(({ADP}+{AGI})/2)", "チェス,例外"],
+                  "nue" : ["ヘンゲ：鵺", "(({ADP}+{FOR})/2)", "チェス"], "hakujya" : ["ヘンゲ：白蛇", "(({ADP}+{STL})/2)", "チェス"]}
   },
   abireverse_list = {
         "洞察" : "dousatsu", "スニーキング" : "sneaking", "地形順応" : "chikeijyunnou", "分析" : "bunseki",
@@ -56,7 +59,9 @@ var document = document,
           "偽造" : "gizou", "スリップトラップ" : "sliptrap", "催眠術" : "saiminjyutsu",
           "キャプチャーウェブ" : "captureweb", "看破" : "kanpa", "サンダーボルト" : "thunderbolt",
           "予告状" : "yokokujyou", "魅了" : "miryou", "バルーン" : "balloon",
-          "ロープ&amp;フック" : "ropeandhook", "スポットライト" : "spotlight", "タイムボム" : "timebomb"
+          "ロープ&amp;フック" : "ropeandhook", "スポットライト" : "spotlight", "タイムボム" : "timebomb",
+          "アヤカシの怪" : "ayakashinokai", "ヘンゲ：夜鷹" : "yotaka", "ヘンゲ：九尾" : "kyuubi",
+          "ヘンゲ：烏天狗" : "karasutengu", "ヘンゲ：鵺" : "nue", "ヘンゲ：白蛇" : "hakujya"
     };
 
 // Utitlity
@@ -219,7 +224,8 @@ function setDefaultStatus() {
       "jack": [6, 8, 6, 5, 10, 6, 4],
       "comet": [5, 4, 8, 6, 7, 10, 5],
       "spider": [5, 6, 5, 7, 8, 4, 10],
-      "retro": [5, 4, 7, 10, 4, 10, 5]
+      "retro": [5, 4, 7, 10, 4, 10, 5],
+      "ayakashi": [5, 10, 6, 6, 6, 6, 6]
     },
     phantomism_list = Object.keys(status),
     phantomism = document.getElementById("phantomism").value,

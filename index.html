@@ -53,6 +53,7 @@
               <option value="comet">COMET</option>
               <option value="spider">SPIDER</option>
               <option value="retro">RETRO</option>
+              <option value="ayakashi">AYAKASHI</option>
             </select>
           </td>
           <td><input type="button" onclick="setSampleCharacter()" value="サンプルキャラクター 能力セット"></td>
@@ -381,6 +382,27 @@
               <tr>
                 <td>スポットライト(STL)</td><td><input type="checkbox" id="spotlight"></td><td>+<input type="number" class="grow" id="spotlight_grow"></td>
                 <td>タイムボム(TEC)</td><td><input type="checkbox" id="timebomb"></td><td>+<input type="number" class="grow" id="timebomb_grow"></td>
+              </tr>
+            </table>
+          </tr>
+        </table>
+      </div>
+      <div class="special ayakashi hidden">
+        <h4>AYAKASHI特化技能</h4>
+        <table>
+          <tr>
+            <table>
+              <tr>
+                <td>アヤカシの怪(ADP)</td><td><input type="checkbox" id="ayakashinokai"></td><td>+<input type="number" class="grow" id="ayakashinokai_grow"></td>
+                <td>ヘンゲ：夜鷹(ADP/TEC)</td><td><input type="checkbox" id="yotaka"></td><td>+<input type="number" class="grow" id="yotaka_grow"></td>
+              </tr>
+              <tr>
+                <td>ヘンゲ：九尾(ADP/CRF)</td><td><input type="checkbox" id="kyuubi"></td><td>+<input type="number" class="grow" id="kyuubi_grow"></td>
+                <td>ヘンゲ：烏天狗(ADP/AGI)</td><td><input type="checkbox" id="karasutengu"></td><td>+<input type="number" class="grow" id="karasutengu_grow"></td>
+              </tr>
+              <tr>
+                <td>ヘンゲ：鵺(ADP/FOR)</td><td><input type="checkbox" id="nue"></td><td>+<input type="number" class="grow" id="nue_grow"></td>
+                <td>ヘンゲ：白蛇(ADP/STL)</td><td><input type="checkbox" id="hakujya"></td><td>+<input type="number" class="grow" id="hakujya_grow"></td>
               </tr>
             </table>
           </tr>
