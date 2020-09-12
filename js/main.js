@@ -31,7 +31,10 @@ var document = document,
               "nichoujyuu": ["二丁銃", "(({STL}+{AGI})/2)", "チェス,攻撃"], "hakugeki": ["迫撃", "(({STL}+{AGI})/2)", "チェス,攻撃,例外"]},
     "spider": {"gizou": ["偽造", "{CRF}", "調査"], "sliptrap": ["スリップトラップ", "(({CRF}+{FOR})/2)", "チェス"],
                "saiminjyutsu": ["催眠術", "{FOR}", "調査"], "captureweb": ["キャプチャーウェブ", "(({CRF}+{FOR})/2)", "チェス"],
-               "kanpa": ["看破", "{CRF}", "調査,チェス"], "thunderbolt": ["サンダーボルト", "(({CRF}+{FOR})/2)", "チェス"]}
+               "kanpa": ["看破", "{CRF}", "調査,チェス"], "thunderbolt": ["サンダーボルト", "(({CRF}+{FOR})/2)", "チェス"]},
+    "retro": {"yokokujyou" : ["予告状", "(({STL}+{TEC})/2)", "調査"], "miryou" : ["魅了", "{STL}", "調査"],
+              "balloon" : ["バルーン", "(({TEC}+{STL})/2)", "調査,チェス,移動前,例外"], "ropeandhook": ["ロープ&amp;フック", "(({TEC}+{STL})/2)", "チェス,例外"],
+              "spotlight" : ["スポットライト", "{STL}", "チェス"], "timebomb" : ["タイムボム", "{TEC}", "チェス"]}
   },
   abireverse_list = {
         "洞察" : "dousatsu", "スニーキング" : "sneaking", "地形順応" : "chikeijyunnou", "分析" : "bunseki",
@@ -51,7 +54,9 @@ var document = document,
           "スピードガン" : "speedgun", "フリップジャンプ" : "flipjump", "クイックステップ" : "quickstep",
           "連撃" : "rengeki", "二丁銃" : "nichoujyuu", "迫撃" : "hakugeki",
           "偽造" : "gizou", "スリップトラップ" : "sliptrap", "催眠術" : "saiminjyutsu",
-          "キャプチャーウェブ" : "captureweb", "看破" : "kanpa", "サンダーボルト" : "thunderbolt"
+          "キャプチャーウェブ" : "captureweb", "看破" : "kanpa", "サンダーボルト" : "thunderbolt",
+          "予告状" : "yokokujyou", "魅了" : "miryou", "バルーン" : "balloon",
+          "ロープ&amp;フック" : "ropeandhook", "スポットライト" : "spotlight", "タイムボム" : "timebomb"
     };
 
 // Utitlity
@@ -213,7 +218,8 @@ function setDefaultStatus() {
       "magic": [5, 6, 4, 10, 6, 6, 8],
       "jack": [6, 8, 6, 5, 10, 6, 4],
       "comet": [5, 4, 8, 6, 7, 10, 5],
-      "spider": [5, 6, 5, 7, 8, 4, 10]
+      "spider": [5, 6, 5, 7, 8, 4, 10],
+      "retro": [5, 4, 7, 10, 4, 10, 5]
     },
     phantomism_list = Object.keys(status),
     phantomism = document.getElementById("phantomism").value,
@@ -237,7 +243,7 @@ function setDefaultStatus() {
   }
   calcStatus();
   // 特化技能の表示、非表示
-  for (index = 0; index < 6; index++) {
+  for (index = 0; index < phantomism_list.length; index++) {
     if (phantomism === phantomism_list[index]) {
       document.getElementsByClassName(phantomism_list[index])[0].classList.remove("hidden");
     } else {
@@ -277,7 +283,7 @@ function calcStatus() {
     temp;
 
   // 追加分のバリデーション 
-  for (index = 0; index < 7; index++) {
+  for (index = 0; index < adds.length; index++) {
     alladds += parseInt(adds[index].value);
     if (adds[index].value < 0 || adds[index].value === "") {
       adds[index].style.backgroundColor = "#fcc";
@@ -300,7 +306,7 @@ function calcStatus() {
   }
 
   // 合計値計算
-  for (index = 0; index < 7; index++) {
+  for (index = 0; index < defaults.length; index++) {
     temp = parseInt(defaults[index]) + parseInt(adds[index].value);
     if (isNaN(temp) || (index === 0 && temp > 10)) {
       sums[index].style.backgroundColor = "#fcc";
