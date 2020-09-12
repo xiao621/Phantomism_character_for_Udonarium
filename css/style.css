@@ -147,6 +147,10 @@ div{
   max-width: 575px;
 }
 
+.gamble{
+  max-width: 580px;
+}
+
 
 .hidden{
   display: none;

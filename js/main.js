@@ -36,8 +36,13 @@ var document = document,
               "balloon" : ["バルーン", "(({TEC}+{STL})/2)", "調査,チェス,移動前,例外"], "ropeandhook": ["ロープ&amp;フック", "(({TEC}+{STL})/2)", "チェス,例外"],
               "spotlight" : ["スポットライト", "{STL}", "チェス"], "timebomb" : ["タイムボム", "{TEC}", "チェス"]},
     "ayakashi" : {"ayakashinokai" : ["アヤカシの怪", "{ADP}", "チェス"], "yotaka" : ["ヘンゲ：夜鷹", "(({ADP}+{TEC})/2)", "調査"],
-                  "kyuubi": ["ヘンゲ：九尾", "(({ADP}+{CRF})/2)", "チェス,移動前,例外"], "karasutengu" : ["ヘンゲ：烏天狗", "(({ADP}+{AGI})/2)", "チェス,例外"],
-                  "nue" : ["ヘンゲ：鵺", "(({ADP}+{FOR})/2)", "チェス"], "hakujya" : ["ヘンゲ：白蛇", "(({ADP}+{STL})/2)", "チェス"]}
+                  "kyuubi": ["ヘンゲ：九尾", "(({ADP}+{CRF})/2)", "チェス,移動前,例外"],
+                  "karasutengu" : ["ヘンゲ：烏天狗", "(({ADP}+{AGI})/2)", "チェス,例外"],
+                  "nue" : ["ヘンゲ：鵺", "(({ADP}+{FOR})/2)", "チェス"], "hakujya" : ["ヘンゲ：白蛇", "(({ADP}+{STL})/2)", "チェス"]},
+    "gamble" : {"thrillaction" : ["スリルアクション", "(({TEC}+{CRF})/2)", "調査,チェス,例外"],
+                "wanderer" : ["ワンダラー", "(({FOR}+{CRF})/2)", "調査,チェス"],
+                "ikasama" : ["イカサマ", "{CRF}", "チェス"], "trickshot" : ["トリックショット", "{TEC}", "チェス"],
+                "doubleedgesword" : ["ダブルエッジソード", "{FOR}", "チェス"], "kirihuda" : ["切り札", "{CRF}", "チェス"]}
   },
   abireverse_list = {
         "洞察" : "dousatsu", "スニーキング" : "sneaking", "地形順応" : "chikeijyunnou", "分析" : "bunseki",
@@ -61,7 +66,9 @@ var document = document,
           "予告状" : "yokokujyou", "魅了" : "miryou", "バルーン" : "balloon",
           "ロープ&amp;フック" : "ropeandhook", "スポットライト" : "spotlight", "タイムボム" : "timebomb",
           "アヤカシの怪" : "ayakashinokai", "ヘンゲ：夜鷹" : "yotaka", "ヘンゲ：九尾" : "kyuubi",
-          "ヘンゲ：烏天狗" : "karasutengu", "ヘンゲ：鵺" : "nue", "ヘンゲ：白蛇" : "hakujya"
+          "ヘンゲ：烏天狗" : "karasutengu", "ヘンゲ：鵺" : "nue", "ヘンゲ：白蛇" : "hakujya",
+          "スリルアクション" : "thrillaction", "ワンダラー" : "wanderer", "イカサマ" : "ikasama",
+          "トリックショット" : "trickshot", "ダブルエッジソード" : "doubleedgesword", "切り札": "kirihuda"
     };
 
 // Utitlity
@@ -225,7 +232,8 @@ function setDefaultStatus() {
       "comet": [5, 4, 8, 6, 7, 10, 5],
       "spider": [5, 6, 5, 7, 8, 4, 10],
       "retro": [5, 4, 7, 10, 4, 10, 5],
-      "ayakashi": [5, 10, 6, 6, 6, 6, 6]
+      "ayakashi": [5, 10, 6, 6, 6, 6, 6],
+      "gamble": [4, 4, 6, 8, 8, 5, 10]
     },
     phantomism_list = Object.keys(status),
     phantomism = document.getElementById("phantomism").value,
