@@ -233,7 +233,8 @@ function setDefaultStatus() {
       "spider": [5, 6, 5, 7, 8, 4, 10],
       "retro": [5, 4, 7, 10, 4, 10, 5],
       "ayakashi": [5, 10, 6, 6, 6, 6, 6],
-      "gamble": [4, 4, 6, 8, 8, 5, 10]
+      "gamble": [4, 4, 6, 8, 8, 5, 10],
+      "liberal": [4, 6, 6, 6, 6, 6, 6]
     },
     phantomism_list = Object.keys(status),
     phantomism = document.getElementById("phantomism").value,
@@ -257,11 +258,17 @@ function setDefaultStatus() {
   }
   calcStatus();
   // 特化技能の表示、非表示
-  for (index = 0; index < phantomism_list.length; index++) {
-    if (phantomism === phantomism_list[index]) {
-      document.getElementsByClassName(phantomism_list[index])[0].classList.remove("hidden");
-    } else {
-      document.getElementsByClassName(phantomism_list[index])[0].classList.add("hidden");
+  if(phantomism === "liberal") {
+    for (index = 0; index < phantomism_list.length-1; index++) {
+       document.getElementsByClassName(phantomism_list[index])[0].classList.remove("hidden");
+    }
+  } else {
+    for (index = 0; index < phantomism_list.length-1; index++) {
+      if (phantomism === phantomism_list[index]) {
+        document.getElementsByClassName(phantomism_list[index])[0].classList.remove("hidden");
+      } else {
+        document.getElementsByClassName(phantomism_list[index])[0].classList.add("hidden");
+      }
     }
   }
 }
@@ -293,7 +300,8 @@ function calcStatus() {
             document.getElementById("sum_crf")],
     index = 0,
     alladds = 0,
-    point_left = 20,
+    phantomism = document.getElementById("phantomism").value,
+    point_left = (phantomism === "liberal") ? 25 : 20,
     temp;
 
   // 追加分のバリデーション 
@@ -324,7 +332,7 @@ function calcStatus() {
     temp = parseInt(defaults[index]) + parseInt(adds[index].value);
     if (isNaN(temp) || (index === 0 && temp > 10)) {
       sums[index].style.backgroundColor = "#fcc";
-    } else if (temp > 18) {
+    } else if (temp > 18 || (phantomism === "liberal" && temp > 14)) {
       sums[index].style.backgroundColor = "#fcc";
     } else {
       sums[index].style.backgroundColor = "#fff";
@@ -402,36 +410,47 @@ function check_and_make_Character() {
             document.getElementById("sum_crf")],
     phantomism = document.getElementById("phantomism").value,
     index = 0,
+    subindex = 0,
     alladds = 0,
+    addpoints = (phantomism === "liberal") ? 25 : 20,
     abilities = {},
     growths = {},
     abkey_list,
+    phantomism_list,
+    special_learned,
     msg = "";
 
   if (phantomism === "") {
     msg += "PHANTOMISMを選択してください。<br />";
   }
-  // パラメータチェック 20点割り振っているか
-  for (index = 0; index < 7; index++) {
+  // パラメータチェック 20点(リベラルは25点)割り振っているか
+  for (index = 0; index < adds.length; index++) {
     alladds += parseInt(adds[index].value);
     if (adds[index].value < 0) {
       msg += "ステータスの追加分にマイナスのものがあります。<br />";
     }
   }
-  for (index = 0; index < 7; index++) {
+  for (index = 0; index < sums.length; index++) {
     if (index === 0 && sums[index].value > 10) {
       msg += "VITの合計値は10を超えてはいけません。<br />";
-    } else if (sums[index].value > 18) {
-      msg += "ステータスの合計値は18を超えてはいけません。<br />";
+    } else if (phantomism === "liberal") {
+      if (sums[index].value > 14) {
+        msg += "リベラルではステータスの合計値は14を超えてはいけません。<br />";
+      }
+    } else {
+      if (sums[index].value > 18) {
+        msg += "ステータスの合計値は18を超えてはいけません。<br />";
+      }
     }
   }
-  if (alladds > 20) {
+  if (alladds > addpoints) {
     msg += "ステータスの追加値が多すぎます。<br />";
-  } else if (alladds < 20) {
+  } else if (alladds < addpoints) {
     msg += "ステータスの追加値が少なすぎます。<br />";
   }
 
   // 技能7つ取っているか
+  // 一般技能
   abkey_list = Object.keys(ability_list["common"]);
   for (index = 0; index < 24; index++) {
     if (document.getElementById(abkey_list[index]).checked) {
@@ -446,9 +465,10 @@ function check_and_make_Character() {
     }
   }
 
-  if (phantomism !== "") {
+  // 特化技能
+  if (phantomism !== "" && phantomism !== "liberal") {
     abkey_list = Object.keys(ability_list[phantomism]);
-    for (index = 0; index < 6; index++) {
+    for (index = 0; index < abkey_list.length; index++) {
       if (document.getElementById(abkey_list[index]).checked) {
         abilities[abkey_list[index]] = ability_list[phantomism][abkey_list[index]];
       }
@@ -460,6 +480,30 @@ function check_and_make_Character() {
         msg += "成長がマイナスの特化技能があります。<br />"
       }
     }
+  } else if (phantomism === "liberal") {
+    phantomism_list = Object.keys(ability_list);
+    phantomism_list.shift();
+    for(index = 0; index < phantomism_list.length; index++){
+      special_learned = 0;
+      abkey_list = Object.keys(ability_list[phantomism_list[index]]);
+      // 各 Phantomismについて
+      for(subindex = 0; subindex < abkey_list.length; subindex++){
+        if (document.getElementById(abkey_list[subindex]).checked) {
+          abilities[abkey_list[subindex]] = ability_list[phantomism_list[index]][abkey_list[subindex]];
+          special_learned++;
+        }
+        if (document.getElementById(abkey_list[subindex]+"_grow").value > 0) {
+          growths[abkey_list[subindex]] =
+          [ability_list[phantomism_list[index]][abkey_list[subindex]][0],
+          parseInt(document.getElementById(abkey_list[subindex]+"_grow").value) ];
+        } else if(document.getElementById(abkey_list[subindex]+"_grow").value < 0) {
+          msg += "成長がマイナスの特化技能があります。<br />";
+        }
+      }
+      if(special_learned > 3) {
+        msg += "リベラルは同一Phantomismの技能を最大で3つまでしか習得できません。<br />";
+      }
+    }
   }
   if (Object.keys(abilities).length > 7) {
     msg += "習得技能が多すぎます。通常攻撃を除いて7つまでです。<br />";
@@ -467,12 +511,13 @@ function check_and_make_Character() {
     msg += "習得技能が少なすぎます。通常攻撃を除いて7つ取得してください。<br />";
   }
 
+  /*
   // 技能の成長にマイナスがないか
   for (index = 0; index < Object.keys(abilities).length; index++) {
     if (document.getElementById(Object.keys(abilities)[index] + "_grow").value < 0) {
       msg += "技能の成長がマイナスの所があります。<br />";
     }
-  }
+  }*/
 
   // データ生成前のチェック
   if (msg !== "") {
