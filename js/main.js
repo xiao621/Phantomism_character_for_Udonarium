@@ -458,7 +458,7 @@ function check_and_make_Character() {
   // 技能7つ取っているか
   // 一般技能
   abkey_list = Object.keys(ability_list["common"]);
-  for (index = 0; index < 24; index++) {
+  for (index = 0; index < abkey_list.length; index++) {
     if (document.getElementById(abkey_list[index]).checked) {
       abilities[abkey_list[index]] = ability_list["common"][abkey_list[index]];
     }
