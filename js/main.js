@@ -228,6 +228,40 @@ function setUploadedData(xml) {
   }
 }
 
+function setVeteran() {
+  var adds = [document.getElementById("add_vit"),
+            document.getElementById("add_adp"),
+            document.getElementById("add_agi"),
+            document.getElementById("add_tec"),
+            document.getElementById("add_for"),
+            document.getElementById("add_stl"),
+            document.getElementById("add_crf")],
+      phantomism = document.getElementById("phantomism").value,
+      max_point = (phantomism === "liberal") ? 25 : 20,
+      veteran = document.getElementById("veteran"),
+      max_additional = (veteran.checked) ? 5: 0,
+      alladds = 0,
+      index, point_left;
+
+  for (index = 0; index < adds.length; index++) {
+    alladds += parseInt(adds[index].value);
+  }
+
+  point_left = max_point + max_additional - alladds
+
+  if (isNaN(point_left)) {
+    document.getElementById("point_left").textContent = "空欄があります";
+  } else if (point_left > 0 && max_additional >= point_left ){
+    document.getElementById("point_left").textContent = "残り " + point_left + "まで";
+  } else {
+    document.getElementById("point_left").textContent = "残り " + point_left;
+  }
+  if (isNaN(point_left) || point_left < 0) {
+    document.getElementById("point_left").style.color = "#f00";
+  } else {
+    document.getElementById("point_left").style.color = "#000";
+  }
+}
 
 function setDefaultStatus() {
   var status = {
@@ -307,8 +341,10 @@ function calcStatus() {
     index = 0,
     alladds = 0,
     phantomism = document.getElementById("phantomism").value,
-    point_left = (phantomism === "liberal") ? 25 : 20,
-    temp;
+    veteran = document.getElementById("veteran"),
+    max_point = (phantomism === "liberal") ? 25 : 20,
+    max_additional = (veteran.checked) ? 5: 0,
+    point_left, temp;
 
   // 追加分のバリデーション 
   for (index = 0; index < adds.length; index++) {
@@ -321,9 +357,11 @@ function calcStatus() {
   }
 
   // 残りの追加値を計算
-  point_left -= alladds;
+  point_left = max_point + max_additional - alladds;
   if (isNaN(point_left)) {
     document.getElementById("point_left").textContent = "空欄があります";
+  } else if (point_left > 0 && max_additional >= point_left ){
+    document.getElementById("point_left").textContent = "残り " + point_left + "まで";
   } else {
     document.getElementById("point_left").textContent = "残り " + point_left;
   }
@@ -415,9 +453,11 @@ function check_and_make_Character() {
             document.getElementById("sum_stl"),
             document.getElementById("sum_crf")],
     phantomism = document.getElementById("phantomism").value,
+    veteran = document.getElementById("veteran"),
     index = 0,
     subindex = 0,
     alladds = 0,
+    max_additional = (veteran.checked) ? 5 : 0,
     addpoints = (phantomism === "liberal") ? 25 : 20,
     abilities = {},
     growths = {},
@@ -449,7 +489,7 @@ function check_and_make_Character() {
       }
     }
   }
-  if (alladds > addpoints) {
+  if (alladds > addpoints + max_additional) {
     msg += "ステータスの追加値が多すぎます。<br />";
   } else if (alladds < addpoints) {
     msg += "ステータスの追加値が少なすぎます。<br />";
