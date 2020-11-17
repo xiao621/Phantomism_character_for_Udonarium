@@ -430,6 +430,9 @@ function setSampleCharacter() {
   if (phantomism === "") {
     alert("PHANTOMISMを選択してください！");
     return;
+  } else if (!(phantomism in sample_data)){
+    alert("サンプルデータがまだありません！");
+    return;
   }
   for (index = 0; index < adds.length; index++) {
     adds[index].value = sample_data[phantomism]["adds"][index];
