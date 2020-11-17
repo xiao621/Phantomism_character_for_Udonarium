@@ -128,10 +128,12 @@ function clearAllInput() {
       index, subindex;
 
   document.getElementById("character_name").value = "";
+  document.getElementById("veteran").checked = false;
   document.getElementById("character_age").value = "";
   document.getElementById("character_gender").value = "";
   document.getElementById("character_home").value = "";
   document.getElementById("character_job").value = "";
+  document.getElementById("character_honor").value = "";
   document.getElementById("phantomism").value = "";
 
   document.getElementById("memo").innerHTML = "";
@@ -189,12 +191,11 @@ function uploadCharacter(inputElem) {
 
 function setUploadedData(xml) {
   var possible_abilities = 7,
+      honor_and_veteran,
       index;
 
   // 初期化
-  if(document.getElementById("phantomism").value !== "") {
-    clearAllInput();
-  }
+  clearAllInput();
 
   // 基本情報
   document.getElementById("character_name").value = xml.getElementsByName("name")[0].innerHTML;
@@ -202,6 +203,11 @@ function setUploadedData(xml) {
   document.getElementById("character_gender").value = xml.getElementsByName("Gender")[0].innerHTML;
   document.getElementById("character_home").value = xml.getElementsByName("Home")[0].innerHTML;
   document.getElementById("character_job").value = xml.getElementsByName("Job")[0].innerHTML;
+  if(xml.getElementsByName("Honor")[0]){
+    honor_and_veteran = xml.getElementsByName("Honor")[0].innerHTML;
+    document.getElementById("veteran").checked = (honor_and_veteran.lastIndexOf("V") != -1) ? true : false;
+    document.getElementById("character_honor").value = honor_and_veteran.substring(0, honor_and_veteran.indexOf("★"));
+  }
   document.getElementById("phantomism").value = xml.getElementsByName("PHANTOMISM")[0].innerHTML.toLowerCase();
   setDefaultStatus();
   document.getElementById("memo").innerHTML = xml.getElementsByName("メモ")[0].innerHTML;
@@ -260,6 +266,16 @@ function setVeteran() {
     document.getElementById("point_left").style.color = "#f00";
   } else {
     document.getElementById("point_left").style.color = "#000";
+  }
+}
+
+function checkHonor() {
+  var honor = document.getElementById("character_honor");
+
+  if(honor.value < 0){
+    honor.style.backgroundColor = "#fcc";
+  } else {
+    honor.style.backgroundColor = "#fff";
   }
 }
 
@@ -454,6 +470,7 @@ function check_and_make_Character() {
             document.getElementById("sum_crf")],
     phantomism = document.getElementById("phantomism").value,
     veteran = document.getElementById("veteran"),
+    honor = document.getElementById("character_honor").value,
     index = 0,
     subindex = 0,
     alladds = 0,
@@ -469,6 +486,12 @@ function check_and_make_Character() {
   if (phantomism === "") {
     msg += "PHANTOMISMを選択してください。<br />";
   }
+
+  // 名声がマイナスでないか
+  if (honor < 0){
+    msg += "名声はマイナスになりません。<br />";
+  }
+
   // パラメータチェック 20点(リベラルは25点)割り振っているか
   for (index = 0; index < adds.length; index++) {
     alladds += parseInt(adds[index].value);
@@ -753,6 +776,14 @@ function makeCharacterXML(abilities, growths) {
   xml += '        <data name="Gender">'+document.getElementById("character_gender").value.replace(patternString, escapeString)+'</data>\n';
   xml += '        <data name="Home">'+document.getElementById("character_home").value.replace(patternString, escapeString)+'</data>\n';
   xml += '        <data name="Job">'+document.getElementById("character_job").value.replace(patternString, escapeString)+'</data>\n';
+  xml += '        <data name="Honor">' + document.getElementById("character_honor").value;
+  for(index = 0 ; index < Math.floor(document.getElementById("character_honor").value / 5); index++){
+    xml += '★';
+  }
+  if(document.getElementById("veteran").checked) {
+    xml += "V";
+  }
+  xml += '</data>\n'
   xml += '        <data name="PHANTOMISM">'+document.getElementById("phantomism").value.toUpperCase()+'</data>\n';
   xml += '        <data type="note" name="メモ">';
   // textareaの改行込み処理
