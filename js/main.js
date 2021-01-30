@@ -484,6 +484,7 @@ function check_and_make_Character() {
     abkey_list,
     phantomism_list,
     special_learned,
+    limit_liberal = 2,
     msg = "";
 
   if (phantomism === "") {
@@ -572,8 +573,8 @@ function check_and_make_Character() {
           msg += "成長がマイナスの特化技能があります。<br />";
         }
       }
-      if(special_learned > 3) {
-        msg += "リベラルは同一Phantomismの技能を最大で3つまでしか習得できません。<br />";
+      if(special_learned > limit_liberal) {
+        msg += "リベラルは同一Phantomismの技能を最大で2つまでしか習得できません。<br />";
       }
     }
   }
