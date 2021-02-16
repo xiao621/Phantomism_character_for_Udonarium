@@ -415,7 +415,13 @@ function setSampleCharacter() {
     "comet": {"adds": [2, 0, 10, 0, 0, 8, 0],
               "abilities": ["taijyutsu", "kaihi", "kinsetsukougeki", "nichoujyuu", "quickstep", "rengeki", "hakugeki"]},
     "spider": {"adds": [0, 8, 0, 0, 6, 0, 6],
-               "abilities": ["dousatsu", "dennou", "bunseki", "gizou", "saiminjyutsu", "sliptrap", "captureweb"]}
+               "abilities": ["dousatsu", "dennou", "bunseki", "gizou", "saiminjyutsu", "sliptrap", "captureweb"]},
+    "retro": {"adds": [1, 0, 7, 6, 0, 6, 0],
+               "abilities": ["kikaikousaku", "glider", "kaihi", "flashgun", "yokokujyou", "ropeandhook", "spotlight"]},
+    "ayakashi": {"adds": [0, 8, 0, 10, 0, 0, 2],
+               "abilities": ["dousatsu", "chikeijyunnou", "iryou", "tactician", "ayakashinokai", "yotaka", "nue"]},
+    "gamble": {"adds": [0, 0, 2, 6, 6, 0, 6],
+               "abilities": ["dennou", "knockout", "survive", "thrillaction", "ikasama", "trickshot", "kirihuda"]}
   },
     adds = [document.getElementById("add_vit"),
             document.getElementById("add_adp"),
