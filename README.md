@@ -7,7 +7,7 @@ Github Pagesで動いてます。https://xiao621.github.io/Phantomism_character_
 リリースノートは https://github.com/xiao621/Phantomism_character_for_Udonarium/releases を参照。
 
 ## 動作環境
-- Google Chrome バージョン: 81.0.4044.138（Official Build）で確認済
+- Google Chrome バージョン: 89.0.4389.90（Official Build） （x86_64）で確認済
 
 ## 今後の予定
 - 作業予定
