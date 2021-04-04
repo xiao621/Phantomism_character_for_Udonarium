@@ -4,8 +4,6 @@
 
 Github Pagesで動いてます。https://xiao621.github.io/Phantomism_character_for_Udonarium/index.html
 
-公式のスプレッドシートへの対応は検討中。作成する場合は別アプリケーションにします。
-
 リリースノートは https://github.com/xiao621/Phantomism_character_for_Udonarium/releases を参照。
 
 ## 動作環境
@@ -13,9 +11,10 @@ Github Pagesで動いてます。https://xiao621.github.io/Phantomism_character_
 
 ## 今後の予定
 - 作業予定
-  - XML生成方法の見直し(DOM -> XMLの形式に変更する)
+  - キャラコマの技能並び順最適化
+  - COCOFOLIA向けチャットパレット出力 兼 技能値確認用テキストボックス
+  - Liberal向け 各特化技能縮小展開ボタン
 - 余力があったら作る機能
-  - その他分かりやすい形式(txtとか？)への対応
   - NPCコマ作成ツール
   - 外部ファイルの読み込み対応(ドラッグ&ドロップ)
   
