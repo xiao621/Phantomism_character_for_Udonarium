@@ -62,10 +62,21 @@
               <option value="liberal">LIBERAL</option>
             </select>
           </td>
-          <td><input type="button" onclick="setSampleCharacter()" value="サンプルキャラクター 能力セット"></td>
+          <td>
+            <select id="sample_type" class="hidden">
+              <option value="stealth">隠密型</option>
+              <option value="combat">戦闘型</option>
+              <option value="support">支援型</option>
+            </select>
+            <input type="button" onclick="setSampleCharacter()" value="サンプルキャラクター 能力セット">
+          </td>
         </tr>
       </table>
-      <textarea id="memo" rows="10" cols="50" placeholder="Other Info..."></textarea>
+      <div id="others" style="overflow:hidden">
+        <div style="float:left"><textarea id="memo" rows="10" cols="40" placeholder="Other Info..."></textarea></div>
+        <div style="float:left; margin-left:10px" class="hidden"><p style="margin:0">取得技能一覧</p><textarea id="memo" rows="9" cols="45" placeholder="取得技能一覧"></textarea>
+      </div>
+      </div>
     </div>
     
     <div id="status">
@@ -265,8 +276,8 @@
         </table>
       </div>
       <div class="special phantom hidden">
-        <h4>PHANTOM特化技能</h4>
-        <table>
+        <h4><input type="button" class="fold hidden" style="margin:0 5px 0 0" value="-" onclick=""><input type="button" class=" expand hidden" style="margin:0 5px 0 0" value="+" onclick="">PHANTOM特化技能</h4>
+        <table id="phantom_table">
           <tr>
             <table>
               <tr>
@@ -286,8 +297,8 @@
         </table>
       </div>
       <div class="special ghost hidden">
-        <h4>GHOST特化技能</h4>
-        <table>
+        <h4><input type="button" class="fold hidden"style="margin:0 5px 0 0" value="-" onclick=""><input type="button" class="expand hidden" style="margin:0 5px 0 0" value="+" onclick="">GHOST特化技能</h4>
+        <table id="ghost_table">
           <tr>
             <table>
               <tr>
@@ -307,8 +318,8 @@
         </table>
       </div>
       <div class="special magic hidden">
-        <h4>MAGIC特化技能</h4>
-        <table>
+        <h4><input type="button" class="fold hidden" style="margin:0 5px 0 0" value="-" onclick=""><input type="button" class="expand hidden" style="margin:0 5px 0 0" value="+" onclick="">MAGIC特化技能</h4>
+        <table id="magic_table">
           <tr>
             <table>
               <tr>
@@ -328,8 +339,8 @@
         </table>
       </div>
       <div class="special jack hidden">
-        <h4>JACK特化技能</h4>
-        <table>
+        <h4><input type="button" class="fold hidden" style="margin:0 5px 0 0" value="-" onclick=""><input type="button" class="expand hidden" style="margin:0 5px 0 0" value="+" onclick="">JACK特化技能</h4>
+        <table id="jack_table">
           <tr>
             <table>
               <tr>
@@ -349,8 +360,8 @@
         </table>
       </div>
       <div class="special comet hidden">
-        <h4>COMET特化技能</h4>
-        <table>
+        <h4><input type="button" class="fold hidden" style="margin:0 5px 0 0" value="-" onclick=""><input type="button" class="expand hidden" style="margin:0 5px 0 0" value="+" onclick="">COMET特化技能</h4>
+        <table id="comet_table">
           <tr>
             <table>
               <tr>
@@ -370,8 +381,8 @@
         </table>
       </div>
       <div class="special spider hidden">
-        <h4>SPIDER特化技能</h4>
-        <table>
+        <h4><input type="button" class="fold hidden" style="margin:0 5px 0 0" value="-" onclick=""><input type="button" class="expnad hidden" style="margin:0 5px 0 0" value="+" onclick="">SPIDER特化技能</h4>
+        <table id="spider_table">
           <tr>
             <table>
               <tr>
@@ -391,8 +402,8 @@
         </table>
       </div>
       <div class="special retro hidden">
-        <h4>RETRO特化技能</h4>
-        <table>
+        <h4><input type="button" class="fold hidden" style="margin:0 5px 0 0" value="-" onclick=""><input type="button" class="expand hidden" style="margin:0 5px 0 0" value="+" onclick="">RETRO特化技能</h4>
+        <table id="retro_table">
           <tr>
             <table>
               <tr>
@@ -412,8 +423,8 @@
         </table>
       </div>
       <div class="special ayakashi hidden">
-        <h4>AYAKASHI特化技能</h4>
-        <table>
+        <h4><input type="button" class="fold hidden" style="margin:0 5px 0 0" value="-" onclick=""><input type="button" class="expand hidden" style="margin:0 5px 0 0" value="+" onclick="">AYAKASHI特化技能</h4>
+        <table id="ayakashi_table">
           <tr>
             <table>
               <tr>
@@ -433,8 +444,8 @@
         </table>
       </div>
       <div class="special gamble hidden">
-        <h4>GAMBLE特化技能</h4>
-        <table>
+        <h4><input type="button" class="fold hidden" style="margin:0 5px 0 0" value="-" onclick=""><input type="button" class="expand hidden" style="margin:0 5px 0 0" value="+" onclick="">GAMBLE特化技能</h4>
+        <table id="gamble_table">
           <tr>
             <table>
               <tr>
@@ -461,7 +472,7 @@
 
     <div class="footer">
       PHANTOMISMの著作権は全て「miRa」「つきのふね」に帰属します。<br />
-      ver2.x made by xiao (twitter: @s_o_xiao)
+      ver2.0 made by xiao (twitter: @s_o_xiao)
     </div>
     <script src="js/main.js"></script>
   </body>

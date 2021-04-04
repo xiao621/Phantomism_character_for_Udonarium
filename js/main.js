@@ -22,7 +22,7 @@ var document = document,
                "tactician": ["タクティシャン", "{CRF}", "チェス,移動前"]},
     "phantom": {"hensou": ["変装", "{ADP}", "調査"], "hengenjizai": ["変幻自在", "{ADP}", "チェス"],
                 "gitai": ["擬態", "{ADP}", "調査,チェス"], "chouyaku": ["跳躍", "{STL}", "チェス,例外"],
-                "wireaction": ["ワイヤーアクション", "(({ADP}+{STL})/2)", "調査,チェス"], "decoy": ["デコイ", "(({ADP}+{STL})/2)", "チェス"]},
+                "wireaction": ["ワイヤーアクション", "(({ADP}+{STL})/2)", "調査,チェス,例外"], "decoy": ["デコイ", "(({ADP}+{STL})/2)", "チェス"]},
     "ghost": {"inpei": ["隠蔽", "{TEC}", "調査"], "shunsoku": ["瞬足", "{AGI}", "チェス,移動前,例外"],
               "onmitsu": ["隠密", "{AGI}", "調査,チェス,移動前"], "yamitobari": ["闇帳", "{TEC}", "チェス,移動前"],
               "yuureiaruki": ["幽霊歩き", "(({AGI}+{TEC})/2)", "チェス,移動前,例外"], "sippuukyaku": ["疾風脚", "(({AGI}+{TEC})/2)", "チェス,攻撃"]},
@@ -39,13 +39,14 @@ var document = document,
                "saiminjyutsu": ["催眠術", "{FOR}", "調査"], "captureweb": ["キャプチャーウェブ", "(({CRF}+{FOR})/2)", "チェス"],
                "kanpa": ["看破", "{CRF}", "調査,チェス"], "thunderbolt": ["サンダーボルト", "(({CRF}+{FOR})/2)", "チェス"]},
     "retro": {"yokokujyou" : ["予告状", "(({STL}+{TEC})/2)", "調査"], "miryou" : ["魅了", "{STL}", "調査"],
-              "balloon" : ["バルーン", "(({TEC}+{STL})/2)", "調査,チェス,移動前,例外"], "ropeandhook": ["ロープ&amp;フック", "(({TEC}+{STL})/2)", "チェス,例外"],
+              "balloon" : ["バルーン", "(({TEC}+{STL})/2)", "調査,チェス,移動前,例外"], "ropeandhook": ["ロープ&amp;フック", "(({TEC}+{STL})/2)", "チェス,移動後,例外"],
               "spotlight" : ["スポットライト", "{STL}", "チェス"], "timebomb" : ["タイムボム", "{TEC}", "チェス"]},
     "ayakashi" : {"ayakashinokai" : ["アヤカシの怪", "{ADP}", "チェス"], "yotaka" : ["ヘンゲ：夜鷹", "(({ADP}+{TEC})/2)", "調査"],
-                  "kyuubi": ["ヘンゲ：九尾", "(({ADP}+{CRF})/2)", "チェス,移動前,例外"],
-                  "karasutengu" : ["ヘンゲ：烏天狗", "(({ADP}+{AGI})/2)", "チェス,例外"],
-                  "nue" : ["ヘンゲ：鵺", "(({ADP}+{FOR})/2)", "チェス"], "hakujya" : ["ヘンゲ：白蛇", "(({ADP}+{STL})/2)", "チェス"]},
-    "gamble" : {"thrillaction" : ["スリルアクション", "(({TEC}+{CRF})/2)", "調査,チェス,例外"],
+                  "karasutengu" : ["ヘンゲ：烏天狗", "(({ADP}+{AGI})/2)", "チェス,移動後,例外"],
+                  "hakujya" : ["ヘンゲ：白蛇", "(({ADP}+{STL})/2)", "チェス,攻撃"],
+                  "nue" : ["ヘンゲ：鵺", "(({ADP}+{FOR})/2)", "チェス"],
+                 "kyuubi": ["ヘンゲ：九尾", "(({ADP}+{CRF})/2)", "チェス,移動前,例外"]},
+    "gamble" : {"thrillaction" : ["スリルアクション", "(({CRF}+{TEC})/2)", "調査,チェス,例外"],
                 "wanderer" : ["ワンダラー", "(({FOR}+{CRF})/2)", "調査,チェス"],
                 "ikasama" : ["イカサマ", "{CRF}", "チェス,例外"], "trickshot" : ["トリックショット", "{TEC}", "チェス"],
                 "doubleedgesword" : ["ダブルエッジソード", "{FOR}", "チェス"], "kirihuda" : ["切り札", "{CRF}", "チェス,例外"]}
@@ -163,6 +164,19 @@ function clearAllInput() {
   }
 }
 
+function clearAbilities(){
+  var abilist = Object.keys(ability_list),
+      temp_abilist,
+      index, subindex;
+
+  for(index = 0 ; index < abilist.length; index++) {
+    temp_abilist = Object.keys(ability_list[abilist[index]]);
+    for(subindex = 0; subindex < temp_abilist.length; subindex++) {
+      document.getElementById(temp_abilist[subindex]).checked = false;
+      document.getElementById(temp_abilist[subindex]+"_grow").value = "";
+    }
+  }
+}
 
 // Handler
 function uploadCharacter(inputElem) {
@@ -272,7 +286,7 @@ function setVeteran() {
 function checkHonor() {
   var honor = document.getElementById("character_honor");
 
-  if(honor.value < 0){
+  if(honor.value < 0 || (honor.value !="" && isNaN(honor.value))){
     honor.style.backgroundColor = "#fcc";
   } else {
     honor.style.backgroundColor = "#fff";
@@ -318,6 +332,7 @@ function setDefaultStatus() {
     for (index = 0; index < phantomism_list.length-1; index++) {
        document.getElementsByClassName(phantomism_list[index])[0].classList.remove("hidden");
     }
+    document.getElementById("sample_type").classList.remove("hidden");
   } else {
     for (index = 0; index < phantomism_list.length-1; index++) {
       if (phantomism === phantomism_list[index]) {
@@ -326,6 +341,7 @@ function setDefaultStatus() {
         document.getElementsByClassName(phantomism_list[index])[0].classList.add("hidden");
       }
     }
+    document.getElementById("sample_type").classList.add("hidden");
   }
 }
 
@@ -418,10 +434,16 @@ function setSampleCharacter() {
                "abilities": ["dousatsu", "dennou", "bunseki", "gizou", "saiminjyutsu", "sliptrap", "captureweb"]},
     "retro": {"adds": [1, 0, 7, 6, 0, 6, 0],
                "abilities": ["kikaikousaku", "glider", "kaihi", "flashgun", "yokokujyou", "ropeandhook", "spotlight"]},
-    "ayakashi": {"adds": [0, 8, 0, 10, 0, 0, 2],
-               "abilities": ["dousatsu", "chikeijyunnou", "iryou", "tactician", "ayakashinokai", "yotaka", "nue"]},
+    "ayakashi": {"adds": [2, 8, 0, 10, 0, 0, 0],
+               "abilities": ["dousatsu", "chikeijyunnou", "bunseki", "iryou", "ayakashinokai", "yotaka", "nue"]},
     "gamble": {"adds": [0, 0, 2, 6, 6, 0, 6],
-               "abilities": ["dennou", "knockout", "survive", "thrillaction", "ikasama", "trickshot", "kirihuda"]}
+               "abilities": ["dennou", "knockout", "survive", "thrillaction", "ikasama", "trickshot", "kirihuda"]},
+    "liberal_stealth": {"adds": [1, 0, 8, 8, 0, 0, 8],
+               "abilities": ["komadukai", "kirokujyutsu", "iikurume", "onmitsu", "yuureiaruki", "speedcontrol", "thrillaction"]},
+    "liberal_combat": {"adds": [3, 8, 6, 0, 0, 8, 0],
+               "abilities": ["sneaking", "mighty", "wireaction", "issen", "rengeki", "miryou", "hakujya"]},
+    "liberal_support": {"adds": [1, 0, 0, 8, 8, 0, 8],
+               "abilities": ["kirokujyutsu", "tactician", "saiminjyutsu", "illusion", "swap", "captureweb", "ikasama"]},
   },
     adds = [document.getElementById("add_vit"),
             document.getElementById("add_adp"),
@@ -431,33 +453,45 @@ function setSampleCharacter() {
             document.getElementById("add_stl"),
             document.getElementById("add_crf")],
     phantomism = document.getElementById("phantomism").value,
-    index = 0, temp_list;
+    index = 0, temp_list, sample_character;
 
   if (phantomism === "") {
     alert("PHANTOMISMを選択してください！");
     return;
-  } else if (!(phantomism in sample_data)){
-    alert("サンプルデータがまだありません！");
-    return;
   }
+  clearAbilities();
+  sample_character = (phantomism === "liberal") ? (phantomism + "_" + document.getElementById("sample_type").value) : phantomism;
   for (index = 0; index < adds.length; index++) {
-    adds[index].value = sample_data[phantomism]["adds"][index];
+    adds[index].value = sample_data[sample_character]["adds"][index];
   }
   calcStatus();
-  temp_list = Object.keys(ability_list["common"]);
-  for (index = 0; index < temp_list.length; index++) {
-    if (sample_data[phantomism]["abilities"].includes(temp_list[index])) {
-      document.getElementById(temp_list[index]).checked = true;
-    } else {
-      document.getElementById(temp_list[index]).checked = false;
+  if(phantomism === "liberal"){
+    Object.keys(ability_list).forEach(function(element){
+      temp_list = Object.keys(ability_list[element]);
+      for (index = 0; index < temp_list.length; index++) {
+        if (sample_data[sample_character]["abilities"].includes(temp_list[index])) {
+          document.getElementById(temp_list[index]).checked = true;
+        } else {
+          document.getElementById(temp_list[index]).checked = false;
+        }
+      }
+    });
+  } else {
+    temp_list = Object.keys(ability_list["common"]);
+    for (index = 0; index < temp_list.length; index++) {
+      if (sample_data[sample_character]["abilities"].includes(temp_list[index])) {
+        document.getElementById(temp_list[index]).checked = true;
+      } else {
+        document.getElementById(temp_list[index]).checked = false;
+      }
     }
-  }
-  temp_list = Object.keys(ability_list[phantomism]);
-  for(index = 0; index < temp_list.length; index++) {
-    if (sample_data[phantomism]["abilities"].includes(temp_list[index])) {
-      document.getElementById(temp_list[index]).checked = true;
-    } else {
-      document.getElementById(temp_list[index]).checked = false;
+    temp_list = Object.keys(ability_list[phantomism]);
+    for(index = 0; index < temp_list.length; index++) {
+      if (sample_data[phantomism]["abilities"].includes(temp_list[index])) {
+        document.getElementById(temp_list[index]).checked = true;
+      } else {
+        document.getElementById(temp_list[index]).checked = false;
+      }
     }
   }
 }
