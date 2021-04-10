@@ -4,19 +4,25 @@ var document = document,
   ability_list = {
     "common": {"dousatsu": ["洞察", "{ADP}", "調査"], "sneaking": ["スニーキング", "{ADP}", "調査"],
                "chikeijyunnou": ["地形順応", "{ADP}", "調査"], "bunseki": ["分析", "{ADP}", "チェス"],
+               "mighty" : ["マイティ", "{ADP}", "チェス,例外"],
                "hayawaza": ["早業", "{AGI}", "調査"], "kikenyochi": ["危険予知", "{AGI}", "調査"],
                "hobaku": ["捕縛", "{AGI}", "調査,チェス,攻撃"], "kaihi": ["回避", "{AGI}", "チェス,例外"],
+               "moonstep": ["ムーンステップ", "{AGI}", "チェス,移動前"],
                "kirokujyutsu": ["記録術", "{TEC}", "調査"], "mekiki": ["目利き", "{TEC}", "調査,チェス"],
                "kikaikousaku": ["機械工作", "{TEC}", "調査"], "iryou": ["医療", "{TEC}", "チェス"],
+               "venom": ["ベノム", "{TEC}", "チェス"],
                "soujyuu": ["操縦", "{FOR}", "調査"], "knockout": ["ノックアウト", "{FOR}", "調査,チェス,攻撃"],
                "toppa": ["突破", "{FOR}", "調査"], "kinsetsukougeki": ["近接攻撃", "{FOR}", "チェス,攻撃"],
+               "survive": ["サバイブ", "{FOR}", "チェス,例外"],
                "taijyutsu": ["体術", "{STL}", "調査"], "glider": ["グライダー", "{STL}", "調査,チェス,例外"],
                "kakuran": ["撹乱", "{STL}", "調査"], "enkyorikougeki": ["遠距離攻撃", "{STL}", "チェス,攻撃"],
+               "flashgun": ["フラッシュガン", "{STL}", "チェス"],
                "dennou": ["電脳", "{CRF}", "調査"], "iikurume": ["言いくるめ", "{CRF}", "調査"],
-               "kaidoku": ["解読", "{CRF}", "調査"], "ryakudatsu": ["略奪", "{CRF}", "チェス"]},
+               "kaidoku": ["解読", "{CRF}", "調査"], "ryakudatsu": ["略奪", "{CRF}", "チェス"],
+               "tactician": ["タクティシャン", "{CRF}", "チェス,移動前"]},
     "phantom": {"hensou": ["変装", "{ADP}", "調査"], "hengenjizai": ["変幻自在", "{ADP}", "チェス"],
                 "gitai": ["擬態", "{ADP}", "調査,チェス"], "chouyaku": ["跳躍", "{STL}", "チェス,例外"],
-                "wireaction": ["ワイヤーアクション", "(({ADP}+{STL})/2)", "調査,チェス"], "decoy": ["デコイ", "(({ADP}+{STL})/2)", "チェス"]},
+                "wireaction": ["ワイヤーアクション", "(({ADP}+{STL})/2)", "調査,チェス,例外"], "decoy": ["デコイ", "(({ADP}+{STL})/2)", "チェス"]},
     "ghost": {"inpei": ["隠蔽", "{TEC}", "調査"], "shunsoku": ["瞬足", "{AGI}", "チェス,移動前,例外"],
               "onmitsu": ["隠密", "{AGI}", "調査,チェス,移動前"], "yamitobari": ["闇帳", "{TEC}", "チェス,移動前"],
               "yuureiaruki": ["幽霊歩き", "(({AGI}+{TEC})/2)", "チェス,移動前,例外"], "sippuukyaku": ["疾風脚", "(({AGI}+{TEC})/2)", "チェス,攻撃"]},
@@ -31,15 +37,27 @@ var document = document,
               "nichoujyuu": ["二丁銃", "(({STL}+{AGI})/2)", "チェス,攻撃"], "hakugeki": ["迫撃", "(({STL}+{AGI})/2)", "チェス,攻撃,例外"]},
     "spider": {"gizou": ["偽造", "{CRF}", "調査"], "sliptrap": ["スリップトラップ", "(({CRF}+{FOR})/2)", "チェス"],
                "saiminjyutsu": ["催眠術", "{FOR}", "調査"], "captureweb": ["キャプチャーウェブ", "(({CRF}+{FOR})/2)", "チェス"],
-               "kanpa": ["看破", "{CRF}", "調査,チェス"], "thunderbolt": ["サンダーボルト", "(({CRF}+{FOR})/2)", "チェス"]}
+               "kanpa": ["看破", "{CRF}", "調査,チェス"], "thunderbolt": ["サンダーボルト", "(({CRF}+{FOR})/2)", "チェス"]},
+    "retro": {"yokokujyou" : ["予告状", "(({STL}+{TEC})/2)", "調査"], "miryou" : ["魅了", "{STL}", "調査"],
+              "balloon" : ["バルーン", "(({TEC}+{STL})/2)", "調査,チェス,移動前,例外"], "ropeandhook": ["ロープ&amp;フック", "(({TEC}+{STL})/2)", "チェス,移動後,例外"],
+              "spotlight" : ["スポットライト", "{STL}", "チェス"], "timebomb" : ["タイムボム", "{TEC}", "チェス"]},
+    "ayakashi" : {"ayakashinokai" : ["アヤカシの怪", "{ADP}", "チェス"], "yotaka" : ["ヘンゲ：夜鷹", "(({ADP}+{TEC})/2)", "調査"],
+                  "karasutengu" : ["ヘンゲ：烏天狗", "(({ADP}+{AGI})/2)", "チェス,移動後,例外"],
+                  "hakujya" : ["ヘンゲ：白蛇", "(({ADP}+{STL})/2)", "チェス,攻撃"],
+                  "nue" : ["ヘンゲ：鵺", "(({ADP}+{FOR})/2)", "チェス"],
+                 "kyuubi": ["ヘンゲ：九尾", "(({ADP}+{CRF})/2)", "チェス,移動前,例外"]},
+    "gamble" : {"thrillaction" : ["スリルアクション", "(({CRF}+{TEC})/2)", "調査,チェス,例外"],
+                "wanderer" : ["ワンダラー", "(({FOR}+{CRF})/2)", "調査,チェス"],
+                "ikasama" : ["イカサマ", "{CRF}", "チェス,例外"], "trickshot" : ["トリックショット", "{TEC}", "チェス"],
+                "doubleedgesword" : ["ダブルエッジソード", "{FOR}", "チェス"], "kirihuda" : ["切り札", "{CRF}", "チェス,例外"]}
   },
   abireverse_list = {
-        "洞察" : "dousatsu", "スニーキング" : "sneaking", "地形順応" : "chikeijyunnou", "分析" : "bunseki",
-        "早業" : "hayawaza", "危険予知" : "kikenyochi", "捕縛" : "hobaku", "回避" : "kaihi",
-        "記録術" : "kirokujyutsu", "目利き" : "mekiki", "機械工作" : "kikaikousaku", "医療" : "iryou",
-        "操縦" : "soujyuu", "ノックアウト" : "knockout", "突破" : "toppa", "近接攻撃" : "kinsetsukougeki",
-        "体術" : "taijyutsu", "グライダー" : "glider", "撹乱" : "kakuran", "遠距離攻撃" : "enkyorikougeki",
-        "電脳" : "dennou", "言いくるめ" : "iikurume", "解読" : "kaidoku", "略奪" : "ryakudatsu",
+        "洞察" : "dousatsu", "スニーキング" : "sneaking", "地形順応" : "chikeijyunnou", "分析" : "bunseki", "マイティ" : "mighty",
+        "早業" : "hayawaza", "危険予知" : "kikenyochi", "捕縛" : "hobaku", "回避" : "kaihi", "ムーンステップ" : "moonstep",
+        "記録術" : "kirokujyutsu", "目利き" : "mekiki", "機械工作" : "kikaikousaku", "医療" : "iryou", "ベノム" : "venom",
+        "操縦" : "soujyuu", "ノックアウト" : "knockout", "突破" : "toppa", "近接攻撃" : "kinsetsukougeki", "サバイブ": "survive",
+        "体術" : "taijyutsu", "グライダー" : "glider", "撹乱" : "kakuran", "遠距離攻撃" : "enkyorikougeki", "フラッシュガン" : "flashgun",
+        "電脳" : "dennou", "言いくるめ" : "iikurume", "解読" : "kaidoku", "略奪" : "ryakudatsu", "タクティシャン" : "tactician",
           "変装" : "hensou", "変幻自在" : "hengenjizai", "擬態" : "gitai",
           "跳躍" : "chouyaku", "ワイヤーアクション" : "wireaction", "デコイ" : "decoy",
           "隠蔽" : "inpei", "瞬足" : "shunsoku", "隠密" : "onmitsu",
@@ -51,7 +69,13 @@ var document = document,
           "スピードガン" : "speedgun", "フリップジャンプ" : "flipjump", "クイックステップ" : "quickstep",
           "連撃" : "rengeki", "二丁銃" : "nichoujyuu", "迫撃" : "hakugeki",
           "偽造" : "gizou", "スリップトラップ" : "sliptrap", "催眠術" : "saiminjyutsu",
-          "キャプチャーウェブ" : "captureweb", "看破" : "kanpa", "サンダーボルト" : "thunderbolt"
+          "キャプチャーウェブ" : "captureweb", "看破" : "kanpa", "サンダーボルト" : "thunderbolt",
+          "予告状" : "yokokujyou", "魅了" : "miryou", "バルーン" : "balloon",
+          "ロープ&amp;フック" : "ropeandhook", "ロープ&フック": "ropeandhook" ,"スポットライト" : "spotlight", "タイムボム" : "timebomb",
+          "アヤカシの怪" : "ayakashinokai", "ヘンゲ：夜鷹" : "yotaka", "ヘンゲ：九尾" : "kyuubi",
+          "ヘンゲ：烏天狗" : "karasutengu", "ヘンゲ：鵺" : "nue", "ヘンゲ：白蛇" : "hakujya",
+          "スリルアクション" : "thrillaction", "ワンダラー" : "wanderer", "イカサマ" : "ikasama",
+          "トリックショット" : "trickshot", "ダブルエッジソード" : "doubleedgesword", "切り札": "kirihuda"
     };
 
 // Utitlity
@@ -105,10 +129,12 @@ function clearAllInput() {
       index, subindex;
 
   document.getElementById("character_name").value = "";
+  document.getElementById("veteran").checked = false;
   document.getElementById("character_age").value = "";
   document.getElementById("character_gender").value = "";
   document.getElementById("character_home").value = "";
   document.getElementById("character_job").value = "";
+  document.getElementById("character_honor").value = "";
   document.getElementById("phantomism").value = "";
 
   document.getElementById("memo").innerHTML = "";
@@ -138,6 +164,19 @@ function clearAllInput() {
   }
 }
 
+function clearAbilities(){
+  var abilist = Object.keys(ability_list),
+      temp_abilist,
+      index, subindex;
+
+  for(index = 0 ; index < abilist.length; index++) {
+    temp_abilist = Object.keys(ability_list[abilist[index]]);
+    for(subindex = 0; subindex < temp_abilist.length; subindex++) {
+      document.getElementById(temp_abilist[subindex]).checked = false;
+      document.getElementById(temp_abilist[subindex]+"_grow").value = "";
+    }
+  }
+}
 
 // Handler
 function uploadCharacter(inputElem) {
@@ -166,12 +205,11 @@ function uploadCharacter(inputElem) {
 
 function setUploadedData(xml) {
   var possible_abilities = 7,
+      honor_and_veteran,
       index;
 
   // 初期化
-  if(document.getElementById("phantomism").value !== "") {
-    clearAllInput();
-  }
+  clearAllInput();
 
   // 基本情報
   document.getElementById("character_name").value = xml.getElementsByName("name")[0].innerHTML;
@@ -179,6 +217,11 @@ function setUploadedData(xml) {
   document.getElementById("character_gender").value = xml.getElementsByName("Gender")[0].innerHTML;
   document.getElementById("character_home").value = xml.getElementsByName("Home")[0].innerHTML;
   document.getElementById("character_job").value = xml.getElementsByName("Job")[0].innerHTML;
+  if(xml.getElementsByName("Honor")[0]){
+    honor_and_veteran = xml.getElementsByName("Honor")[0].innerHTML;
+    document.getElementById("veteran").checked = (honor_and_veteran.lastIndexOf("V") != -1) ? true : false;
+    document.getElementById("character_honor").value = honor_and_veteran.substring(0, honor_and_veteran.indexOf("★"));
+  }
   document.getElementById("phantomism").value = xml.getElementsByName("PHANTOMISM")[0].innerHTML.toLowerCase();
   setDefaultStatus();
   document.getElementById("memo").innerHTML = xml.getElementsByName("メモ")[0].innerHTML;
@@ -205,6 +248,50 @@ function setUploadedData(xml) {
   }
 }
 
+function setVeteran() {
+  var adds = [document.getElementById("add_vit"),
+            document.getElementById("add_adp"),
+            document.getElementById("add_agi"),
+            document.getElementById("add_tec"),
+            document.getElementById("add_for"),
+            document.getElementById("add_stl"),
+            document.getElementById("add_crf")],
+      phantomism = document.getElementById("phantomism").value,
+      max_point = (phantomism === "liberal") ? 25 : 20,
+      veteran = document.getElementById("veteran"),
+      max_additional = (veteran.checked) ? 5: 0,
+      alladds = 0,
+      index, point_left;
+
+  for (index = 0; index < adds.length; index++) {
+    alladds += parseInt(adds[index].value);
+  }
+
+  point_left = max_point + max_additional - alladds
+
+  if (isNaN(point_left)) {
+    document.getElementById("point_left").textContent = "空欄があります";
+  } else if (point_left > 0 && max_additional >= point_left ){
+    document.getElementById("point_left").textContent = "残り " + point_left + "まで";
+  } else {
+    document.getElementById("point_left").textContent = "残り " + point_left;
+  }
+  if (isNaN(point_left) || point_left < 0) {
+    document.getElementById("point_left").style.color = "#f00";
+  } else {
+    document.getElementById("point_left").style.color = "#000";
+  }
+}
+
+function checkHonor() {
+  var honor = document.getElementById("character_honor");
+
+  if(honor.value < 0 || (honor.value !="" && isNaN(honor.value))){
+    honor.style.backgroundColor = "#fcc";
+  } else {
+    honor.style.backgroundColor = "#fff";
+  }
+}
 
 function setDefaultStatus() {
   var status = {
@@ -213,7 +300,11 @@ function setDefaultStatus() {
       "magic": [5, 6, 4, 10, 6, 6, 8],
       "jack": [6, 8, 6, 5, 10, 6, 4],
       "comet": [5, 4, 8, 6, 7, 10, 5],
-      "spider": [5, 6, 5, 7, 8, 4, 10]
+      "spider": [5, 6, 5, 7, 8, 4, 10],
+      "retro": [5, 4, 7, 10, 4, 10, 5],
+      "ayakashi": [5, 10, 6, 6, 6, 6, 6],
+      "gamble": [4, 4, 6, 8, 8, 5, 10],
+      "liberal": [4, 6, 6, 6, 6, 6, 6]
     },
     phantomism_list = Object.keys(status),
     phantomism = document.getElementById("phantomism").value,
@@ -237,12 +328,20 @@ function setDefaultStatus() {
   }
   calcStatus();
   // 特化技能の表示、非表示
-  for (index = 0; index < 6; index++) {
-    if (phantomism === phantomism_list[index]) {
-      document.getElementsByClassName(phantomism_list[index])[0].classList.remove("hidden");
-    } else {
-      document.getElementsByClassName(phantomism_list[index])[0].classList.add("hidden");
+  if(phantomism === "liberal") {
+    for (index = 0; index < phantomism_list.length-1; index++) {
+       document.getElementsByClassName(phantomism_list[index])[0].classList.remove("hidden");
     }
+    document.getElementById("sample_type").classList.remove("hidden");
+  } else {
+    for (index = 0; index < phantomism_list.length-1; index++) {
+      if (phantomism === phantomism_list[index]) {
+        document.getElementsByClassName(phantomism_list[index])[0].classList.remove("hidden");
+      } else {
+        document.getElementsByClassName(phantomism_list[index])[0].classList.add("hidden");
+      }
+    }
+    document.getElementById("sample_type").classList.add("hidden");
   }
 }
 
@@ -273,11 +372,14 @@ function calcStatus() {
             document.getElementById("sum_crf")],
     index = 0,
     alladds = 0,
-    point_left = 20,
-    temp;
+    phantomism = document.getElementById("phantomism").value,
+    veteran = document.getElementById("veteran"),
+    max_point = (phantomism === "liberal") ? 25 : 20,
+    max_additional = (veteran.checked) ? 5: 0,
+    point_left, temp;
 
   // 追加分のバリデーション 
-  for (index = 0; index < 7; index++) {
+  for (index = 0; index < adds.length; index++) {
     alladds += parseInt(adds[index].value);
     if (adds[index].value < 0 || adds[index].value === "") {
       adds[index].style.backgroundColor = "#fcc";
@@ -287,9 +389,11 @@ function calcStatus() {
   }
 
   // 残りの追加値を計算
-  point_left -= alladds;
+  point_left = max_point + max_additional - alladds;
   if (isNaN(point_left)) {
     document.getElementById("point_left").textContent = "空欄があります";
+  } else if (point_left > 0 && max_additional >= point_left ){
+    document.getElementById("point_left").textContent = "残り " + point_left + "まで";
   } else {
     document.getElementById("point_left").textContent = "残り " + point_left;
   }
@@ -300,11 +404,11 @@ function calcStatus() {
   }
 
   // 合計値計算
-  for (index = 0; index < 7; index++) {
+  for (index = 0; index < defaults.length; index++) {
     temp = parseInt(defaults[index]) + parseInt(adds[index].value);
     if (isNaN(temp) || (index === 0 && temp > 10)) {
       sums[index].style.backgroundColor = "#fcc";
-    } else if (temp > 18) {
+    } else if (temp > 18 || (phantomism === "liberal" && temp > 14)) {
       sums[index].style.backgroundColor = "#fcc";
     } else {
       sums[index].style.backgroundColor = "#fff";
@@ -327,7 +431,19 @@ function setSampleCharacter() {
     "comet": {"adds": [2, 0, 10, 0, 0, 8, 0],
               "abilities": ["taijyutsu", "kaihi", "kinsetsukougeki", "nichoujyuu", "quickstep", "rengeki", "hakugeki"]},
     "spider": {"adds": [0, 8, 0, 0, 6, 0, 6],
-               "abilities": ["dousatsu", "dennou", "bunseki", "gizou", "saiminjyutsu", "sliptrap", "captureweb"]}
+               "abilities": ["dousatsu", "dennou", "bunseki", "gizou", "saiminjyutsu", "sliptrap", "captureweb"]},
+    "retro": {"adds": [1, 0, 7, 6, 0, 6, 0],
+               "abilities": ["kikaikousaku", "glider", "kaihi", "flashgun", "yokokujyou", "ropeandhook", "spotlight"]},
+    "ayakashi": {"adds": [2, 8, 0, 10, 0, 0, 0],
+               "abilities": ["dousatsu", "chikeijyunnou", "bunseki", "iryou", "ayakashinokai", "yotaka", "nue"]},
+    "gamble": {"adds": [0, 0, 2, 6, 6, 0, 6],
+               "abilities": ["dennou", "knockout", "survive", "thrillaction", "ikasama", "trickshot", "kirihuda"]},
+    "liberal_stealth": {"adds": [1, 0, 8, 8, 0, 0, 8],
+               "abilities": ["komadukai", "kirokujyutsu", "iikurume", "onmitsu", "yuureiaruki", "speedcontrol", "thrillaction"]},
+    "liberal_combat": {"adds": [3, 8, 6, 0, 0, 8, 0],
+               "abilities": ["sneaking", "mighty", "wireaction", "issen", "rengeki", "miryou", "hakujya"]},
+    "liberal_support": {"adds": [1, 0, 0, 8, 8, 0, 8],
+               "abilities": ["kirokujyutsu", "tactician", "saiminjyutsu", "illusion", "swap", "captureweb", "ikasama"]},
   },
     adds = [document.getElementById("add_vit"),
             document.getElementById("add_adp"),
@@ -337,30 +453,45 @@ function setSampleCharacter() {
             document.getElementById("add_stl"),
             document.getElementById("add_crf")],
     phantomism = document.getElementById("phantomism").value,
-    index = 0, temp_list;
+    index = 0, temp_list, sample_character;
 
   if (phantomism === "") {
     alert("PHANTOMISMを選択してください！");
     return;
   }
+  clearAbilities();
+  sample_character = (phantomism === "liberal") ? (phantomism + "_" + document.getElementById("sample_type").value) : phantomism;
   for (index = 0; index < adds.length; index++) {
-    adds[index].value = sample_data[phantomism]["adds"][index];
+    adds[index].value = sample_data[sample_character]["adds"][index];
   }
   calcStatus();
-  temp_list = Object.keys(ability_list["common"]);
-  for (index = 0; index < temp_list.length; index++) {
-    if (sample_data[phantomism]["abilities"].includes(temp_list[index])) {
-      document.getElementById(temp_list[index]).checked = true;
-    } else {
-      document.getElementById(temp_list[index]).checked = false;
+  if(phantomism === "liberal"){
+    Object.keys(ability_list).forEach(function(element){
+      temp_list = Object.keys(ability_list[element]);
+      for (index = 0; index < temp_list.length; index++) {
+        if (sample_data[sample_character]["abilities"].includes(temp_list[index])) {
+          document.getElementById(temp_list[index]).checked = true;
+        } else {
+          document.getElementById(temp_list[index]).checked = false;
+        }
+      }
+    });
+  } else {
+    temp_list = Object.keys(ability_list["common"]);
+    for (index = 0; index < temp_list.length; index++) {
+      if (sample_data[sample_character]["abilities"].includes(temp_list[index])) {
+        document.getElementById(temp_list[index]).checked = true;
+      } else {
+        document.getElementById(temp_list[index]).checked = false;
+      }
     }
-  }
-  temp_list = Object.keys(ability_list[phantomism]);
-  for(index = 0; index < temp_list.length; index++) {
-    if (sample_data[phantomism]["abilities"].includes(temp_list[index])) {
-      document.getElementById(temp_list[index]).checked = true;
-    } else {
-      document.getElementById(temp_list[index]).checked = false;
+    temp_list = Object.keys(ability_list[phantomism]);
+    for(index = 0; index < temp_list.length; index++) {
+      if (sample_data[phantomism]["abilities"].includes(temp_list[index])) {
+        document.getElementById(temp_list[index]).checked = true;
+      } else {
+        document.getElementById(temp_list[index]).checked = false;
+      }
     }
   }
 }
@@ -381,39 +512,60 @@ function check_and_make_Character() {
             document.getElementById("sum_stl"),
             document.getElementById("sum_crf")],
     phantomism = document.getElementById("phantomism").value,
+    veteran = document.getElementById("veteran"),
+    honor = document.getElementById("character_honor").value,
     index = 0,
+    subindex = 0,
     alladds = 0,
+    max_additional = (veteran.checked) ? 5 : 0,
+    addpoints = (phantomism === "liberal") ? 25 : 20,
     abilities = {},
     growths = {},
     abkey_list,
+    phantomism_list,
+    special_learned,
+    limit_liberal = 2,
     msg = "";
 
   if (phantomism === "") {
     msg += "PHANTOMISMを選択してください。<br />";
   }
-  // パラメータチェック 20点割り振っているか
-  for (index = 0; index < 7; index++) {
+
+  // 名声がマイナスでないか
+  if (honor < 0){
+    msg += "名声はマイナスになりません。<br />";
+  }
+
+  // パラメータチェック 20点(リベラルは25点)割り振っているか
+  for (index = 0; index < adds.length; index++) {
     alladds += parseInt(adds[index].value);
     if (adds[index].value < 0) {
       msg += "ステータスの追加分にマイナスのものがあります。<br />";
     }
   }
-  for (index = 0; index < 7; index++) {
+  for (index = 0; index < sums.length; index++) {
     if (index === 0 && sums[index].value > 10) {
       msg += "VITの合計値は10を超えてはいけません。<br />";
-    } else if (sums[index].value > 18) {
-      msg += "ステータスの合計値は18を超えてはいけません。<br />";
+    } else if (phantomism === "liberal") {
+      if (sums[index].value > 14) {
+        msg += "リベラルではステータスの合計値は14を超えてはいけません。<br />";
+      }
+    } else {
+      if (sums[index].value > 18) {
+        msg += "ステータスの合計値は18を超えてはいけません。<br />";
+      }
     }
   }
-  if (alladds > 20) {
+  if (alladds > addpoints + max_additional) {
     msg += "ステータスの追加値が多すぎます。<br />";
-  } else if (alladds < 20) {
+  } else if (alladds < addpoints) {
     msg += "ステータスの追加値が少なすぎます。<br />";
   }
 
   // 技能7つ取っているか
+  // 一般技能
   abkey_list = Object.keys(ability_list["common"]);
-  for (index = 0; index < 24; index++) {
+  for (index = 0; index < abkey_list.length; index++) {
     if (document.getElementById(abkey_list[index]).checked) {
       abilities[abkey_list[index]] = ability_list["common"][abkey_list[index]];
     }
@@ -426,9 +578,10 @@ function check_and_make_Character() {
     }
   }
 
-  if (phantomism !== "") {
+  // 特化技能
+  if (phantomism !== "" && phantomism !== "liberal") {
     abkey_list = Object.keys(ability_list[phantomism]);
-    for (index = 0; index < 6; index++) {
+    for (index = 0; index < abkey_list.length; index++) {
       if (document.getElementById(abkey_list[index]).checked) {
         abilities[abkey_list[index]] = ability_list[phantomism][abkey_list[index]];
       }
@@ -440,6 +593,30 @@ function check_and_make_Character() {
         msg += "成長がマイナスの特化技能があります。<br />"
       }
     }
+  } else if (phantomism === "liberal") {
+    phantomism_list = Object.keys(ability_list);
+    phantomism_list.shift();
+    for(index = 0; index < phantomism_list.length; index++){
+      special_learned = 0;
+      abkey_list = Object.keys(ability_list[phantomism_list[index]]);
+      // 各 Phantomismについて
+      for(subindex = 0; subindex < abkey_list.length; subindex++){
+        if (document.getElementById(abkey_list[subindex]).checked) {
+          abilities[abkey_list[subindex]] = ability_list[phantomism_list[index]][abkey_list[subindex]];
+          special_learned++;
+        }
+        if (document.getElementById(abkey_list[subindex]+"_grow").value > 0) {
+          growths[abkey_list[subindex]] =
+          [ability_list[phantomism_list[index]][abkey_list[subindex]][0],
+          parseInt(document.getElementById(abkey_list[subindex]+"_grow").value) ];
+        } else if(document.getElementById(abkey_list[subindex]+"_grow").value < 0) {
+          msg += "成長がマイナスの特化技能があります。<br />";
+        }
+      }
+      if(special_learned > limit_liberal) {
+        msg += "リベラルは同一Phantomismの技能を最大で2つまでしか習得できません。<br />";
+      }
+    }
   }
   if (Object.keys(abilities).length > 7) {
     msg += "習得技能が多すぎます。通常攻撃を除いて7つまでです。<br />";
@@ -447,12 +624,13 @@ function check_and_make_Character() {
     msg += "習得技能が少なすぎます。通常攻撃を除いて7つ取得してください。<br />";
   }
 
+  /*
   // 技能の成長にマイナスがないか
   for (index = 0; index < Object.keys(abilities).length; index++) {
     if (document.getElementById(Object.keys(abilities)[index] + "_grow").value < 0) {
       msg += "技能の成長がマイナスの所があります。<br />";
     }
-  }
+  }*/
 
   // データ生成前のチェック
   if (msg !== "") {
@@ -642,6 +820,14 @@ function makeCharacterXML(abilities, growths) {
   xml += '        <data name="Gender">'+document.getElementById("character_gender").value.replace(patternString, escapeString)+'</data>\n';
   xml += '        <data name="Home">'+document.getElementById("character_home").value.replace(patternString, escapeString)+'</data>\n';
   xml += '        <data name="Job">'+document.getElementById("character_job").value.replace(patternString, escapeString)+'</data>\n';
+  xml += '        <data name="Honor">' + document.getElementById("character_honor").value;
+  for(index = 0 ; index < Math.floor(document.getElementById("character_honor").value / 5); index++){
+    xml += '★';
+  }
+  if(document.getElementById("veteran").checked) {
+    xml += "V";
+  }
+  xml += '</data>\n'
   xml += '        <data name="PHANTOMISM">'+document.getElementById("phantomism").value.toUpperCase()+'</data>\n';
   xml += '        <data type="note" name="メモ">';
   // textareaの改行込み処理

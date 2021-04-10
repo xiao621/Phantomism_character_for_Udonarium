@@ -20,7 +20,7 @@
         <tr>
           <td class="personal_elem">Name</td>
           <td><input type="text" id="character_name"></td>
-          <td></td>
+          <td><input type="checkbox" id="veteran" onclick="setVeteran()">ベテラン</td>
         </tr>
         <tr>
           <td class="personal_elem">Age</td>
@@ -42,6 +42,10 @@
           <td><input type="text" id="character_job"></td>
         </tr>
         <tr>
+          <td class="personal_elem">Honor</td>
+          <td><input type="number" id="character_honor" min="0" onchange="checkHonor()"></td>
+        </tr>
+        <tr>
           <td class="personal_elem">PHANTOMISM</td>
           <td>
             <select id="phantomism" onchange="setDefaultStatus()">
@@ -52,12 +56,27 @@
               <option value="jack">JACK</option>
               <option value="comet">COMET</option>
               <option value="spider">SPIDER</option>
+              <option value="retro">RETRO</option>
+              <option value="ayakashi">AYAKASHI</option>
+              <option value="gamble">GAMBLE</option>
+              <option value="liberal">LIBERAL</option>
             </select>
           </td>
-          <td><input type="button" onclick="setSampleCharacter()" value="サンプルキャラクター 能力セット"></td>
+          <td>
+            <select id="sample_type" class="hidden">
+              <option value="stealth">隠密型</option>
+              <option value="combat">戦闘型</option>
+              <option value="support">支援型</option>
+            </select>
+            <input type="button" onclick="setSampleCharacter()" value="サンプルキャラクター 能力セット">
+          </td>
         </tr>
       </table>
-      <textarea id="memo" rows="10" cols="50" placeholder="Other Info..."></textarea>
+      <div id="others" style="overflow:hidden">
+        <div style="float:left"><textarea id="memo" rows="10" cols="40" placeholder="Other Info..."></textarea></div>
+        <div style="float:left; margin-left:10px" class="hidden"><p style="margin:0">取得技能一覧</p><textarea id="memo" rows="9" cols="45" placeholder="取得技能一覧"></textarea>
+      </div>
+      </div>
     </div>
     
     <div id="status">
@@ -134,6 +153,9 @@
                   <tr>
                     <td>分析</td><td><input type="checkbox" id="bunseki"></td><td>+<input type="number" class="grow" id="bunseki_grow"></td>
                   </tr>
+                  <tr>
+                    <td>マイティ</td><td><input type="checkbox" id="mighty"></td><td>+<input type="number" class="grow" id="mighty_grow"></td>
+                  </tr>
                 </table>
               </div>
             </td>
@@ -153,6 +175,9 @@
                   <tr>
                     <td>医療</td><td><input type="checkbox" id="iryou"></td><td>+<input type="number" class="grow" id="iryou_grow"></td>
                   </tr>
+                  <tr>
+                    <td>ベノム</td><td><input type="checkbox" id="venom"></td><td>+<input type="number" class="grow" id="venom_grow"></td>
+                  </tr>
                 </table>
               </div>
             </td>
@@ -171,6 +196,9 @@
                   </tr>
                   <tr>
                     <td>遠距離攻撃</td><td><input type="checkbox" id="enkyorikougeki"></td><td>+<input type="number" class="grow" id="enkyorikougeki_grow"></td>
+                  </tr>
+                  <tr>
+                    <td>フラッシュガン</td><td><input type="checkbox" id="flashgun"></td><td>+<input type="number" class="grow" id="flashgun_grow"></td>
                   </tr>
                 </table>
               </div>
@@ -194,6 +222,9 @@
                   <tr>
                     <td>回避</td><td><input type="checkbox" id="kaihi"></td><td>+<input type="number" class="grow" id="kaihi_grow"></td>
                   </tr>
+                  <tr>
+                    <td>ムーンステップ</td><td><input type="checkbox" id="moonstep"></td><td>+<input type="number" class="grow" id="moonstep_grow"></td>
+                  </tr>
                 </table>
               </div>
             </td>
@@ -212,6 +243,9 @@
                   </tr>
                   <tr>
                     <td>近接攻撃</td><td><input type="checkbox" id="kinsetsukougeki"></td><td>+<input type="number" class="grow" id="kinsetsukougeki_grow"></td>
+                  </tr>
+                  <tr>
+                    <td>サバイブ</td><td><input type="checkbox" id="survive"></td><td>+<input type="number" class="grow" id="survive_grow"></td>
                   </tr>
                 </table>
               </div>
@@ -232,6 +266,9 @@
                   <tr>
                     <td>略奪</td><td><input type="checkbox" id="ryakudatsu"></td><td>+<input type="number" class="grow" id="ryakudatsu_grow"></td>
                   </tr>
+                  <tr>
+                    <td>タクティシャン</td><td><input type="checkbox" id="tactician"></td><td>+<input type="number" class="grow" id="tactician_grow"></td>
+                  </tr>
                 </table>
               </div>
             </td>
@@ -239,8 +276,8 @@
         </table>
       </div>
       <div class="special phantom hidden">
-        <h4>PHANTOM特化技能</h4>
-        <table>
+        <h4><input type="button" class="fold hidden" style="margin:0 5px 0 0" value="-" onclick=""><input type="button" class=" expand hidden" style="margin:0 5px 0 0" value="+" onclick="">PHANTOM特化技能</h4>
+        <table id="phantom_table">
           <tr>
             <table>
               <tr>
@@ -260,8 +297,8 @@
         </table>
       </div>
       <div class="special ghost hidden">
-        <h4>GHOST特化技能</h4>
-        <table>
+        <h4><input type="button" class="fold hidden"style="margin:0 5px 0 0" value="-" onclick=""><input type="button" class="expand hidden" style="margin:0 5px 0 0" value="+" onclick="">GHOST特化技能</h4>
+        <table id="ghost_table">
           <tr>
             <table>
               <tr>
@@ -281,8 +318,8 @@
         </table>
       </div>
       <div class="special magic hidden">
-        <h4>MAGIC特化技能</h4>
-        <table>
+        <h4><input type="button" class="fold hidden" style="margin:0 5px 0 0" value="-" onclick=""><input type="button" class="expand hidden" style="margin:0 5px 0 0" value="+" onclick="">MAGIC特化技能</h4>
+        <table id="magic_table">
           <tr>
             <table>
               <tr>
@@ -302,8 +339,8 @@
         </table>
       </div>
       <div class="special jack hidden">
-        <h4>JACK特化技能</h4>
-        <table>
+        <h4><input type="button" class="fold hidden" style="margin:0 5px 0 0" value="-" onclick=""><input type="button" class="expand hidden" style="margin:0 5px 0 0" value="+" onclick="">JACK特化技能</h4>
+        <table id="jack_table">
           <tr>
             <table>
               <tr>
@@ -323,8 +360,8 @@
         </table>
       </div>
       <div class="special comet hidden">
-        <h4>COMET特化技能</h4>
-        <table>
+        <h4><input type="button" class="fold hidden" style="margin:0 5px 0 0" value="-" onclick=""><input type="button" class="expand hidden" style="margin:0 5px 0 0" value="+" onclick="">COMET特化技能</h4>
+        <table id="comet_table">
           <tr>
             <table>
               <tr>
@@ -344,8 +381,8 @@
         </table>
       </div>
       <div class="special spider hidden">
-        <h4>SPIDER特化技能</h4>
-        <table>
+        <h4><input type="button" class="fold hidden" style="margin:0 5px 0 0" value="-" onclick=""><input type="button" class="expnad hidden" style="margin:0 5px 0 0" value="+" onclick="">SPIDER特化技能</h4>
+        <table id="spider_table">
           <tr>
             <table>
               <tr>
@@ -364,6 +401,69 @@
           </tr>
         </table>
       </div>
+      <div class="special retro hidden">
+        <h4><input type="button" class="fold hidden" style="margin:0 5px 0 0" value="-" onclick=""><input type="button" class="expand hidden" style="margin:0 5px 0 0" value="+" onclick="">RETRO特化技能</h4>
+        <table id="retro_table">
+          <tr>
+            <table>
+              <tr>
+                <td>予告状(STL/TEC)</td><td><input type="checkbox" id="yokokujyou"></td><td>+<input type="number" class="grow" id="yokokujyou_grow"></td>
+                <td>魅了(STL)</td><td><input type="checkbox" id="miryou"></td><td>+<input type="number" class="grow" id="miryou_grow"></td>
+              </tr>
+              <tr>
+                <td>バルーン(TEC/STL)</td><td><input type="checkbox" id="balloon"></td><td>+<input type="number" class="grow" id="balloon_grow"></td>
+                <td>ロープ&amp;フック(TEC/STL)</td><td><input type="checkbox" id="ropeandhook"></td><td>+<input type="number" class="grow" id="ropeandhook_grow"></td>
+              </tr>
+              <tr>
+                <td>スポットライト(STL)</td><td><input type="checkbox" id="spotlight"></td><td>+<input type="number" class="grow" id="spotlight_grow"></td>
+                <td>タイムボム(TEC)</td><td><input type="checkbox" id="timebomb"></td><td>+<input type="number" class="grow" id="timebomb_grow"></td>
+              </tr>
+            </table>
+          </tr>
+        </table>
+      </div>
+      <div class="special ayakashi hidden">
+        <h4><input type="button" class="fold hidden" style="margin:0 5px 0 0" value="-" onclick=""><input type="button" class="expand hidden" style="margin:0 5px 0 0" value="+" onclick="">AYAKASHI特化技能</h4>
+        <table id="ayakashi_table">
+          <tr>
+            <table>
+              <tr>
+                <td>アヤカシの怪(ADP)</td><td><input type="checkbox" id="ayakashinokai"></td><td>+<input type="number" class="grow" id="ayakashinokai_grow"></td>
+                <td>ヘンゲ：夜鷹(ADP/TEC)</td><td><input type="checkbox" id="yotaka"></td><td>+<input type="number" class="grow" id="yotaka_grow"></td>
+              </tr>
+              <tr>
+                <td>ヘンゲ：九尾(ADP/CRF)</td><td><input type="checkbox" id="kyuubi"></td><td>+<input type="number" class="grow" id="kyuubi_grow"></td>
+                <td>ヘンゲ：烏天狗(ADP/AGI)</td><td><input type="checkbox" id="karasutengu"></td><td>+<input type="number" class="grow" id="karasutengu_grow"></td>
+              </tr>
+              <tr>
+                <td>ヘンゲ：鵺(ADP/FOR)</td><td><input type="checkbox" id="nue"></td><td>+<input type="number" class="grow" id="nue_grow"></td>
+                <td>ヘンゲ：白蛇(ADP/STL)</td><td><input type="checkbox" id="hakujya"></td><td>+<input type="number" class="grow" id="hakujya_grow"></td>
+              </tr>
+            </table>
+          </tr>
+        </table>
+      </div>
+      <div class="special gamble hidden">
+        <h4><input type="button" class="fold hidden" style="margin:0 5px 0 0" value="-" onclick=""><input type="button" class="expand hidden" style="margin:0 5px 0 0" value="+" onclick="">GAMBLE特化技能</h4>
+        <table id="gamble_table">
+          <tr>
+            <table>
+              <tr>
+                <td>スリルアクション(TEC/CRF)</td><td><input type="checkbox" id="thrillaction"></td><td>+<input type="number" class="grow" id="thrillaction_grow"></td>
+                <td>ワンダラー(FOR/CRF)</td><td><input type="checkbox" id="wanderer"></td><td>+<input type="number" class="grow" id="wanderer_grow"></td>
+              </tr>
+              <tr>
+                <td>イカサマ(CRF)</td><td><input type="checkbox" id="ikasama"></td><td>+<input type="number" class="grow" id="ikasama_grow"></td>
+                <td>トリックショット(TEC)</td><td><input type="checkbox" id="trickshot"></td><td>+<input type="number" class="grow" id="trickshot_grow"></td>
+              </tr>
+              <tr>
+                <td>ダブルエッジソード(FOR)</td><td><input type="checkbox" id="doubleedgesword"></td><td>+<input type="number" class="grow" id="doubleedgesword_grow"></td>
+                <td>切り札(CRF)</td><td><input type="checkbox" id="kirihuda"></td><td>+<input type="number" class="grow" id="kirihuda_grow"></td>
+              </tr>
+            </table>
+          </tr>
+        </table>
+      </div>
     </div>
    
     <div id="message"></div>
@@ -372,7 +472,7 @@
 
     <div class="footer">
       PHANTOMISMの著作権は全て「miRa」「つきのふね」に帰属します。<br />
-      ver1.9 made by xiao (twitter: @s_o_xiao)
+      ver2.0 made by xiao (twitter: @s_o_xiao)
     </div>
     <script src="js/main.js"></script>
   </body>

@@ -143,6 +143,20 @@ div{
   background-color: rgba(100, 100, 100, 0.2);
 }
 
+.retro{
+  background-color: rgba(249, 203, 156, 0.2);
+}
+
+.ayakashi{
+  background-color: rgba(142, 124, 195, 0.2);
+  max-width: 575px;
+}
+
+.gamble{
+  background-color: rgba(224, 102, 102, 0.2);
+  max-width: 580px;
+}
+
 
 .hidden{
   display: none;
