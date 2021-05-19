@@ -1,7 +1,7 @@
 var document = document,
   patternString = /"|'|<|>|&/g,
-  // ablity_list ... 分野->技能ID->[技能名, チャットパレット, 使用タイミング]
-  ability_list = {
+  // phantomism_ability_dict ... ファントミズム->技能ID->[技能名, チャットパレット, 使用タイミング]
+  phantomism_ability_dict = {
     "common": {"dousatsu": ["洞察", "{ADP}", "調査"], "sneaking": ["スニーキング", "{ADP}", "調査"],
                "chikeijyunnou": ["地形順応", "{ADP}", "調査"], "bunseki": ["分析", "{ADP}", "チェス"],
                "mighty" : ["マイティ", "{ADP}", "チェス,例外"],
@@ -51,7 +51,7 @@ var document = document,
                 "ikasama" : ["イカサマ", "{CRF}", "チェス,例外"], "trickshot" : ["トリックショット", "{TEC}", "チェス"],
                 "doubleedgesword" : ["ダブルエッジソード", "{FOR}", "チェス"], "kirihuda" : ["切り札", "{CRF}", "チェス,例外"]}
   },
-  abireverse_list = {
+  ability_id_dict = {
         "洞察" : "dousatsu", "スニーキング" : "sneaking", "地形順応" : "chikeijyunnou", "分析" : "bunseki", "マイティ" : "mighty",
         "早業" : "hayawaza", "危険予知" : "kikenyochi", "捕縛" : "hobaku", "回避" : "kaihi", "ムーンステップ" : "moonstep",
         "記録術" : "kirokujyutsu", "目利き" : "mekiki", "機械工作" : "kikaikousaku", "医療" : "iryou", "ベノム" : "venom",
@@ -93,38 +93,8 @@ function escapeString() {
   }
 }
 
-function makeNormalElement(eName,eAttribute,eText) {
-  var elem = document.createElement("data");
-  elem.setAttribute(eName,eAttribute);
-  elem.textContent = eText;
-  return elem;
-}
-
-function makeResourceElement(rName,rAttribute,rText,rCurrent) {
-  var elem = document.createElement("data");
-  elem.setAttribute("type","numberResource");
-  elem.setAttribute("currentValue",rCurrent);
-  elem.setAttribute(rName,rAttribute);
-  elem.textContent = rText;
-  return elem;
-}
-
-function makeNoteElement(nName,nAttribute,nText) {
-  var elem = document.createElement("data");
-  elem.setAttribute("type","note");
-  elem.setAttribute(nName,nAttribute);
-  elem.textContent = nText;
-  return elem;
-}
-
-function makeParentElement(attribute) {
-  var elem = document.createElement("data");
-  elem.setAttribute("name",attribute);
-  return elem;
-}
-
 function clearAllInput() {
-  var abilist = Object.keys(ability_list),
+  var abilist = Object.keys(phantomism_ability_dict),
       temp_abilist,
       index, subindex;
 
@@ -156,7 +126,7 @@ function clearAllInput() {
   calcStatus();
 
   for(index = 0 ; index < abilist.length; index++) {
-    temp_abilist = Object.keys(ability_list[abilist[index]]);
+    temp_abilist = Object.keys(phantomism_ability_dict[abilist[index]]);
     for(subindex = 0; subindex < temp_abilist.length; subindex++) {
       document.getElementById(temp_abilist[subindex]).checked = false;
       document.getElementById(temp_abilist[subindex]+"_grow").value = "";
@@ -165,12 +135,12 @@ function clearAllInput() {
 }
 
 function clearAbilities(){
-  var abilist = Object.keys(ability_list),
+  var abilist = Object.keys(phantomism_ability_dict),
       temp_abilist,
       index, subindex;
 
   for(index = 0 ; index < abilist.length; index++) {
-    temp_abilist = Object.keys(ability_list[abilist[index]]);
+    temp_abilist = Object.keys(phantomism_ability_dict[abilist[index]]);
     for(subindex = 0; subindex < temp_abilist.length; subindex++) {
       document.getElementById(temp_abilist[subindex]).checked = false;
       document.getElementById(temp_abilist[subindex]+"_grow").value = "";
@@ -238,13 +208,13 @@ function setUploadedData(xml) {
 
   // 技能
   for(index = 1; index < possible_abilities+1; index++){
-    document.getElementById(abireverse_list[xml.getElementsByName("技能")[0].children[index].innerHTML.match(/[^+]+/)[0]]).checked = true;
+    document.getElementById(ability_id_dict[xml.getElementsByName("技能")[0].children[index].innerHTML.match(/[^+]+/)[0]]).checked = true;
   }
 
   // 成長
   if(!xml.getElementsByName("成長")[0]) return;
   for(index = 0 ; index < xml.getElementsByName("成長")[0].children.length; index++) {
-    document.getElementById(abireverse_list[xml.getElementsByName("成長")[0].children[index].getAttribute("name")] + "_grow").value = xml.getElementsByName("成長")[0].children[index].innerHTML.match(/\d+/)[0];
+    document.getElementById(ability_id_dict[xml.getElementsByName("成長")[0].children[index].getAttribute("name")] + "_grow").value = xml.getElementsByName("成長")[0].children[index].innerHTML.match(/\d+/)[0];
   }
 }
 
@@ -466,8 +436,8 @@ function setSampleCharacter() {
   }
   calcStatus();
   if(phantomism === "liberal"){
-    Object.keys(ability_list).forEach(function(element){
-      temp_list = Object.keys(ability_list[element]);
+    Object.keys(phantomism_ability_dict).forEach(function(element){
+      temp_list = Object.keys(phantomism_ability_dict[element]);
       for (index = 0; index < temp_list.length; index++) {
         if (sample_data[sample_character]["abilities"].includes(temp_list[index])) {
           document.getElementById(temp_list[index]).checked = true;
@@ -477,7 +447,7 @@ function setSampleCharacter() {
       }
     });
   } else {
-    temp_list = Object.keys(ability_list["common"]);
+    temp_list = Object.keys(phantomism_ability_dict["common"]);
     for (index = 0; index < temp_list.length; index++) {
       if (sample_data[sample_character]["abilities"].includes(temp_list[index])) {
         document.getElementById(temp_list[index]).checked = true;
@@ -485,7 +455,7 @@ function setSampleCharacter() {
         document.getElementById(temp_list[index]).checked = false;
       }
     }
-    temp_list = Object.keys(ability_list[phantomism]);
+    temp_list = Object.keys(phantomism_ability_dict[phantomism]);
     for(index = 0; index < temp_list.length; index++) {
       if (sample_data[phantomism]["abilities"].includes(temp_list[index])) {
         document.getElementById(temp_list[index]).checked = true;
@@ -564,14 +534,14 @@ function check_and_make_Character() {
 
   // 技能7つ取っているか
   // 一般技能
-  abkey_list = Object.keys(ability_list["common"]);
+  abkey_list = Object.keys(phantomism_ability_dict["common"]);
   for (index = 0; index < abkey_list.length; index++) {
     if (document.getElementById(abkey_list[index]).checked) {
-      abilities[abkey_list[index]] = ability_list["common"][abkey_list[index]];
+      abilities[abkey_list[index]] = phantomism_ability_dict["common"][abkey_list[index]];
     }
     if (document.getElementById(abkey_list[index]+"_grow").value > 0) {
       growths[abkey_list[index]] =
-        [ability_list["common"][abkey_list[index]][0],
+        [phantomism_ability_dict["common"][abkey_list[index]][0],
         parseInt(document.getElementById(abkey_list[index]+"_grow").value) ];
     } else if(document.getElementById(abkey_list[index]+"_grow").value < 0) {
       msg += "成長がマイナスの一般技能があります。<br />"
@@ -580,34 +550,34 @@ function check_and_make_Character() {
 
   // 特化技能
   if (phantomism !== "" && phantomism !== "liberal") {
-    abkey_list = Object.keys(ability_list[phantomism]);
+    abkey_list = Object.keys(phantomism_ability_dict[phantomism]);
     for (index = 0; index < abkey_list.length; index++) {
       if (document.getElementById(abkey_list[index]).checked) {
-        abilities[abkey_list[index]] = ability_list[phantomism][abkey_list[index]];
+        abilities[abkey_list[index]] = phantomism_ability_dict[phantomism][abkey_list[index]];
       }
       if (document.getElementById(abkey_list[index]+"_grow").value > 0) {
         growths[abkey_list[index]] =
-        [ability_list[phantomism][abkey_list[index]][0],
+        [phantomism_ability_dict[phantomism][abkey_list[index]][0],
         parseInt(document.getElementById(abkey_list[index]+"_grow").value) ];
       } else if(document.getElementById(abkey_list[index]+"_grow").value < 0) {
         msg += "成長がマイナスの特化技能があります。<br />"
       }
     }
   } else if (phantomism === "liberal") {
-    phantomism_list = Object.keys(ability_list);
+    phantomism_list = Object.keys(phantomism_ability_dict);
     phantomism_list.shift();
     for(index = 0; index < phantomism_list.length; index++){
       special_learned = 0;
-      abkey_list = Object.keys(ability_list[phantomism_list[index]]);
+      abkey_list = Object.keys(phantomism_ability_dict[phantomism_list[index]]);
       // 各 Phantomismについて
       for(subindex = 0; subindex < abkey_list.length; subindex++){
         if (document.getElementById(abkey_list[subindex]).checked) {
-          abilities[abkey_list[subindex]] = ability_list[phantomism_list[index]][abkey_list[subindex]];
+          abilities[abkey_list[subindex]] = phantomism_ability_dict[phantomism_list[index]][abkey_list[subindex]];
           special_learned++;
         }
         if (document.getElementById(abkey_list[subindex]+"_grow").value > 0) {
           growths[abkey_list[subindex]] =
-          [ability_list[phantomism_list[index]][abkey_list[subindex]][0],
+          [phantomism_ability_dict[phantomism_list[index]][abkey_list[subindex]][0],
           parseInt(document.getElementById(abkey_list[subindex]+"_grow").value) ];
         } else if(document.getElementById(abkey_list[subindex]+"_grow").value < 0) {
           msg += "成長がマイナスの特化技能があります。<br />";
@@ -623,14 +593,6 @@ function check_and_make_Character() {
   } else if (Object.keys(abilities).length < 7) {
     msg += "習得技能が少なすぎます。通常攻撃を除いて7つ取得してください。<br />";
   }
-
-  /*
-  // 技能の成長にマイナスがないか
-  for (index = 0; index < Object.keys(abilities).length; index++) {
-    if (document.getElementById(Object.keys(abilities)[index] + "_grow").value < 0) {
-      msg += "技能の成長がマイナスの所があります。<br />";
-    }
-  }*/
 
   // データ生成前のチェック
   if (msg !== "") {
@@ -661,146 +623,7 @@ function makeCharacterXML(abilities, growths) {
     blob,
     url,
     atag;
-
-  /* DOMツリー生成版, エスケープコードがパースされない不具合につき、一旦保留
-  let xmltree = document.createElement("character");
-
-  // data character
-  let character = document.createElement("data");
-  character.setAttribute("name","character");
-
-  // data character - img
-  let img = document.createElement("data");
-  img.setAttribute("name","image");
-  let imgChild = document.createElement("data");
-  imgChild.setAttribute("type","image");
-  imgChild.setAttribute("name","imageIdentifier");
-  imgChild.textContent = "none_icon";
-  img.appendChild(imgChild);
-  character.appendChild(img);
-
-  // data character - common
-  let common = document.createElement("data");
-  common.setAttribute("name","common");
-  let commonChild = makeNormalElement("name","name",document.getElementById("character_name").value.replace(patternString, escapeString));
-  common.appendChild(commonChild);
-  commonChild = makeNormalElement("name","size","2");
-  common.appendChild(commonChild);
-  character.appendChild(common);
-
-  // data character - detail
-  let detail = makeParentElement("detail");
-
-  // data character - detail - リソース
-  let resource = makeParentElement("リソース");
-  let resourceChild = makeResourceElement("name", "VIT", document.getElementById("sum_vit").value, document.getElementById("sum_vit").value);
-  resource.appendChild(resourceChild);
-  detail.appendChild(resource);
-
-  // data character - detail - 情報
-  let info = makeParentElement("情報");
-
-  // data character - detail - 情報 - age
-  let age = makeNormalElement("name", "Age", document.getElementById("character_age").value.replace(patternString, escapeString));
-  info.appendChild(age);
-
-  // data character - detail - 情報 - Gender
-  let gender = makeNormalElement("name", "Gender", document.getElementById("character_gender").value.replace(patternString, escapeString));
-  info.appendChild(gender);
-
-  // data character - detail - 情報 - Home
-  let home = makeNormalElement("name", "Home", document.getElementById("character_home").value.replace(patternString, escapeString));
-  info.appendChild(home);
-
-  // data character - detail - 情報 - Job
-  let job = makeNormalElement("name", "Job", document.getElementById("character_job").value.replace(patternString, escapeString));
-  info.appendChild(job);
-
-  // data character - detail - 情報 - PHANTOMISM
-  let phantomism = makeNormalElement("name", "PHANTOMISM", document.getElementById("phantomism").value.toUpperCase());
-  info.appendChild(phantomism);
-
-  // data character - detail - 情報 - メモ
-  setting = document.getElementById("memo").value.replace(patternString, escapeString).replace(/\r\n|\r/g, "\n").split("\n");
-  for (index = 0; index < setting.length; index++) {
-    newlined_setting += setting[index] +'\n';
-  }
-  let memo = makeNoteElement("name", "メモ", newlined_setting);
-  info.appendChild(memo);
-
-  detail.appendChild(info);
-
-  // data character - detail - ステータス
-  let statuses = makeParentElement("ステータス");
-
-  let adp = makeNormalElement("name", "ADP", status[0]);
-  statuses.appendChild(adp);
-  let agi = makeNormalElement("name", "AGI", status[1]);
-  statuses.appendChild(agi);
-  let tec = makeNormalElement("name", "TEC", status[2]);
-  statuses.appendChild(tec);
-  let force = makeNormalElement("name", "FOR", status[3]);
-  statuses.appendChild(force);
-  let stl = makeNormalElement("name", "STL", status[4]);
-  statuses.appendChild(stl);
-  let crf = makeNormalElement("name", "CRF", status[5]);
-  statuses.appendChild(crf);
-
-  detail.appendChild(statuses);
-
-  // data character - detail - 技能
-  let abilist = makeParentElement("技能");
-
-  let normal_attack = makeNormalElement("name", "チェス,攻撃", "通常攻撃");
-  abilist.appendChild(normal_attack);
-  for(index = 0; index < learned_ability.length; index++) {
-    tmpabi = makeNormalElement("name", "", abilities[learned_ability[index]][0]);
-    abilist.appendChild(tmpabi);
-  }
-
-  detail.appendChild(abilist);
-  character.appendChild(detail);
-  xmltree.appendChild(character);
-
-  // チャットパレット
-  let chat_palette = document.createElement("chat-palette");
-  chat_palette.setAttribute("dicebot","");
-  chat_palette.textContent = "1d3 移動ロール\n";
-  chat_palette.textContent += '\n';
-  chat_palette.textContent += "1d20&lt;="+Math.max(status[0], status[1], status[2], status[3], status[4], status[5])+" 通常攻撃\n";
-  for(index = 0; index < learned_ability.length; index++) {
-    growth = document.getElementById(learned_ability[index] + "_grow").value;
-    chat_palette.textContent += '1d20&lt;=('+abilities[learned_ability[index]][1];
-    if (growth !== "" && growth > 0) {
-      chat_palette.textContent += '+'+growth;
-    }
-    chat_palette.textContent += ') '+abilities[learned_ability[index]][0];
-    if (growth !== "" && growth > 0) {
-      chat_palette.textContent += '+'+growth;
-    }
-    chat_palette.textContent += '\n';
-  }
-  chat_palette.textContent += '\n';
-  chat_palette.textContent += '1d10&lt;={VIT} VITロール\n';
-  chat_palette.textContent += '1d20&lt;={ADP} ADPロール\n';
-  chat_palette.textContent += '1d20&lt;={AGI} AGIロール\n';
-  chat_palette.textContent += '1d20&lt;={TEC} TECロール\n';
-  chat_palette.textContent += '1d20&lt;={FOR} FORロール\n';
-  chat_palette.textContent += '1d20&lt;={STL} STLロール\n';
-  chat_palette.textContent += '1d20&lt;={CRF} CRFロール\n';
-
-  xmltree.appendChild(chat_palette);
-
-  // XML 宣言
-  //let xml = document.createProcessingInstruction('xml', 'version="1.0" encoding="UTF-8"');
-  //xml.append(xmltree);
-
-  // XML 生成
-  xmlSerializer = new XMLSerializer();
-  serializedXML = xmlSerializer.serializeToString(xmltree);
-  serializedXML = serializedXML.replace(/ xmlns="http:\/\/www.w3.org\/1999\/xhtml"/g,'');
-  serializedXML = serializedXML.replace(/currentvalue/g,'currentValue');
-  */
+  
   xml += '<?xml version="1.0" encoding="UTF-8"?>\n';
   xml += '<character>\n';
   xml += '  <data name="character">\n';
@@ -903,23 +726,6 @@ function makeCharacterXML(abilities, growths) {
   atag.click();
   atag.remove();
   URL.revokeObjectURL(url);
-
-
-
-  /* DOM 生成版 エスケープコードがパースされないので一旦保留
-  //blob = new Blob([serializedXML], {"type":"text/xml"});
-  // serializedXML = '<?xml version="1.0" encoding="UTF-8"?>\n' + serializedXML;
-  blob = new Blob([serializedXML], {"type":"text/xml"});
-  url = URL.createObjectURL(blob);
-
-  atag = document.createElement("a");
-  document.body.appendChild(atag);
-  atag.download = document.getElementById("character_name").value.replace(/\s+/g, "") + '.xml';
-  atag.href = url;
-  atag.click();
-  atag.remove();
-  URL.revokeObjectURL(url);
-  */
 }
 
 window.onload = setDefaultStatus;
