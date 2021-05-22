@@ -151,7 +151,7 @@ function clearAbilities(){
 function calcJudgeValue(status_dict, judge_status_list){
   var judge_value = 0;
   judge_status_list.forEach(function(status){
-    judge_value += status_dict[status];
+    judge_value += parseInt(status_dict[status]);
   });
   return Math.floor(judge_value / judge_status_list.length);
 }
@@ -304,7 +304,6 @@ function setDefaultStatus() {
     document.getElementById("default_stl").value = 0;
     document.getElementById("default_crf").value = 0;
   }
-  calcStatus();
   // 特化技能の表示、非表示
   if(phantomism === "liberal") {
     for (index = 0; index < phantomism_list.length-1; index++) {
@@ -321,6 +320,7 @@ function setDefaultStatus() {
     }
     document.getElementById("sample_type").classList.add("hidden");
   }
+  calcStatus();
 }
 
 function calcStatus() {
@@ -393,6 +393,7 @@ function calcStatus() {
     }
     sums[index].value = temp;
   }
+  showLearnedAbilities();
 }
 
 function setSampleCharacter() {
@@ -442,7 +443,6 @@ function setSampleCharacter() {
   for (index = 0; index < adds.length; index++) {
     adds[index].value = sample_data[sample_character]["adds"][index];
   }
-  calcStatus();
   if(phantomism === "liberal"){
     Object.keys(phantomism_ability_dict).forEach(function(element){
       temp_list = Object.keys(phantomism_ability_dict[element]);
@@ -472,7 +472,68 @@ function setSampleCharacter() {
       }
     }
   }
+  calcStatus();
 }
+
+function showLearnedAbilities(){
+  var status_dict = {"ADP" : document.getElementById("sum_adp").value,
+                     "AGI" : document.getElementById("sum_agi").value,
+                     "TEC" : document.getElementById("sum_tec").value, 
+                     "FOR" : document.getElementById("sum_for").value, 
+                     "STL" : document.getElementById("sum_stl").value, 
+                     "CRF" : document.getElementById("sum_crf").value},
+      phantomism = document.getElementById("phantomism").value,
+      phantomism_list,
+      ability_keys,
+      learned_ability, // [技能名, チャットパレット, 使用タイミング]
+      growth, 
+      judge_value,
+      index, subindex;
+
+  document.getElementById("learned_abilities").innerHTML = "";
+
+  // 共通技能のチェック
+  ability_keys = Object.keys(phantomism_ability_dict["common"]);
+  for (index = 0; index < ability_keys.length; index++) {
+    if (document.getElementById(ability_keys[index]).checked) {
+      learned_ability = phantomism_ability_dict["common"][ability_keys[index]];
+      growth = document.getElementById(ability_keys[index]+"_grow").value;
+      judge_value = calcJudgeValue(status_dict, learned_ability[1]);
+      judge_value = (typeof growth === "undefined" || isNaN(growth) || growth <= 0) ? Math.min(18, judge_value) : Math.min(18, judge_value + parseInt(growth));
+      document.getElementById("learned_abilities").innerHTML += "【" + learned_ability[0] + "】: " + judge_value + "\n";
+    }
+  }
+  // 特化技能のチェック
+  if (phantomism !== "" && phantomism !== "liberal") {
+    ability_keys = Object.keys(phantomism_ability_dict[phantomism]);
+    for (index = 0; index < ability_keys.length; index++) {
+      if (document.getElementById(ability_keys[index]).checked) {
+        learned_ability = phantomism_ability_dict[phantomism][ability_keys[index]];
+        growth = document.getElementById(ability_keys[index]+"_grow").value;
+        judge_value = calcJudgeValue(status_dict, learned_ability[1]);
+        judge_value = (typeof growth === "undefined" || isNaN(growth) || growth <= 0) ? Math.min(18, judge_value) : Math.min(18, judge_value + parseInt(growth));
+        document.getElementById("learned_abilities").innerHTML += "【" + learned_ability[0] + "】: " + judge_value + "\n";
+      }
+    }
+  } else if (phantomism === "liberal") {
+    phantomism_list = Object.keys(phantomism_ability_dict);
+    phantomism_list.shift();
+    for(index = 0; index < phantomism_list.length; index++){
+      ability_keys = Object.keys(phantomism_ability_dict[phantomism_list[index]]);
+      // 各 Phantomismについて
+      for(subindex = 0; subindex < ability_keys.length; subindex++){
+        if (document.getElementById(ability_keys[subindex]).checked) {
+          learned_ability = phantomism_ability_dict[phantomism_list[index]][ability_keys[subindex]];
+          growth = document.getElementById(ability_keys[index]+"_grow").value;
+          judge_value = calcJudgeValue(status_dict, learned_ability[1]);
+          judge_value = (typeof growth === "undefined" || isNaN(growth) || growth <= 0) ? Math.min(18, judge_value) : Math.min(18, judge_value + parseInt(growth));
+          document.getElementById("learned_abilities").innerHTML += "【" + learned_ability[0] + "】: " + judge_value + "\n";
+        }
+      }
+    }
+  }
+}
+
 
 function check_and_make_Character() {
   var adds = [document.getElementById("add_vit"),
