@@ -2,54 +2,54 @@ var document = document,
   patternString = /"|'|<|>|&/g,
   // phantomism_ability_dict ... ファントミズム->技能ID->[技能名, チャットパレット, 使用タイミング]
   phantomism_ability_dict = {
-    "common": {"dousatsu": ["洞察", "{ADP}", "調査"], "sneaking": ["スニーキング", "{ADP}", "調査"],
-               "chikeijyunnou": ["地形順応", "{ADP}", "調査"], "bunseki": ["分析", "{ADP}", "チェス"],
-               "mighty" : ["マイティ", "{ADP}", "チェス,例外"],
-               "hayawaza": ["早業", "{AGI}", "調査"], "kikenyochi": ["危険予知", "{AGI}", "調査"],
-               "hobaku": ["捕縛", "{AGI}", "調査,チェス,攻撃"], "kaihi": ["回避", "{AGI}", "チェス,例外"],
-               "moonstep": ["ムーンステップ", "{AGI}", "チェス,移動前"],
-               "kirokujyutsu": ["記録術", "{TEC}", "調査"], "mekiki": ["目利き", "{TEC}", "調査,チェス"],
-               "kikaikousaku": ["機械工作", "{TEC}", "調査"], "iryou": ["医療", "{TEC}", "チェス"],
-               "venom": ["ベノム", "{TEC}", "チェス"],
-               "soujyuu": ["操縦", "{FOR}", "調査"], "knockout": ["ノックアウト", "{FOR}", "調査,チェス,攻撃"],
-               "toppa": ["突破", "{FOR}", "調査"], "kinsetsukougeki": ["近接攻撃", "{FOR}", "チェス,攻撃"],
-               "survive": ["サバイブ", "{FOR}", "チェス,例外"],
-               "taijyutsu": ["体術", "{STL}", "調査"], "glider": ["グライダー", "{STL}", "調査,チェス,例外"],
-               "kakuran": ["撹乱", "{STL}", "調査"], "enkyorikougeki": ["遠距離攻撃", "{STL}", "チェス,攻撃"],
-               "flashgun": ["フラッシュガン", "{STL}", "チェス"],
-               "dennou": ["電脳", "{CRF}", "調査"], "iikurume": ["言いくるめ", "{CRF}", "調査"],
-               "kaidoku": ["解読", "{CRF}", "調査"], "ryakudatsu": ["略奪", "{CRF}", "チェス"],
-               "tactician": ["タクティシャン", "{CRF}", "チェス,移動前"]},
-    "phantom": {"hensou": ["変装", "{ADP}", "調査"], "hengenjizai": ["変幻自在", "{ADP}", "チェス"],
-                "gitai": ["擬態", "{ADP}", "調査,チェス"], "chouyaku": ["跳躍", "{STL}", "チェス,例外"],
-                "wireaction": ["ワイヤーアクション", "(({ADP}+{STL})/2)", "調査,チェス,例外"], "decoy": ["デコイ", "(({ADP}+{STL})/2)", "チェス"]},
-    "ghost": {"inpei": ["隠蔽", "{TEC}", "調査"], "shunsoku": ["瞬足", "{AGI}", "チェス,移動前,例外"],
-              "onmitsu": ["隠密", "{AGI}", "調査,チェス,移動前"], "yamitobari": ["闇帳", "{TEC}", "チェス,移動前"],
-              "yuureiaruki": ["幽霊歩き", "(({AGI}+{TEC})/2)", "チェス,移動前,例外"], "sippuukyaku": ["疾風脚", "(({AGI}+{TEC})/2)", "チェス,攻撃"]},
-    "magic": {"komadukai": ["小間使い", "{TEC}", "調査"], "swap": ["スワップ", "{CRF}", "チェス"],
-              "illusion": ["イリュージョン", "(({TEC}+{CRF})/2)", "調査"], "mimic": ["ミミック", "{TEC}", "チェス"],
-              "shadow": ["シャドウ", "(({TEC}+{CRF})/2)", "チェス,移動前,例外"], "speedcontrol": ["スピードコントロール", "(({TEC}+{CRF})/2)", "チェス,例外"]},
-    "jack": {"iatsu": ["威圧", "{FOR}", "調査"], "mikiri": ["見切り", "(({FOR}+{ADP})/2)", "チェス,攻撃,例外"],
-             "kenjyutsu": ["剣術", "(({FOR}+{ADP})/2)", "チェス,攻撃"], "uchikowashi": ["打ち壊し", "{FOR}", "チェス"],
-             "issen": ["一閃", "{ADP}", "チェス,攻撃"], "smash": ["スマッシュ", "{FOR}", "チェス,攻撃"]},
-    "comet": {"speedgun": ["スピードガン", "{AGI}", "調査,チェス"], "flipjump": ["フリップジャンプ", "{STL}", "チェス,移動前,例外"],
-              "quickstep": ["クイックステップ", "{STL}", "チェス,例外"], "rengeki": ["連撃", "(({STL}+{AGI})/2)", "チェス,攻撃,例外"],
-              "nichoujyuu": ["二丁銃", "(({STL}+{AGI})/2)", "チェス,攻撃"], "hakugeki": ["迫撃", "(({STL}+{AGI})/2)", "チェス,攻撃,例外"]},
-    "spider": {"gizou": ["偽造", "{CRF}", "調査"], "sliptrap": ["スリップトラップ", "(({CRF}+{FOR})/2)", "チェス"],
-               "saiminjyutsu": ["催眠術", "{FOR}", "調査"], "captureweb": ["キャプチャーウェブ", "(({CRF}+{FOR})/2)", "チェス"],
-               "kanpa": ["看破", "{CRF}", "調査,チェス"], "thunderbolt": ["サンダーボルト", "(({CRF}+{FOR})/2)", "チェス"]},
-    "retro": {"yokokujyou" : ["予告状", "(({STL}+{TEC})/2)", "調査"], "miryou" : ["魅了", "{STL}", "調査"],
-              "balloon" : ["バルーン", "(({TEC}+{STL})/2)", "調査,チェス,移動前,例外"], "ropeandhook": ["ロープ&amp;フック", "(({TEC}+{STL})/2)", "チェス,移動後,例外"],
-              "spotlight" : ["スポットライト", "{STL}", "チェス"], "timebomb" : ["タイムボム", "{TEC}", "チェス"]},
-    "ayakashi" : {"ayakashinokai" : ["アヤカシの怪", "{ADP}", "チェス"], "yotaka" : ["ヘンゲ：夜鷹", "(({ADP}+{TEC})/2)", "調査"],
-                  "karasutengu" : ["ヘンゲ：烏天狗", "(({ADP}+{AGI})/2)", "チェス,移動後,例外"],
-                  "hakujya" : ["ヘンゲ：白蛇", "(({ADP}+{STL})/2)", "チェス,攻撃"],
-                  "nue" : ["ヘンゲ：鵺", "(({ADP}+{FOR})/2)", "チェス"],
-                 "kyuubi": ["ヘンゲ：九尾", "(({ADP}+{CRF})/2)", "チェス,移動前,例外"]},
-    "gamble" : {"thrillaction" : ["スリルアクション", "(({CRF}+{TEC})/2)", "調査,チェス,例外"],
-                "wanderer" : ["ワンダラー", "(({FOR}+{CRF})/2)", "調査,チェス"],
-                "ikasama" : ["イカサマ", "{CRF}", "チェス,例外"], "trickshot" : ["トリックショット", "{TEC}", "チェス"],
-                "doubleedgesword" : ["ダブルエッジソード", "{FOR}", "チェス"], "kirihuda" : ["切り札", "{CRF}", "チェス,例外"]}
+    "common": {"dousatsu": ["洞察", ["ADP"], "調査"], "sneaking": ["スニーキング", ["ADP"], "調査"],
+               "chikeijyunnou": ["地形順応", ["ADP"], "調査"], "bunseki": ["分析", ["ADP"], "チェス"],
+               "mighty" : ["マイティ", ["ADP"], "チェス,例外"],
+               "hayawaza": ["早業", ["AGI"], "調査"], "kikenyochi": ["危険予知", ["AGI"], "調査"],
+               "hobaku": ["捕縛", ["AGI"], "調査,チェス,攻撃"], "kaihi": ["回避", ["AGI"], "チェス,例外"],
+               "moonstep": ["ムーンステップ", ["AGI"], "チェス,移動前"],
+               "kirokujyutsu": ["記録術", ["TEC"], "調査"], "mekiki": ["目利き", ["TEC"], "調査,チェス"],
+               "kikaikousaku": ["機械工作", ["TEC"], "調査"], "iryou": ["医療", ["TEC"], "チェス"],
+               "venom": ["ベノム", ["TEC"], "チェス"],
+               "soujyuu": ["操縦", ["FOR"], "調査"], "knockout": ["ノックアウト", ["FOR"], "調査,チェス,攻撃"],
+               "toppa": ["突破", ["FOR"], "調査"], "kinsetsukougeki": ["近接攻撃", ["FOR"], "チェス,攻撃"],
+               "survive": ["サバイブ", ["FOR"], "チェス,例外"],
+               "taijyutsu": ["体術", ["STL"], "調査"], "glider": ["グライダー", ["STL"], "調査,チェス,例外"],
+               "kakuran": ["撹乱", ["STL"], "調査"], "enkyorikougeki": ["遠距離攻撃", ["STL"], "チェス,攻撃"],
+               "flashgun": ["フラッシュガン", ["STL"], "チェス"],
+               "dennou": ["電脳", ["CRF"], "調査"], "iikurume": ["言いくるめ", ["CRF"], "調査"],
+               "kaidoku": ["解読", ["CRF"], "調査"], "ryakudatsu": ["略奪", ["CRF"], "チェス"],
+               "tactician": ["タクティシャン", ["CRF"], "チェス,移動前"]},
+    "phantom": {"hensou": ["変装", ["ADP"], "調査"], "hengenjizai": ["変幻自在", ["ADP"], "チェス"],
+                "gitai": ["擬態", ["ADP"], "調査,チェス"], "chouyaku": ["跳躍", ["STL"], "チェス,例外"],
+                "wireaction": ["ワイヤーアクション", ["ADP","STL"], "調査,チェス,例外"], "decoy": ["デコイ", ["ADP","STL"], "チェス"]},
+    "ghost": {"inpei": ["隠蔽", ["TEC"], "調査"], "shunsoku": ["瞬足", ["AGI"], "チェス,移動前,例外"],
+              "onmitsu": ["隠密", ["AGI"], "調査,チェス,移動前"], "yamitobari": ["闇帳", ["TEC"], "チェス,移動前"],
+              "yuureiaruki": ["幽霊歩き", ["AGI","TEC"], "チェス,移動前,例外"], "sippuukyaku": ["疾風脚", ["AGI","TEC"], "チェス,攻撃"]},
+    "magic": {"komadukai": ["小間使い", ["TEC"], "調査"], "swap": ["スワップ", ["CRF"], "チェス"],
+              "illusion": ["イリュージョン", ["TEC","CRF"], "調査"], "mimic": ["ミミック", ["TEC"], "チェス"],
+              "shadow": ["シャドウ", ["TEC","CRF"], "チェス,移動前,例外"], "speedcontrol": ["スピードコントロール", ["TEC","CRF"], "チェス,例外"]},
+    "jack": {"iatsu": ["威圧", ["FOR"], "調査"], "mikiri": ["見切り", ["FOR","ADP"], "チェス,攻撃,例外"],
+             "kenjyutsu": ["剣術", ["FOR","ADP"], "チェス,攻撃"], "uchikowashi": ["打ち壊し", ["FOR"], "チェス"],
+             "issen": ["一閃", ["ADP"], "チェス,攻撃"], "smash": ["スマッシュ", ["FOR"], "チェス,攻撃"]},
+    "comet": {"speedgun": ["スピードガン", ["AGI"], "調査,チェス"], "flipjump": ["フリップジャンプ", ["STL"], "チェス,移動前,例外"],
+              "quickstep": ["クイックステップ", ["STL"], "チェス,例外"], "rengeki": ["連撃", ["STL","AGI"], "チェス,攻撃,例外"],
+              "nichoujyuu": ["二丁銃", ["STL","AGI"], "チェス,攻撃"], "hakugeki": ["迫撃", ["STL","AGI"], "チェス,攻撃,例外"]},
+    "spider": {"gizou": ["偽造", ["CRF"], "調査"], "sliptrap": ["スリップトラップ", ["CRF","FOR"], "チェス"],
+               "saiminjyutsu": ["催眠術", ["FOR"], "調査"], "captureweb": ["キャプチャーウェブ", ["CRF","FOR"], "チェス"],
+               "kanpa": ["看破", ["CRF"], "調査,チェス"], "thunderbolt": ["サンダーボルト", ["CRF","FOR"], "チェス"]},
+    "retro": {"yokokujyou" : ["予告状", ["STL","TEC"], "調査"], "miryou" : ["魅了", ["STL"], "調査"],
+              "balloon" : ["バルーン", ["STL","TEC"], "調査,チェス,移動前,例外"], "ropeandhook": ["ロープ&amp;フック", ["STL","TEC"], "チェス,移動後,例外"],
+              "spotlight" : ["スポットライト", ["STL"], "チェス"], "timebomb" : ["タイムボム", ["TEC"], "チェス"]},
+    "ayakashi" : {"ayakashinokai" : ["アヤカシの怪", ["ADP"], "チェス"], "yotaka" : ["ヘンゲ：夜鷹", ["ADP","TEC"], "調査"],
+                  "karasutengu" : ["ヘンゲ：烏天狗", ["ADP","AGI"], "チェス,移動後,例外"],
+                  "hakujya" : ["ヘンゲ：白蛇", ["ADP","STL"], "チェス,攻撃"],
+                  "nue" : ["ヘンゲ：鵺", ["ADP","FOR"], "チェス"],
+                 "kyuubi": ["ヘンゲ：九尾", ["ADP","CRF"], "チェス,移動前,例外"]},
+    "gamble" : {"thrillaction" : ["スリルアクション", ["CRF","TEC"], "調査,チェス,例外"],
+                "wanderer" : ["ワンダラー", ["CRF","FOR"], "調査,チェス"],
+                "ikasama" : ["イカサマ", ["CRF"], "チェス,例外"], "trickshot" : ["トリックショット", ["TEC"], "チェス"],
+                "doubleedgesword" : ["ダブルエッジソード", ["FOR"], "チェス"], "kirihuda" : ["切り札", ["CRF"], "チェス,例外"]}
   },
   ability_id_dict = {
         "洞察" : "dousatsu", "スニーキング" : "sneaking", "地形順応" : "chikeijyunnou", "分析" : "bunseki", "マイティ" : "mighty",
@@ -146,6 +146,14 @@ function clearAbilities(){
       document.getElementById(temp_abilist[subindex]+"_grow").value = "";
     }
   }
+}
+
+function calcJudgeValue(status_dict, judge_status_list){
+  var judge_value = 0;
+  judge_status_list.forEach(function(status){
+    judge_value += status_dict[status];
+  });
+  return Math.floor(judge_value / judge_status_list.length);
 }
 
 // Handler
@@ -556,6 +564,7 @@ function check_and_make_Character() {
         abilities[abkey_list[index]] = phantomism_ability_dict[phantomism][abkey_list[index]];
       }
       if (document.getElementById(abkey_list[index]+"_grow").value > 0) {
+        // growths = {"技能ID" : ["技能名", 成長値]}
         growths[abkey_list[index]] =
         [phantomism_ability_dict[phantomism][abkey_list[index]][0],
         parseInt(document.getElementById(abkey_list[index]+"_grow").value) ];
@@ -620,6 +629,8 @@ function makeCharacterXML(abilities, growths) {
     tmpabi,
     setting,
     newlined_setting = "",
+    judge_status_list,
+    judge_status,
     blob,
     url,
     atag;
@@ -671,9 +682,10 @@ function makeCharacterXML(abilities, growths) {
   xml += '      <data name="技能">\n';
   xml += '        <data name="チェス,攻撃">通常攻撃</data>\n';
   for(index = 0; index < learned_ability.length; index++) {
-    growth = document.getElementById(learned_ability[index] + "_grow").value;
+    growth = growths[learned_ability[index]];
+    growth = (typeof growth === "undefined") ? 0 : growths[learned_ability[index]][1];
     xml += '        <data name="'+abilities[learned_ability[index]][2]+'">'+abilities[learned_ability[index]][0];
-    if (growth !== "" && growth > 0) {
+    if (growth > 0) {
       xml += '+'+growth;
     }
     xml += '</data>\n';
@@ -691,17 +703,23 @@ function makeCharacterXML(abilities, growths) {
 
   xml += '    </data>\n';
   xml += '  </data>\n';
+
+  // チャットパレット
   xml += '  <chat-palette dicebot="">';
   xml += '1d3 移動ロール\n';
   xml += '1d20&lt;='+Math.max(status[0], status[1], status[2], status[3], status[4], status[5])+' 通常攻撃\n';
   for(index = 0; index < learned_ability.length; index++) {
-    growth = document.getElementById(learned_ability[index] + "_grow").value;
-    xml += '1d20&lt;=('+abilities[learned_ability[index]][1];
-    if (growth !== "" && growth > 0) {
+    growth = growths[learned_ability[index]];
+    growth = (typeof growth === "undefined") ? 0 : growths[learned_ability[index]][1];
+    judge_status_list = abilities[learned_ability[index]][1];
+    judge_status = (judge_status_list.length === 1) ? "{" + judge_status_list[0] + "}" : 
+                                                      "({" + judge_status_list[0] + "}+{" + judge_status_list[1] + "})/2"
+    xml += '1d20&lt;='+judge_status;
+    if (growth > 0) {
       xml += '+'+growth;
     }
-    xml += ') '+abilities[learned_ability[index]][0];
-    if (growth !== "" && growth > 0) {
+    xml += ' '+abilities[learned_ability[index]][0];
+    if (growth > 0) {
       xml += '+'+growth;
     }
     xml += '\n';
