@@ -74,7 +74,7 @@
       </table>
       <div id="others" style="overflow:hidden">
         <div style="float:left"><textarea id="memo" rows="10" cols="40" placeholder="Other Info..."></textarea></div>
-        <div style="float:left; margin-left:10px" class="hidden"><p style="margin:0">取得技能一覧</p><textarea id="memo" rows="9" cols="45" placeholder="取得技能一覧"></textarea>
+        <div style="float:left; margin-left:10px" class=""><!--<p style="margin:0">取得技能一覧</p>--><textarea id="learned_abilities" rows="10" cols="40" placeholder="取得技能一覧"></textarea>
       </div>
       </div>
     </div>
@@ -142,19 +142,19 @@
                 ADP分野
                 <table>
                   <tr>
-                    <td>洞察</td><td><input type="checkbox" id="dousatsu"></td><td>+<input type="number" class="grow" id="dousatsu_grow"></td>
+                    <td>洞察</td><td><input type="checkbox" id="dousatsu" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="dousatsu_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>スニーキング</td><td><input type="checkbox" id="sneaking"></td><td>+<input type="number" class="grow" id="sneaking_grow"></td>
+                    <td>スニーキング</td><td><input type="checkbox" id="sneaking" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="sneaking_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>地形順応</td><td><input type="checkbox" id="chikeijyunnou"></td><td>+<input type="number" class="grow" id="chikeijyunnou_grow"></td>
+                    <td>地形順応</td><td><input type="checkbox" id="chikeijyunnou" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="chikeijyunnou_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>分析</td><td><input type="checkbox" id="bunseki"></td><td>+<input type="number" class="grow" id="bunseki_grow"></td>
+                    <td>分析</td><td><input type="checkbox" id="bunseki" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="bunseki_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>マイティ</td><td><input type="checkbox" id="mighty"></td><td>+<input type="number" class="grow" id="mighty_grow"></td>
+                    <td>マイティ</td><td><input type="checkbox" id="mighty" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="mighty_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                 </table>
               </div>
@@ -164,19 +164,19 @@
                 TEC分野
                 <table>
                   <tr>
-                    <td>記録術</td><td><input type="checkbox" id="kirokujyutsu"></td><td>+<input type="number" class="grow" id="kirokujyutsu_grow"></td>
+                    <td>記録術</td><td><input type="checkbox" id="kirokujyutsu" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="kirokujyutsu_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>目利き</td><td><input type="checkbox" id="mekiki"></td><td>+<input type="number" class="grow" id="mekiki_grow"></td>
+                    <td>目利き</td><td><input type="checkbox" id="mekiki" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="mekiki_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>機械工作</td><td><input type="checkbox" id="kikaikousaku"></td><td>+<input type="number" class="grow" id="kikaikousaku_grow"></td>
+                    <td>機械工作</td><td><input type="checkbox" id="kikaikousaku" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="kikaikousaku_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>医療</td><td><input type="checkbox" id="iryou"></td><td>+<input type="number" class="grow" id="iryou_grow"></td>
+                    <td>医療</td><td><input type="checkbox" id="iryou" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="iryou_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>ベノム</td><td><input type="checkbox" id="venom"></td><td>+<input type="number" class="grow" id="venom_grow"></td>
+                    <td>ベノム</td><td><input type="checkbox" id="venom" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="venom_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                 </table>
               </div>
@@ -186,19 +186,19 @@
                 STL分野
                 <table>
                   <tr>
-                    <td>体術</td><td><input type="checkbox" id="taijyutsu"></td><td>+<input type="number" class="grow" id="taijyutsu_grow"></td>
+                    <td>体術</td><td><input type="checkbox" id="taijyutsu" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="taijyutsu_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>グライダー</td><td><input type="checkbox" id="glider"></td><td>+<input type="number" class="grow" id="glider_grow"></td>
+                    <td>グライダー</td><td><input type="checkbox" id="glider" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="glider_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>撹乱</td><td><input type="checkbox" id="kakuran"></td><td>+<input type="number" class="grow" id="kakuran_grow"></td>
+                    <td>撹乱</td><td><input type="checkbox" id="kakuran" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="kakuran_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>遠距離攻撃</td><td><input type="checkbox" id="enkyorikougeki"></td><td>+<input type="number" class="grow" id="enkyorikougeki_grow"></td>
+                    <td>遠距離攻撃</td><td><input type="checkbox" id="enkyorikougeki" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="enkyorikougeki_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>フラッシュガン</td><td><input type="checkbox" id="flashgun"></td><td>+<input type="number" class="grow" id="flashgun_grow"></td>
+                    <td>フラッシュガン</td><td><input type="checkbox" id="flashgun" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="flashgun_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                 </table>
               </div>
@@ -211,19 +211,19 @@
                 AGI分野
                 <table>
                   <tr>
-                    <td>早業</td><td><input type="checkbox" id="hayawaza"></td><td>+<input type="number" class="grow" id="hayawaza_grow"></td>
+                    <td>早業</td><td><input type="checkbox" id="hayawaza" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="hayawaza_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>危険予知</td><td><input type="checkbox" id="kikenyochi"></td><td>+<input type="number" class="grow" id="kikenyochi_grow"></td>
+                    <td>危険予知</td><td><input type="checkbox" id="kikenyochi" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="kikenyochi_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>捕縛</td><td><input type="checkbox" id="hobaku"></td><td>+<input type="number" class="grow" id="hobaku_grow"></td>
+                    <td>捕縛</td><td><input type="checkbox" id="hobaku" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="hobaku_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>回避</td><td><input type="checkbox" id="kaihi"></td><td>+<input type="number" class="grow" id="kaihi_grow"></td>
+                    <td>回避</td><td><input type="checkbox" id="kaihi" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="kaihi_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>ムーンステップ</td><td><input type="checkbox" id="moonstep"></td><td>+<input type="number" class="grow" id="moonstep_grow"></td>
+                    <td>ムーンステップ</td><td><input type="checkbox" id="moonstep" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="moonstep_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                 </table>
               </div>
@@ -233,19 +233,19 @@
                 FOR分野
                 <table>
                   <tr>
-                    <td>操縦</td><td><input type="checkbox" id="soujyuu"></td><td>+<input type="number" class="grow" id="soujyuu_grow"></td>
+                    <td>操縦</td><td><input type="checkbox" id="soujyuu" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="soujyuu_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>ノックアウト</td><td><input type="checkbox" id="knockout"></td><td>+<input type="number" class="grow" id="knockout_grow"></td>
+                    <td>ノックアウト</td><td><input type="checkbox" id="knockout" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="knockout_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>突破</td><td><input type="checkbox" id="toppa"></td><td>+<input type="number" class="grow" id="toppa_grow"></td>
+                    <td>突破</td><td><input type="checkbox" id="toppa" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="toppa_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>近接攻撃</td><td><input type="checkbox" id="kinsetsukougeki"></td><td>+<input type="number" class="grow" id="kinsetsukougeki_grow"></td>
+                    <td>近接攻撃</td><td><input type="checkbox" id="kinsetsukougeki" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="kinsetsukougeki_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>サバイブ</td><td><input type="checkbox" id="survive"></td><td>+<input type="number" class="grow" id="survive_grow"></td>
+                    <td>サバイブ</td><td><input type="checkbox" id="survive" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="survive_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                 </table>
               </div>
@@ -255,19 +255,19 @@
                 CRF分野
                 <table>
                   <tr>
-                    <td>電脳</td><td><input type="checkbox" id="dennou"></td><td>+<input type="number" class="grow" id="dennou_grow"></td>
+                    <td>電脳</td><td><input type="checkbox" id="dennou" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="dennou_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>言いくるめ</td><td><input type="checkbox" id="iikurume"></td><td>+<input type="number" class="grow" id="iikurume_grow"></td>
+                    <td>言いくるめ</td><td><input type="checkbox" id="iikurume" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="iikurume_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>解読</td><td><input type="checkbox" id="kaidoku"></td><td>+<input type="number" class="grow" id="kaidoku_grow"></td>
+                    <td>解読</td><td><input type="checkbox" id="kaidoku" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="kaidoku_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>略奪</td><td><input type="checkbox" id="ryakudatsu"></td><td>+<input type="number" class="grow" id="ryakudatsu_grow"></td>
+                    <td>略奪</td><td><input type="checkbox" id="ryakudatsu" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="ryakudatsu_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                   <tr>
-                    <td>タクティシャン</td><td><input type="checkbox" id="tactician"></td><td>+<input type="number" class="grow" id="tactician_grow"></td>
+                    <td>タクティシャン</td><td><input type="checkbox" id="tactician" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="tactician_grow" onchange="showLearnedAbilities()"></td>
                   </tr>
                 </table>
               </div>
@@ -281,16 +281,16 @@
           <tr>
             <table>
               <tr>
-                <td>変装(ADP)</td><td><input type="checkbox" id="hensou"></td><td>+<input type="number" class="grow" id="hensou_grow"></td>
-                <td>変幻自在(ADP)</td><td><input type="checkbox" id="hengenjizai"></td><td>+<input type="number" class="grow" id="hengenjizai_grow"></td>
+                <td>変装(ADP)</td><td><input type="checkbox" id="hensou" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="hensou_grow" onchange="showLearnedAbilities()"></td>
+                <td>変幻自在(ADP)</td><td><input type="checkbox" id="hengenjizai" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="hengenjizai_grow" onchange="showLearnedAbilities()"></td>
               </tr>
               <tr>
-                <td>擬態(ADP)</td><td><input type="checkbox" id="gitai"></td><td>+<input type="number" class="grow" id="gitai_grow"></td>
-                <td>跳躍(STL)</td><td><input type="checkbox" id="chouyaku"></td><td>+<input type="number" class="grow" id="chouyaku_grow"></td>
+                <td>擬態(ADP)</td><td><input type="checkbox" id="gitai" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="gitai_grow" onchange="showLearnedAbilities()"></td>
+                <td>跳躍(STL)</td><td><input type="checkbox" id="chouyaku" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="chouyaku_grow" onchange="showLearnedAbilities()"></td>
               </tr>
               <tr>
-                <td>ワイヤーアクション(ADP/STL)</td><td><input type="checkbox" id="wireaction"></td><td>+<input type="number" class="grow" id="wireaction_grow"></td>
-                <td>デコイ(ADP/STL)</td><td><input type="checkbox" id="decoy"></td><td>+<input type="number" class="grow" id="decoy_grow"></td>
+                <td>ワイヤーアクション(ADP/STL)</td><td><input type="checkbox" id="wireaction" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="wireaction_grow" onchange="showLearnedAbilities()"></td>
+                <td>デコイ(ADP/STL)</td><td><input type="checkbox" id="decoy" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="decoy_grow" onchange="showLearnedAbilities()"></td>
               </tr>
             </table>
           </tr>
@@ -302,16 +302,16 @@
           <tr>
             <table>
               <tr>
-                <td>隠蔽(TEC)</td><td><input type="checkbox" id="inpei"></td><td>+<input type="number" class="grow" id="inpei_grow"></td>
-                <td>瞬足(AGI)</td><td><input type="checkbox" id="shunsoku"></td><td>+<input type="number" class="grow" id="shunsoku_grow"></td>
+                <td>隠蔽(TEC)</td><td><input type="checkbox" id="inpei" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="inpei_grow" onchange="showLearnedAbilities()"></td>
+                <td>瞬足(AGI)</td><td><input type="checkbox" id="shunsoku" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="shunsoku_grow" onchange="showLearnedAbilities()"></td>
               </tr>
               <tr>
-                <td>隠密(AGI)</td><td><input type="checkbox" id="onmitsu"></td><td>+<input type="number" class="grow" id="onmitsu_grow"></td>
-                <td>闇帳(TEC)</td><td><input type="checkbox" id="yamitobari"></td><td>+<input type="number" class="grow" id="yamitobari_grow"></td>
+                <td>隠密(AGI)</td><td><input type="checkbox" id="onmitsu" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="onmitsu_grow" onchange="showLearnedAbilities()"></td>
+                <td>闇帳(TEC)</td><td><input type="checkbox" id="yamitobari" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="yamitobari_grow" onchange="showLearnedAbilities()"></td>
               </tr>
               <tr>
-                <td>幽霊歩き(AGI/TEC)</td><td><input type="checkbox" id="yuureiaruki"></td><td>+<input type="number" class="grow" id="yuureiaruki_grow"></td>
-                <td>疾風脚(AGI/TEC)</td><td><input type="checkbox" id="sippuukyaku"></td><td>+<input type="number" class="grow" id="sippuukyaku_grow"></td>
+                <td>幽霊歩き(AGI/TEC)</td><td><input type="checkbox" id="yuureiaruki" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="yuureiaruki_grow" onchange="showLearnedAbilities()"></td>
+                <td>疾風脚(AGI/TEC)</td><td><input type="checkbox" id="sippuukyaku" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="sippuukyaku_grow" onchange="showLearnedAbilities()"></td>
               </tr>
             </table>
           </tr>
@@ -323,16 +323,16 @@
           <tr>
             <table>
               <tr>
-                <td>小間使い(TEC)</td><td><input type="checkbox" id="komadukai"></td><td>+<input type="number" class="grow" id="komadukai_grow"></td>
-                <td>スワップ(CRF)</td><td><input type="checkbox" id="swap"></td><td>+<input type="number" class="grow" id="swap_grow"></td>
+                <td>小間使い(TEC)</td><td><input type="checkbox" id="komadukai" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="komadukai_grow" onchange="showLearnedAbilities()"></td>
+                <td>スワップ(CRF)</td><td><input type="checkbox" id="swap" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="swap_grow" onchange="showLearnedAbilities()"></td>
               </tr>
               <tr>
-                <td>イリュージョン(TEC/CRF)</td><td><input type="checkbox" id="illusion"></td><td>+<input type="number" class="grow" id="illusion_grow"></td>
-                <td>ミミック(TEC)</td><td><input type="checkbox" id="mimic"></td><td>+<input type="number" class="grow" id="mimic_grow"></td>
+                <td>イリュージョン(TEC/CRF)</td><td><input type="checkbox" id="illusion" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="illusion_grow" onchange="showLearnedAbilities()"></td>
+                <td>ミミック(TEC)</td><td><input type="checkbox" id="mimic" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="mimic_grow" onchange="showLearnedAbilities()"></td>
               </tr>
               <tr>
-                <td>シャドウ(TEC/CRF)</td><td><input type="checkbox" id="shadow"></td><td>+<input type="number" class="grow" id="shadow_grow"></td>
-                <td>スピードコントロール(TEC/CRF)</td><td><input type="checkbox" id="speedcontrol"></td><td>+<input type="number" class="grow" id="speedcontrol_grow"></td>
+                <td>シャドウ(TEC/CRF)</td><td><input type="checkbox" id="shadow" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="shadow_grow" onchange="showLearnedAbilities()"></td>
+                <td>スピードコントロール(TEC/CRF)</td><td><input type="checkbox" id="speedcontrol" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="speedcontrol_grow" onchange="showLearnedAbilities()"></td>
               </tr>
             </table>
           </tr>
@@ -344,16 +344,16 @@
           <tr>
             <table>
               <tr>
-                <td>威圧(FOR)</td><td><input type="checkbox" id="iatsu"></td><td>+<input type="number" class="grow" id="iatsu_grow"></td>
-                <td>見切り(FOR/ADP)</td><td><input type="checkbox" id="mikiri"></td><td>+<input type="number" class="grow" id="mikiri_grow"></td>
+                <td>威圧(FOR)</td><td><input type="checkbox" id="iatsu" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="iatsu_grow" onchange="showLearnedAbilities()"></td>
+                <td>見切り(FOR/ADP)</td><td><input type="checkbox" id="mikiri" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="mikiri_grow" onchange="showLearnedAbilities()"></td>
               </tr>
               <tr>
-                <td>剣術(FOR/ADP)</td><td><input type="checkbox" id="kenjyutsu"></td><td>+<input type="number" class="grow" id="kenjyutsu_grow"></td>
-                <td>打ち壊し(FOR)</td><td><input type="checkbox" id="uchikowashi"></td><td>+<input type="number" class="grow" id="uchikowashi_grow"></td>
+                <td>剣術(FOR/ADP)</td><td><input type="checkbox" id="kenjyutsu" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="kenjyutsu_grow" onchange="showLearnedAbilities()"></td>
+                <td>打ち壊し(FOR)</td><td><input type="checkbox" id="uchikowashi" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="uchikowashi_grow" onchange="showLearnedAbilities()"></td>
               </tr>
               <tr>
-                <td>一閃(ADP)</td><td><input type="checkbox" id="issen"></td><td>+<input type="number" class="grow" id="issen_grow"></td>
-                <td>スマッシュ(FOR)</td><td><input type="checkbox" id="smash"></td><td>+<input type="number" class="grow" id="smash_grow"></td>
+                <td>一閃(ADP)</td><td><input type="checkbox" id="issen" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="issen_grow" onchange="showLearnedAbilities()"></td>
+                <td>スマッシュ(FOR)</td><td><input type="checkbox" id="smash" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="smash_grow" onchange="showLearnedAbilities()"></td>
               </tr>
             </table>
           </tr>
@@ -365,16 +365,16 @@
           <tr>
             <table>
               <tr>
-                <td>スピードガン(AGI)</td><td><input type="checkbox" id="speedgun"></td><td>+<input type="number" class="grow" id="speedgun_grow"></td>
-                <td>フリップジャンプ(STL)</td><td><input type="checkbox" id="flipjump"></td><td>+<input type="number" class="grow" id="flipjump_grow"></td>
+                <td>スピードガン(AGI)</td><td><input type="checkbox" id="speedgun" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="speedgun_grow" onchange="showLearnedAbilities()"></td>
+                <td>フリップジャンプ(STL)</td><td><input type="checkbox" id="flipjump" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="flipjump_grow" onchange="showLearnedAbilities()"></td>
               </tr>
               <tr>
-                <td>クイックステップ(STL)</td><td><input type="checkbox" id="quickstep"></td><td>+<input type="number" class="grow" id="quickstep_grow"></td>
-                <td>連撃(STL/AGI)</td><td><input type="checkbox" id="rengeki"></td><td>+<input type="number" class="grow" id="rengeki_grow"></td>
+                <td>クイックステップ(STL)</td><td><input type="checkbox" id="quickstep" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="quickstep_grow" onchange="showLearnedAbilities()"></td>
+                <td>連撃(STL/AGI)</td><td><input type="checkbox" id="rengeki" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="rengeki_grow" onchange="showLearnedAbilities()"></td>
               </tr>
               <tr>
-                <td>二丁銃(STL/AGI)</td><td><input type="checkbox" id="nichoujyuu"></td><td>+<input type="number" class="grow" id="nichoujyuu_grow"></td>
-                <td>迫撃(STL/AGI)</td><td><input type="checkbox" id="hakugeki"></td><td>+<input type="number" class="grow" id="hakugeki_grow"></td>
+                <td>二丁銃(STL/AGI)</td><td><input type="checkbox" id="nichoujyuu" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="nichoujyuu_grow" onchange="showLearnedAbilities()"></td>
+                <td>迫撃(STL/AGI)</td><td><input type="checkbox" id="hakugeki" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="hakugeki_grow" onchange="showLearnedAbilities()"></td>
               </tr>
             </table>
           </tr>
@@ -386,16 +386,16 @@
           <tr>
             <table>
               <tr>
-                <td>偽造(CRF)</td><td><input type="checkbox" id="gizou"></td><td>+<input type="number" class="grow" id="gizou_grow"></td>
-                <td>スリップトラップ(CRF/FOR)</td><td><input type="checkbox" id="sliptrap"></td><td>+<input type="number" class="grow" id="sliptrap_grow"></td>
+                <td>偽造(CRF)</td><td><input type="checkbox" id="gizou" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="gizou_grow" onchange="showLearnedAbilities()"></td>
+                <td>スリップトラップ(CRF/FOR)</td><td><input type="checkbox" id="sliptrap" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="sliptrap_grow" onchange="showLearnedAbilities()"></td>
               </tr>
               <tr>
-                <td>催眠術(FOR)</td><td><input type="checkbox" id="saiminjyutsu"></td><td>+<input type="number" class="grow" id="saiminjyutsu_grow"></td>
-                <td>キャプチャーウェブ(CRF/FOR)</td><td><input type="checkbox" id="captureweb"></td><td>+<input type="number" class="grow" id="captureweb_grow"></td>
+                <td>催眠術(FOR)</td><td><input type="checkbox" id="saiminjyutsu" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="saiminjyutsu_grow" onchange="showLearnedAbilities()"></td>
+                <td>キャプチャーウェブ(CRF/FOR)</td><td><input type="checkbox" id="captureweb" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="captureweb_grow" onchange="showLearnedAbilities()"></td>
               </tr>
               <tr>
-                <td>看破(CRF)</td><td><input type="checkbox" id="kanpa"></td><td>+<input type="number" class="grow" id="kanpa_grow"></td>
-                <td>サンダーボルト(CRF/FOR)</td><td><input type="checkbox" id="thunderbolt"></td><td>+<input type="number" class="grow" id="thunderbolt_grow"></td>
+                <td>看破(CRF)</td><td><input type="checkbox" id="kanpa" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="kanpa_grow" onchange="showLearnedAbilities()"></td>
+                <td>サンダーボルト(CRF/FOR)</td><td><input type="checkbox" id="thunderbolt" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="thunderbolt_grow" onchange="showLearnedAbilities()"></td>
               </tr>
             </table>
           </tr>
@@ -407,16 +407,16 @@
           <tr>
             <table>
               <tr>
-                <td>予告状(STL/TEC)</td><td><input type="checkbox" id="yokokujyou"></td><td>+<input type="number" class="grow" id="yokokujyou_grow"></td>
-                <td>魅了(STL)</td><td><input type="checkbox" id="miryou"></td><td>+<input type="number" class="grow" id="miryou_grow"></td>
+                <td>予告状(STL/TEC)</td><td><input type="checkbox" id="yokokujyou" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="yokokujyou_grow" onchange="showLearnedAbilities()"></td>
+                <td>魅了(STL)</td><td><input type="checkbox" id="miryou" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="miryou_grow" onchange="showLearnedAbilities()"></td>
               </tr>
               <tr>
-                <td>バルーン(STL/TEC)</td><td><input type="checkbox" id="balloon"></td><td>+<input type="number" class="grow" id="balloon_grow"></td>
-                <td>ロープ&amp;フック(STL/TEC)</td><td><input type="checkbox" id="ropeandhook"></td><td>+<input type="number" class="grow" id="ropeandhook_grow"></td>
+                <td>バルーン(STL/TEC)</td><td><input type="checkbox" id="balloon" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="balloon_grow" onchange="showLearnedAbilities()"></td>
+                <td>ロープ&amp;フック(STL/TEC)</td><td><input type="checkbox" id="ropeandhook" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="ropeandhook_grow" onchange="showLearnedAbilities()"></td>
               </tr>
               <tr>
-                <td>スポットライト(STL)</td><td><input type="checkbox" id="spotlight"></td><td>+<input type="number" class="grow" id="spotlight_grow"></td>
-                <td>タイムボム(TEC)</td><td><input type="checkbox" id="timebomb"></td><td>+<input type="number" class="grow" id="timebomb_grow"></td>
+                <td>スポットライト(STL)</td><td><input type="checkbox" id="spotlight" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="spotlight_grow" onchange="showLearnedAbilities()"></td>
+                <td>タイムボム(TEC)</td><td><input type="checkbox" id="timebomb" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="timebomb_grow" onchange="showLearnedAbilities()"></td>
               </tr>
             </table>
           </tr>
@@ -428,16 +428,16 @@
           <tr>
             <table>
               <tr>
-                <td>アヤカシの怪(ADP)</td><td><input type="checkbox" id="ayakashinokai"></td><td>+<input type="number" class="grow" id="ayakashinokai_grow"></td>
-                <td>ヘンゲ：夜鷹(ADP/TEC)</td><td><input type="checkbox" id="yotaka"></td><td>+<input type="number" class="grow" id="yotaka_grow"></td>
+                <td>アヤカシの怪(ADP)</td><td><input type="checkbox" id="ayakashinokai" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="ayakashinokai_grow" onchange="showLearnedAbilities()"></td>
+                <td>ヘンゲ：夜鷹(ADP/TEC)</td><td><input type="checkbox" id="yotaka" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="yotaka_grow" onchange="showLearnedAbilities()"></td>
               </tr>
               <tr>
-                <td>ヘンゲ：九尾(ADP/CRF)</td><td><input type="checkbox" id="kyuubi"></td><td>+<input type="number" class="grow" id="kyuubi_grow"></td>
-                <td>ヘンゲ：烏天狗(ADP/AGI)</td><td><input type="checkbox" id="karasutengu"></td><td>+<input type="number" class="grow" id="karasutengu_grow"></td>
+                <td>ヘンゲ：九尾(ADP/CRF)</td><td><input type="checkbox" id="kyuubi" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="kyuubi_grow" onchange="showLearnedAbilities()"></td>
+                <td>ヘンゲ：烏天狗(ADP/AGI)</td><td><input type="checkbox" id="karasutengu" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="karasutengu_grow" onchange="showLearnedAbilities()"></td>
               </tr>
               <tr>
-                <td>ヘンゲ：鵺(ADP/FOR)</td><td><input type="checkbox" id="nue"></td><td>+<input type="number" class="grow" id="nue_grow"></td>
-                <td>ヘンゲ：白蛇(ADP/STL)</td><td><input type="checkbox" id="hakujya"></td><td>+<input type="number" class="grow" id="hakujya_grow"></td>
+                <td>ヘンゲ：鵺(ADP/FOR)</td><td><input type="checkbox" id="nue" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="nue_grow" onchange="showLearnedAbilities()"></td>
+                <td>ヘンゲ：白蛇(ADP/STL)</td><td><input type="checkbox" id="hakujya" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="hakujya_grow" onchange="showLearnedAbilities()"></td>
               </tr>
             </table>
           </tr>
@@ -449,16 +449,16 @@
           <tr>
             <table>
               <tr>
-                <td>スリルアクション(CRF/TEC)</td><td><input type="checkbox" id="thrillaction"></td><td>+<input type="number" class="grow" id="thrillaction_grow"></td>
-                <td>ワンダラー(CRF/FOR)</td><td><input type="checkbox" id="wanderer"></td><td>+<input type="number" class="grow" id="wanderer_grow"></td>
+                <td>スリルアクション(CRF/TEC)</td><td><input type="checkbox" id="thrillaction" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="thrillaction_grow" onchange="showLearnedAbilities()"></td>
+                <td>ワンダラー(CRF/FOR)</td><td><input type="checkbox" id="wanderer" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="wanderer_grow" onchange="showLearnedAbilities()"></td>
               </tr>
               <tr>
-                <td>イカサマ(CRF)</td><td><input type="checkbox" id="ikasama"></td><td>+<input type="number" class="grow" id="ikasama_grow"></td>
-                <td>トリックショット(TEC)</td><td><input type="checkbox" id="trickshot"></td><td>+<input type="number" class="grow" id="trickshot_grow"></td>
+                <td>イカサマ(CRF)</td><td><input type="checkbox" id="ikasama" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="ikasama_grow" onchange="showLearnedAbilities()"></td>
+                <td>トリックショット(TEC)</td><td><input type="checkbox" id="trickshot" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="trickshot_grow" onchange="showLearnedAbilities()"></td>
               </tr>
               <tr>
-                <td>ダブルエッジソード(FOR)</td><td><input type="checkbox" id="doubleedgesword"></td><td>+<input type="number" class="grow" id="doubleedgesword_grow"></td>
-                <td>切り札(CRF)</td><td><input type="checkbox" id="kirihuda"></td><td>+<input type="number" class="grow" id="kirihuda_grow"></td>
+                <td>ダブルエッジソード(FOR)</td><td><input type="checkbox" id="doubleedgesword" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="doubleedgesword_grow" onchange="showLearnedAbilities()"></td>
+                <td>切り札(CRF)</td><td><input type="checkbox" id="kirihuda" onchange="showLearnedAbilities()"></td><td>+<input type="number" class="grow" id="kirihuda_grow" onchange="showLearnedAbilities()"></td>
               </tr>
             </table>
           </tr>
@@ -472,7 +472,7 @@
 
     <div class="footer">
       PHANTOMISMの著作権は全て「miRa」「つきのふね」に帰属します。<br />
-      ver2.0 made by xiao (twitter: @s_o_xiao)
+      ver2.1 made by xiao (twitter: @s_o_xiao)
     </div>
     <script src="js/main.js"></script>
   </body>
