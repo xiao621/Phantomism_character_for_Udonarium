@@ -524,7 +524,7 @@ function showLearnedAbilities(){
       for(subindex = 0; subindex < ability_keys.length; subindex++){
         if (document.getElementById(ability_keys[subindex]).checked) {
           learned_ability = phantomism_ability_dict[phantomism_list[index]][ability_keys[subindex]];
-          growth = document.getElementById(ability_keys[index]+"_grow").value;
+          growth = document.getElementById(ability_keys[subindex]+"_grow").value;
           judge_value = calcJudgeValue(status_dict, learned_ability[1]);
           judge_value = (typeof growth === "undefined" || isNaN(growth) || growth <= 0) ? Math.min(18, judge_value) : Math.min(18, judge_value + parseInt(growth));
           document.getElementById("learned_abilities").innerHTML += "【" + learned_ability[0] + "】: " + judge_value + "\n";
