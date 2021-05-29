@@ -224,6 +224,8 @@ function setUploadedData(xml) {
   for(index = 0 ; index < xml.getElementsByName("成長")[0].children.length; index++) {
     document.getElementById(ability_id_dict[xml.getElementsByName("成長")[0].children[index].getAttribute("name")] + "_grow").value = xml.getElementsByName("成長")[0].children[index].innerHTML.match(/\d+/)[0];
   }
+
+  showLearnedAbilities();
 }
 
 function setVeteran() {
