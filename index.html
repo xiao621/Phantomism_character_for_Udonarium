@@ -469,11 +469,16 @@
    
     <div id="message"></div>
     <input type="button" onclick="check_and_make_Character()" value="キャラクター作成！">
-     ダウンロードされたファイルをユドナリウム上にドラッグ＆ドロップをして使用してください。
-
+    <input type="checkbox" id="create_cocofolia_json">cocofolia用のキャラクターデータを生成する
+    <p>ダウンロードされたファイルをユドナリウム上にドラッグ＆ドロップをして使用してください。</p>
+    <div id="for_cocofolia" class="hidden">
+      <p>cocofoliaへは以下をコピー&ペーストしてください。</p>
+      <textarea id="cocofolia_json" rows="10" cols="40" placeholder="Cocofoliaキャラクター用JSON" readonly>{"kind":"character","data":{"name":"Cocofolia Demo","memo":"something\nnew.","initiative":10,"status":[{"label":"VIT","value":5,"max":5}],"params":[{"label":"ADP","value":"10"},{"label":"AGI","value":"10"},{"label":"TEC","value":"10"},{"label":"FOR","value":"10"},{"label":"STL","value":"10"},{"label":"CRF","value":"10"}],"commands":"1d3 移動ロール\n1d20<=10 通常攻撃\nその他技能..."}}
+      </textarea>
+    </div>
     <div class="footer">
       PHANTOMISMの著作権は全て「miRa」「つきのふね」に帰属します。<br />
-      ver2.1.1 made by xiao (twitter: @s_o_xiao)
+      ver2.2 made by xiao (twitter: @s_o_xiao)
     </div>
   </body>
 </html>
