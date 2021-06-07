@@ -198,7 +198,7 @@ function setUploadedData(xml) {
   if(xml.getElementsByName("Honor")[0]){
     honor_and_veteran = xml.getElementsByName("Honor")[0].innerHTML;
     document.getElementById("veteran").checked = (honor_and_veteran.lastIndexOf("V") != -1) ? true : false;
-    document.getElementById("character_honor").value = honor_and_veteran.substring(0, honor_and_veteran.indexOf("★"));
+    document.getElementById("character_honor").value = honor_and_veteran.substring(0, honor_and_veteran.indexOf("★")) != "" ? honor_and_veteran.substring(0, honor_and_veteran.indexOf("★")) : honor_and_veteran.replace(/[^0-9]/g, "");;
   }
   document.getElementById("phantomism").value = xml.getElementsByName("PHANTOMISM")[0].innerHTML.toLowerCase();
   setDefaultStatus();
