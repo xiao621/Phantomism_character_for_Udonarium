@@ -198,7 +198,7 @@ function setUploadedData(xml) {
   if(xml.getElementsByName("Honor")[0]){
     honor_and_veteran = xml.getElementsByName("Honor")[0].innerHTML;
     document.getElementById("veteran").checked = (honor_and_veteran.lastIndexOf("V") != -1) ? true : false;
-    document.getElementById("character_honor").value = honor_and_veteran.substring(0, honor_and_veteran.indexOf("★")) != "" ? honor_and_veteran.substring(0, honor_and_veteran.indexOf("★")) : honor_and_veteran.replace(/[^0-9]/g, "");;
+    document.getElementById("character_honor").value = honor_and_veteran.replace(/[^0-9]/g, "");;
   }
   document.getElementById("phantomism").value = xml.getElementsByName("PHANTOMISM")[0].innerHTML.toLowerCase();
   setDefaultStatus();
@@ -669,9 +669,16 @@ function check_and_make_Character() {
   // データ生成前のチェック
   if (msg !== "") {
     document.getElementById("message").innerHTML = msg;
+    document.getElementById("for_cocofolia").classList.add("hidden");
   } else {
     document.getElementById("message").innerHTML = "";
     makeCharacterXML(abilities, growths);
+    if(document.getElementById("create_cocofolia_json").checked){
+      document.getElementById("for_cocofolia").classList.remove("hidden");
+      makeCharacterJSON(abilities, growths);
+    } else {
+      document.getElementById("for_cocofolia").classList.add("hidden");
+    }
   }
 }
 
@@ -807,6 +814,69 @@ function makeCharacterXML(abilities, growths) {
   atag.click();
   atag.remove();
   URL.revokeObjectURL(url);
+}
+
+function makeCharacterJSON(abilities, growths) {
+  var cocofolia_json = {"kind":"character","data":{}},
+      params = [],
+      commands = "",
+      learned_ability = Object.keys(abilities),
+      growth_keys = Object.keys(growths),
+      status = [document.getElementById("sum_adp").value,
+                document.getElementById("sum_agi").value,
+                document.getElementById("sum_tec").value,
+                document.getElementById("sum_for").value,
+                document.getElementById("sum_stl").value,
+                document.getElementById("sum_crf").value];
+  cocofolia_json["data"]["name"] = document.getElementById("character_name").value.replace(patternString, escapeString)
+  cocofolia_json["data"]["memo"] = document.getElementById("memo").value.replace(patternString, escapeString).replace(/\r\n|\r/g, "\n")
+  cocofolia_json["data"]["initiative"] = parseInt(document.getElementById("sum_agi").value, 10)
+  cocofolia_json["data"]["status"] = [{"label":"VIT", "value":document.getElementById("sum_vit").value, "max":document.getElementById("sum_vit").value}]
+  params.push({"label":"Age", "value": document.getElementById("character_age").value});
+  params.push({"label":"Gender", "value": document.getElementById("character_gender").value});
+  params.push({"label":"Home", "value": document.getElementById("character_home").value});
+  params.push({"label":"Job", "value": document.getElementById("character_job").value});
+  params.push({"label":"Home", "value": document.getElementById("character_home").value});
+  params.push({"label":"Honor", "value": document.getElementById("character_honor").value});
+  params.push({"label":"Phantomism", "value": document.getElementById("phantomism").value});
+  params.push({"label":"", "value": ""});
+  params.push({"label":"ADP", "value": document.getElementById("sum_adp").value});
+  params.push({"label":"AGI", "value": document.getElementById("sum_agi").value});
+  params.push({"label":"TEC", "value": document.getElementById("sum_tec").value});
+  params.push({"label":"FOR", "value": document.getElementById("sum_for").value});
+  params.push({"label":"STL", "value": document.getElementById("sum_stl").value});
+  params.push({"label":"CRF", "value": document.getElementById("sum_crf").value});
+  cocofolia_json["data"]["params"] = params;
+  
+  commands += "1d3 移動ロール\n";
+  commands += "1d20&lt;="+Math.max(status[0], status[1], status[2], status[3], status[4], status[5])+" 通常攻撃\n";
+  for(index = 0; index < learned_ability.length; index++) {
+    growth = growths[learned_ability[index]];
+    growth = (typeof growth === "undefined") ? 0 : growths[learned_ability[index]][1];
+    judge_status_list = abilities[learned_ability[index]][1];
+    judge_status = (judge_status_list.length === 1) ? "{" + judge_status_list[0] + "}" : 
+                                                      "({" + judge_status_list[0] + "}+{" + judge_status_list[1] + "})/2"
+    commands += "1d20&lt;="+judge_status;
+    if (growth > 0) {
+      commands += "+"+growth;
+    }
+    commands += " "+abilities[learned_ability[index]][0];
+    if (growth > 0) {
+      commands += "+"+growth;
+    }
+    commands += "\n";
+  }
+  commands += "\n";
+  commands += "1d10&lt;={VIT} VITロール\n";
+  commands += "1d20&lt;={ADP} ADPロール\n";
+  commands += "1d20&lt;={AGI} AGIロール\n";
+  commands += "1d20&lt;={TEC} TECロール\n";
+  commands += "1d20&lt;={FOR} FORロール\n";
+  commands += "1d20&lt;={STL} STLロール\n";
+  commands += "1d20&lt;={CRF} CRFロール\n";
+  cocofolia_json["data"]["commands"] = commands;
+  document.getElementById("cocofolia_json").innerHTML = JSON.stringify(cocofolia_json);
+  document.getElementById("cocofolia_json").focus();
 }
 
 window.onload = setDefaultStatus;
