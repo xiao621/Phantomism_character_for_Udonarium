@@ -836,7 +836,6 @@ function makeCharacterJSON(abilities, growths) {
   params.push({"label":"Gender", "value": document.getElementById("character_gender").value});
   params.push({"label":"Home", "value": document.getElementById("character_home").value});
   params.push({"label":"Job", "value": document.getElementById("character_job").value});
-  params.push({"label":"Home", "value": document.getElementById("character_home").value});
   params.push({"label":"Honor", "value": document.getElementById("character_honor").value});
   params.push({"label":"Phantomism", "value": document.getElementById("phantomism").value});
   params.push({"label":"", "value": ""});
