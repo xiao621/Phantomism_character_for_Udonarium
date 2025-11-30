@@ -190,39 +190,39 @@ function setUploadedData(xml) {
   clearAllInput();
 
   // 基本情報
-  document.getElementById("character_name").value = xml.getElementsByName("name")[0].innerHTML;
-  document.getElementById("character_age").value = xml.getElementsByName("Age")[0].innerHTML;
-  document.getElementById("character_gender").value = xml.getElementsByName("Gender")[0].innerHTML;
-  document.getElementById("character_home").value = xml.getElementsByName("Home")[0].innerHTML;
-  document.getElementById("character_job").value = xml.getElementsByName("Job")[0].innerHTML;
-  if(xml.getElementsByName("Honor")[0]){
-    honor_and_veteran = xml.getElementsByName("Honor")[0].innerHTML;
+  document.getElementById("character_name").value = xml.querySelector("[name=name]").innerHTML;
+  document.getElementById("character_age").value = xml.querySelector("[name=Age]").innerHTML;
+  document.getElementById("character_gender").value = xml.querySelector("[name=Gender]").innerHTML;
+  document.getElementById("character_home").value = xml.querySelector("[name=Home]").innerHTML;
+  document.getElementById("character_job").value = xml.querySelector("[name=Job]").innerHTML;
+  if(xml.querySelector("[name=Honor]")){
+    honor_and_veteran = xml.querySelector("[name=Honor]").innerHTML;
     document.getElementById("veteran").checked = (honor_and_veteran.lastIndexOf("V") != -1) ? true : false;
     document.getElementById("character_honor").value = honor_and_veteran.replace(/[^0-9]/g, "");;
   }
-  document.getElementById("phantomism").value = xml.getElementsByName("PHANTOMISM")[0].innerHTML.toLowerCase();
+  document.getElementById("phantomism").value = xml.querySelector("[name=PHANTOMISM]").innerHTML.toLowerCase();
   setDefaultStatus();
-  document.getElementById("memo").innerHTML = xml.getElementsByName("メモ")[0].innerHTML;
+  document.getElementById("memo").innerHTML = xml.querySelector("[name=メモ]").innerHTML;
 
   // ステータス
-  document.getElementById("add_vit").value = parseInt(xml.getElementsByName("VIT")[0].innerHTML) - document.getElementById("default_vit").value;
-  document.getElementById("add_adp").value = parseInt(xml.getElementsByName("ADP")[0].innerHTML) - document.getElementById("default_adp").value;
-  document.getElementById("add_agi").value = parseInt(xml.getElementsByName("AGI")[0].innerHTML) - document.getElementById("default_agi").value;
-  document.getElementById("add_tec").value = parseInt(xml.getElementsByName("TEC")[0].innerHTML) - document.getElementById("default_tec").value;
-  document.getElementById("add_for").value = parseInt(xml.getElementsByName("FOR")[0].innerHTML) - document.getElementById("default_for").value;
-  document.getElementById("add_stl").value = parseInt(xml.getElementsByName("STL")[0].innerHTML) - document.getElementById("default_stl").value;
-  document.getElementById("add_crf").value = parseInt(xml.getElementsByName("CRF")[0].innerHTML) - document.getElementById("default_crf").value;
+  document.getElementById("add_vit").value = parseInt(xml.querySelector("[name=VIT]").innerHTML) - document.getElementById("default_vit").value;
+  document.getElementById("add_adp").value = parseInt(xml.querySelector("[name=ADP]").innerHTML) - document.getElementById("default_adp").value;
+  document.getElementById("add_agi").value = parseInt(xml.querySelector("[name=AGI]").innerHTML) - document.getElementById("default_agi").value;
+  document.getElementById("add_tec").value = parseInt(xml.querySelector("[name=TEC]").innerHTML) - document.getElementById("default_tec").value;
+  document.getElementById("add_for").value = parseInt(xml.querySelector("[name=FOR]").innerHTML) - document.getElementById("default_for").value;
+  document.getElementById("add_stl").value = parseInt(xml.querySelector("[name=STL]").innerHTML) - document.getElementById("default_stl").value;
+  document.getElementById("add_crf").value = parseInt(xml.querySelector("[name=CRF]").innerHTML) - document.getElementById("default_crf").value;
   calcStatus();
 
   // 技能
   for(index = 1; index < possible_abilities+1; index++){
-    document.getElementById(ability_id_dict[xml.getElementsByName("技能")[0].children[index].innerHTML.match(/[^+]+/)[0]]).checked = true;
+    document.getElementById(ability_id_dict[xml.querySelector("[name=技能]").children[index].innerHTML.match(/[^+]+/)[0]]).checked = true;
   }
 
   // 成長
-  if(!xml.getElementsByName("成長")[0]) return;
-  for(index = 0 ; index < xml.getElementsByName("成長")[0].children.length; index++) {
-    document.getElementById(ability_id_dict[xml.getElementsByName("成長")[0].children[index].getAttribute("name")] + "_grow").value = xml.getElementsByName("成長")[0].children[index].innerHTML.match(/\d+/)[0];
+  if(!xml.querySelector("[name=成長]")) return;
+  for(index = 0 ; index < xml.querySelector("[name=成長]").children.length; index++) {
+    document.getElementById(ability_id_dict[xml.querySelector("[name=成長]").children[index].getAttribute("name")] + "_grow").value = xml.querySelector("[name=成長]").children[index].innerHTML.match(/\d+/)[0];
   }
 
   showLearnedAbilities();
